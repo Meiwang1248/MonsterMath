@@ -1,4 +1,4 @@
-package edu.neu.madcourse.sticktothem;
+package edu.neu.madcourse.monstermath;
 
 import org.junit.Test;
 

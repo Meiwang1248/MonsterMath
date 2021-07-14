@@ -1,4 +1,4 @@
-package edu.neu.madcourse.sticktothem;
+package edu.neu.madcourse.monstermath;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("edu.neu.madcourse.sticktothem", appContext.getPackageName());
+        assertEquals("edu.neu.madcourse.monstermath", appContext.getPackageName());
     }
 }

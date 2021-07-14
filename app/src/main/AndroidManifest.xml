@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.neu.madcourse.sticktothem">
+    package="edu.neu.madcourse.monstermath">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StickToThem">
+        android:theme="@style/Theme.MonsterMath">
 
         <activity android:name=".StartActivity"
             android:configChanges="orientation|screenSize">
