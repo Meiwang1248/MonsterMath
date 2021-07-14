@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#ffffff"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/setting_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting_game"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.072"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.244" />
+
+    <TextView
+        android:id="@+id/setting_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/setting_difficulty"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/setting_game"
+        app:layout_constraintTop_toBottomOf="@+id/setting_game"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/setting_playmode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/setting_playmode"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/setting_difficulty"
+        app:layout_constraintTop_toBottomOf="@+id/setting_difficulty"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_button_add"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="68dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_add"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_game"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_game"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/setting_button_subtract"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_subtract"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_add"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_add"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/setting_button_multiply"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_multiply"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_subtract"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_subtract"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_subtract" />
+
+    <Button
+        android:id="@+id/setting_button_divide"
+        android:layout_width="55dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_divide"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_multiply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_multiply"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_multiply"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_button_mix"
+        android:layout_width="65dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="50dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_mix"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_divide"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_divide"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_divide"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_button_easy"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="32dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_easy"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_difficulty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_difficulty"
+        app:layout_constraintTop_toBottomOf="@+id/setting_button_add"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/setting_button_medium"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="62dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_medium"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_easy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_easy"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_easy" />
+
+    <Button
+        android:id="@+id/setting_button_hard"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="62dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_hard"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_medium"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_medium"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_button_single_player"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_single_player"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_playmode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toEndOf="@+id/setting_playmode"
+        app:layout_constraintTop_toBottomOf="@+id/setting_button_easy"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/setting_button_play_with_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="84dp"
+        android:background="#86959f"
+        android:text="@string/setting_button_play_with_friend"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="@+id/setting_button_single_player"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/setting_button_single_player"
+        app:layout_constraintTop_toTopOf="@+id/setting_button_single_player"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_button_play"
+        android:layout_width="225dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:background="#606b72"
+        android:text="@string/setting_button_play"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.575"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_button_single_player"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/setting_back"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="#606b72"
+        android:text="@string/setting_back"
+        android:textSize="15sp"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.024"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.043" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
