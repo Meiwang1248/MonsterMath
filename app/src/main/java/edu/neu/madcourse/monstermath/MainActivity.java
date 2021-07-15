@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView rvStickerReceiverPair;
     StickerSenderPairAdapter adapter;
 
-    public static final String SERVER_KEY = "key=AAAAH4KqPrw:APA91bE_nXgwLZvPG7s_H0OSALdP-EWb_sNE-CVmBHTUuoQLiouwCUoNMOhKo32GEAGKQneB7tOeydBVSPs1QWWf2P6OjNJqu61o77V3ZGXjKVohay1GYs09vaCSpZ3VtQwmC3TuTWzg";
+    public static final String SERVER_KEY = "key=AAAAqIkUxg4:APA91bGznQvbuE1j_BynlqrHXXZwUYAOy7lFXOt6x_D7UExgRViC1cXAP4_DFdxmLAGmiD9mlQ0uAaVbPoYUTqMlGx7OYvzbI1_kHirMnSo0dWa4WJbcx5Ila75K9o7iyzy7zm27r6xg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

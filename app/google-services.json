@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "135336181436",
-    "project_id": "cs5520-firebaseproject",
-    "storage_bucket": "cs5520-firebaseproject.appspot.com"
+    "project_number": "723854345742",
+    "project_id": "monstermath-cs5520",
+    "storage_bucket": "monstermath-cs5520.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:135336181436:android:b68368269eed7178949ab9",
+        "mobilesdk_app_id": "1:723854345742:android:37863a6166b6d5720f5e5f",
         "android_client_info": {
           "package_name": "edu.neu.madcourse.monstermath"
         }
       },
       "oauth_client": [
         {
-          "client_id": "135336181436-9bvu3epkp7u6qf645hkh0imjc39t2nvl.apps.googleusercontent.com",
+          "client_id": "723854345742-5b1cmu67vb966612dduacrlsudv16v66.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAwExkAJbrVVWKiQBk0GcrpjLBF8BvuHa8"
+          "current_key": "AIzaSyAUFjnQEkrDSPTEEid74j52h1T0-ZGxziw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "135336181436-9bvu3epkp7u6qf645hkh0imjc39t2nvl.apps.googleusercontent.com",
+              "client_id": "723854345742-5b1cmu67vb966612dduacrlsudv16v66.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
