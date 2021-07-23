@@ -20,5 +20,5 @@
     <string name="setting_button_single_player">Single Player</string>
     <string name="setting_button_play_with_friend">Play against a Friend</string>
     <string name="setting_button_play">Play</string>
-    <string name="setting_back">Back</string>
+    <string name="score_board">Score Board</string>
 </resources>
