@@ -5,46 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:padding="56dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create a new account"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/username"
-            android:layout_marginTop="10dp"
-            android:hint="Username"/>
-
-        <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/email"
             android:layout_marginTop="10dp"
-            android:hint="Email Address"/>
+            android:hint="Username" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="Email Address" />
 
         <Button
+            android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnRegister"
+            android:layout_marginTop="10dp"
             android:text="register"
             android:textColor="@color/white"
-            android:background="@color/colorPrimaryDark"
-            android:layout_marginTop="10dp"/>
+            android:background="#668b8b"
+            android:fontFamily="casual"
+            android:textSize="18sp"
+            app:backgroundTint="@null" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>
