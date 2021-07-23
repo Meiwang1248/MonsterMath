@@ -4,29 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:layout_margin="20dp"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".StartActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stick It to Them"
-        android:textSize="25sp"
-        android:textStyle="bold"/>
+        android:text="Monster Math"
+        android:textSize="50sp"
+        android:textStyle="bold" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:id="@+id/login"
-        android:text="log in"/>
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="50dp"
+        android:background="#668b8b"
+        android:fontFamily="casual"
+        android:text="log in"
+        android:textSize="18sp"
+        app:backgroundTint="@null" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/register"
-        android:text="register"/>
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:background="#668b8b"
+        android:fontFamily="casual"
+        android:text="register"
+        android:textSize="18sp"
+        app:backgroundTint="@null" />
 
 </LinearLayout>
