@@ -32,20 +32,31 @@ import edu.neu.madcourse.monstermath.Model.StickerSenderPairAdapter;
 import edu.neu.madcourse.monstermath.Model.User;
 
 public class MainActivity extends AppCompatActivity {
+    // All buttons selecting operations
+    Button addButton, subtractButton, multiplyButton, divideButton;
+
+    // All buttons selecting difficulties
+    Button easyButton, mediumButton, hardButton;
+
+    // Buttons selecting play mode
+    Button soloMode, compMode;
+
     static final String TAG = MainActivity.class.getSimpleName();
-    // set up for Firebase
+    // Previously set up for Firebase
     FirebaseUser firebaseUser;
     DatabaseReference databaseReference;
     User user;
     String usernameStr;
 
-    // set up for two dialogs
+
+
+    // Previously set up for two dialogs
     Button btnSendDialog, btnHistory;
     TextView username;
     int numOfStickerSent;
     TextView tvNumOfStickerSent;
 
-    // set up for RecyclerView
+    // Previously set up for RecyclerView
     ArrayList<StickerSenderPair> stickerSenderPairArrayList = new ArrayList<>();
     RecyclerView rvStickerReceiverPair;
     StickerSenderPairAdapter adapter;
@@ -57,17 +68,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Score board
+        
+
         username = findViewById(R.id.username);
         tvNumOfStickerSent = findViewById(R.id.tvNumOfStickerSent);
 
-        // set up RecyclerView
+        // Previously set up RecyclerView
         rvStickerReceiverPair = (RecyclerView) findViewById(R.id.rvStickersReceived);
         adapter = new StickerSenderPairAdapter(stickerSenderPairArrayList);
         rvStickerReceiverPair.setAdapter(adapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvStickerReceiverPair.setLayoutManager(layoutManager);
 
-        // get current user and database reference
+        // Previously get current user and database reference
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
 
@@ -100,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        // get current user's token
+                        // Previously get current user's token
                         FirebaseMessaging.getInstance().getToken()
                                 .addOnCompleteListener(new OnCompleteListener<String>() {
                                     @Override
