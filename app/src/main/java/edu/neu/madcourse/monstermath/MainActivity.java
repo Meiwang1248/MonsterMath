@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     // Buttons selecting play mode
     Button soloMode, compMode;
 
+    // Decisive buttons
+    Button playButton, scoreBoardButton;
+
     static final String TAG = MainActivity.class.getSimpleName();
     // Previously set up for Firebase
     FirebaseUser firebaseUser;
@@ -68,7 +71,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Score board
+        // Connecting all buttons from layout
+        addButton = findViewById(R.id.setting_button_add);
+        subtractButton = findViewById(R.id.setting_button_subtract);
+        multiplyButton = findViewById(R.id.setting_button_multiply);
+        divideButton = findViewById(R.id.setting_button_divide);
+
+        easyButton = findViewById(R.id.setting_button_easy);
+        mediumButton = findViewById(R.id.setting_button_medium);
+        hardButton = findViewById(R.id.setting_button_hard);
+
+        soloMode = findViewById(R.id.setting_button_single_player);
+        compMode = findViewById(R.id.setting_button_play_with_friend);
+
+        playButton = findViewById(R.id.setting_button_play);
+        scoreBoardButton = findViewById(R.id.score);
         
 
         username = findViewById(R.id.username);
