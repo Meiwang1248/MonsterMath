@@ -18,6 +18,10 @@ public class ScoreReviewAdapter extends RecyclerView.Adapter<ScoreReviewAdapter.
     @Override
     public void onBindViewHolder(@NonNull ScoreReviewAdapter.ViewHolder holder, int position) {
 
+        // Set item views based on views  and data model
+        // To be completed
+        holder.username.setText("username");
+        holder.score.setText("100");
     }
 
     @Override
