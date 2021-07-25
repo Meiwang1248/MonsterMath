@@ -27,7 +27,6 @@
             android:textColor="@color/colorPrimary"
             android:id="@+id/tvScoreMark"
             android:fontFamily="casual"
-            android:text="test"
             android:textSize="16sp"/>
 
         <TextView
@@ -37,7 +36,6 @@
             android:textColor="@color/colorPrimary"
             android:id="@+id/tvScoreUsername"
             android:fontFamily="casual"
-            android:text="test"
             android:textSize="16sp"/>
 
     </LinearLayout>
