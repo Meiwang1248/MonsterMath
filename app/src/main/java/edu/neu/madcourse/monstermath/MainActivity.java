@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
 
         playButton = findViewById(R.id.setting_button_play);
         scoreBoardButton = findViewById(R.id.score);
+
+        scoreBoardButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                openScoreBoard();
+            }
+        });
         
 
         username = findViewById(R.id.username);
@@ -184,6 +192,11 @@ public class MainActivity extends AppCompatActivity {
                 showStickerHistory();
             }
         });
+    }
+
+    private void openScoreBoard() {
+        Intent intent = new Intent(this, ScoreBoardActivity.class);
+        startActivity(intent);
     }
 
     private void showSendStickerDialog() {
