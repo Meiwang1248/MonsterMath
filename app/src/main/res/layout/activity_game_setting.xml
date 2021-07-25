@@ -56,6 +56,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_add" />
@@ -68,6 +69,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_subtract" />
@@ -80,6 +82,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_multiply" />
@@ -105,6 +108,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_mix" />
@@ -145,6 +149,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_easy" />
@@ -157,6 +162,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_medium" />
@@ -169,6 +175,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_hard" />
@@ -209,6 +216,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_single_player" />
@@ -221,6 +229,7 @@
                         android:layout_weight="1"
                         style="?attr/materialButtonOutlinedStyle"
                         android:textColor="@color/white"
+                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_play_with_friend" />
