@@ -1,5 +1,7 @@
 package edu.neu.madcourse.monstermath;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -7,26 +9,43 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class ScoreReviewAdapter extends RecyclerView.Adapter<ScoreReviewAdapter.ViewHolder> {
 
+    private ArrayList<ScoreItem> itemList;
+
+    // Constructor
+    public ScoreReviewAdapter(ArrayList<ScoreItem> scoreItemList) {
+        this.itemList = scoreItemList;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        // Inflate the custom layout
+        View scoreItemView = inflater.inflate(R.layout.score_item, parent, false);
+
+        // return a new holder instance
+        ScoreReviewAdapter.ViewHolder viewHolder = new ViewHolder(scoreItemView);
+        return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ScoreReviewAdapter.ViewHolder holder, int position) {
+        // Get the data model based on position
+        ScoreItem scoreItem = itemList.get(position);
 
         // Set item views based on views  and data model
-        // To be completed
-        holder.username.setText("username");
-        holder.score.setText("100");
+        holder.username.setText(scoreItem.getUsername());
+        holder.score.setText(scoreItem.getScore());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return itemList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

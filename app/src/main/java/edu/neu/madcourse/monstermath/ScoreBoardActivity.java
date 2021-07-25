@@ -1,12 +1,15 @@
 package edu.neu.madcourse.monstermath;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ScoreBoardActivity extends AppCompatActivity {
 
@@ -16,8 +19,11 @@ public class ScoreBoardActivity extends AppCompatActivity {
     private Button mediumButton;
     private Button hardButton;
 
+    // Set up for RecyclerView
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager rLayoutManager;
+    private ArrayList<ScoreItem> scoreItemArrayList = new ArrayList<>();
+    private ScoreReviewAdapter reviewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +35,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
         easyButton = findViewById(R.id.easy_score);
         mediumButton = findViewById(R.id.medium_score);
         hardButton = findViewById(R.id.hard_score);
-        recyclerView = findViewById(R.id.recycler_view);
 
         easyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,5 +56,13 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void createRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view);
+        rLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
+
+        reviewAdapter = new
     }
 }
