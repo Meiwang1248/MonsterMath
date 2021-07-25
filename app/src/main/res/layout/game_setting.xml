@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/setting_game"
+        android:id="@+id/tvSettingGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/setting_game"
@@ -21,7 +21,7 @@
         app:layout_constraintVertical_bias="0.244" />
 
     <TextView
-        android:id="@+id/setting_difficulty"
+        android:id="@+id/tvSettingLevel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -31,12 +31,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/setting_game"
-        app:layout_constraintTop_toBottomOf="@+id/setting_game"
+        app:layout_constraintStart_toStartOf="@+id/tvSettingGame"
+        app:layout_constraintTop_toBottomOf="@+id/tvSettingGame"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/setting_playmode"
+        android:id="@+id/tvSettingMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
@@ -46,12 +46,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/setting_difficulty"
-        app:layout_constraintTop_toBottomOf="@+id/setting_difficulty"
+        app:layout_constraintStart_toStartOf="@+id/tvSettingLevel"
+        app:layout_constraintTop_toBottomOf="@+id/tvSettingLevel"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/setting_button_add"
+        android:id="@+id/btnSettingGameAdd"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginStart="68dp"
@@ -60,15 +60,15 @@
         android:fontFamily="casual"
         android:textSize="25sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_game"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSettingGame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_game"
+        app:layout_constraintStart_toEndOf="@+id/tvSettingGame"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/setting_button_subtract"
+        android:id="@+id/btnSettingGameSubtract"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
@@ -77,15 +77,15 @@
         android:fontFamily="casual"
         android:textSize="25sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_add"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingGameAdd"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_add"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_add"
+        app:layout_constraintStart_toEndOf="@+id/btnSettingGameAdd"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingGameAdd"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/setting_button_multiply"
+        android:id="@+id/btnSettingGameMultiply"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:background="#96cdcd"
@@ -93,14 +93,14 @@
         android:fontFamily="casual"
         android:textSize="25sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_subtract"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingGameSubtract"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.156"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_subtract"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_subtract" />
+        app:layout_constraintStart_toEndOf="@+id/btnSettingGameSubtract"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingGameSubtract" />
 
     <Button
-        android:id="@+id/setting_button_divide"
+        android:id="@+id/btnSettingGameDivide"
         android:layout_width="55dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
@@ -109,31 +109,31 @@
         android:fontFamily="casual"
         android:textSize="25sp"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_multiply"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingGameMultiply"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_multiply"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_multiply"
+        app:layout_constraintStart_toEndOf="@+id/btnSettingGameMultiply"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingGameMultiply"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/setting_button_mix"
+        android:id="@+id/btnSettingGameMix"
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:background="#96cdcd"
         android:text="@string/setting_button_mix"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_divide"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingGameDivide"
         android:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_divide"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_divide"
+        app:layout_constraintStart_toEndOf="@+id/btnSettingGameDivide"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingGameDivide"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/setting_button_easy"
+        android:id="@+id/btnSettingLevelEasy"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="44dp"
@@ -141,47 +141,47 @@
         android:background="#96cdcd"
         android:text="@string/setting_button_easy"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_difficulty"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSettingLevel"
         android:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_difficulty"
-        app:layout_constraintTop_toBottomOf="@+id/setting_button_add"
+        app:layout_constraintStart_toEndOf="@+id/tvSettingLevel"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettingGameAdd"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/setting_button_medium"
+        android:id="@+id/btnSettingLevelMedium"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="62dp"
         android:background="#96cdcd"
         android:text="@string/setting_button_medium"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_easy"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingLevelEasy"
         android:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_easy"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_easy" />
+        app:layout_constraintStart_toEndOf="@+id/btnSettingLevelEasy"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingLevelEasy" />
 
     <Button
-        android:id="@+id/setting_button_hard"
+        android:id="@+id/btnSettingLevelHard"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginStart="62dp"
         android:background="#96cdcd"
         android:text="@string/setting_button_hard"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_medium"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingLevelMedium"
         android:fontFamily="casual"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_medium"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_medium"
+        app:layout_constraintStart_toEndOf="@+id/btnSettingLevelMedium"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingLevelMedium"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/setting_button_single_player"
+        android:id="@+id/btnSettingModeSolo"
         android:layout_width="180dp"
         android:layout_height="50dp"
         android:layout_marginStart="28dp"
@@ -190,15 +190,15 @@
         android:text="@string/setting_button_single_player"
         android:fontFamily="casual"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_playmode"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSettingMode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.005"
-        app:layout_constraintStart_toEndOf="@+id/setting_playmode"
-        app:layout_constraintTop_toBottomOf="@+id/setting_button_easy"
+        app:layout_constraintStart_toEndOf="@+id/tvSettingMode"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettingLevelEasy"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/setting_button_play_with_friend"
+        android:id="@+id/btnSettingModeComp"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="84dp"
@@ -206,15 +206,15 @@
         android:fontFamily="casual"
         android:text="@string/setting_button_play_with_friend"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="@+id/setting_button_single_player"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSettingModeSolo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/setting_button_single_player"
-        app:layout_constraintTop_toTopOf="@+id/setting_button_single_player"
+        app:layout_constraintStart_toEndOf="@+id/btnSettingModeSolo"
+        app:layout_constraintTop_toTopOf="@+id/btnSettingModeSolo"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/setting_button_play"
+        android:id="@+id/btnSettingDone"
         android:layout_width="225dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
@@ -228,11 +228,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.575"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/setting_button_single_player"
+        app:layout_constraintTop_toBottomOf="@+id/btnSettingModeSolo"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/score"
+        android:id="@+id/btnScoreBoard"
         android:layout_width="128dp"
         android:layout_height="35dp"
         android:background="#5BFFC107"

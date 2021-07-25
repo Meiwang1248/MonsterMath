@@ -10,7 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MonsterMath"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ScoreBoardActivity"></activity>
+        <activity android:name=".GameSettingActivity"></activity>
+        <activity android:name=".ScoreBoardActivity" />
         <activity
             android:name=".StartActivity"
             android:configChanges="orientation|screenSize">

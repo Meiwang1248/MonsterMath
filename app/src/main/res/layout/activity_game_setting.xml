@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameSettingActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvSettingGame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="15dp"
+                    android:textStyle="bold"
+                    android:text="@string/setting_game"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleBtnGrpOperationSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btnSettingGameAdd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_add" />
+
+                    <Button
+                        android:id="@+id/btnSettingGameSubtract"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_subtract" />
+
+                    <Button
+                        android:id="@+id/btnSettingGameMultiply"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_multiply" />
+
+                    <Button
+                        android:id="@+id/btnSettingGameDivide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_divide"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnSettingGameMix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_mix" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvSettingLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="casual"
+                    android:text="@string/setting_difficulty"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleBtnGrpLevelSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btnSettingLevelEasy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_easy" />
+
+                    <Button
+                        android:id="@+id/btnSettingLevelMedium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_medium" />
+
+                    <Button
+                        android:id="@+id/btnSettingLevelHard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_hard" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvSettingMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="casual"
+                    android:layout_gravity="center"
+                    android:text="@string/setting_playmode"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleBtnGrpModeSelection"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="true"
+                    app:singleSelection="true">
+
+                    <Button
+                        android:id="@+id/btnSettingModeSolo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_single_player" />
+
+                    <Button
+                        android:id="@+id/btnSettingModeComp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_weight="1"
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:textColor="@color/white"
+                        android:backgroundTint="@color/colorSecondary"
+                        android:fontFamily="casual"
+                        android:text="@string/setting_button_play_with_friend" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+            android:id="@+id/btnSettingDone"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="casual"
+            android:includeFontPadding="false"
+            android:text="@string/setting_button_play"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnScoreBoard"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="casual"
+            android:text="@string/score_board"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

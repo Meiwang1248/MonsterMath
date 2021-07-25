@@ -13,6 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Monster Math"
+        android:fontFamily="casual"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -20,8 +21,8 @@
         android:id="@+id/login"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:background="#668b8b"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
         android:fontFamily="casual"
         android:text="log in"
         android:textSize="18sp"
@@ -31,7 +32,8 @@
         android:id="@+id/register"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:background="#668b8b"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorPrimary"
         android:fontFamily="casual"
         android:text="register"
         android:textSize="18sp"
