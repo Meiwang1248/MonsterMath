@@ -21,39 +21,39 @@
             android:id="@+id/tvScoreBoardTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="20dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@color/colorPrimary"
-            android:text="Score Board"
             android:fontFamily="casual"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="5dp"
+            android:text="Score Board"
             android:textColor="@color/white"
             android:textSize="25dp"
-            android:gravity="center"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvNumOfGamesPlayed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:layout_marginBottom="10dp"
-            android:textStyle="bold"
             android:fontFamily="casual"
+            android:text=""
             android:textColor="@color/colorSecondary"
-            android:text="" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvPersonalBestScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
             android:layout_marginBottom="10dp"
-            android:textStyle="bold"
             android:fontFamily="casual"
+            android:text="Your personal best score: "
             android:textColor="@color/colorSecondary"
-            android:text="Your personal best score: " />
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleBtnGrpScore"
@@ -65,33 +65,33 @@
 
             <Button
                 android:id="@+id/btnScoreEasy"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
                 android:backgroundTint="@color/white"
                 android:fontFamily="casual"
                 android:text="Easy" />
 
             <Button
                 android:id="@+id/btnScoreMedium"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
                 android:backgroundTint="@color/white"
                 android:fontFamily="casual"
                 android:text="Medium" />
 
             <Button
                 android:id="@+id/btnScoreHard"
+                style="?attr/materialButtonOutlinedStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
                 android:backgroundTint="@color/white"
                 android:fontFamily="casual"
                 android:text="Hard" />
@@ -103,8 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="90"
-            android:scrollbars="vertical"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
