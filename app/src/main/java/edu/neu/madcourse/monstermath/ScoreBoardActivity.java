@@ -64,8 +64,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
         // set up for toggle button group
         MaterialButtonToggleGroup toggleButtonGroupScore = findViewById(R.id.toggleBtnGrpScore);
-        // add a default check state
-        toggleButtonGroupScore.check(R.id.btnScoreEasy);
         // add on button checked listener
         toggleButtonGroupScore.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
             @Override

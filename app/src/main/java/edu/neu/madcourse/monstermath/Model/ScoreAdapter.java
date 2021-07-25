@@ -21,8 +21,8 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            username = itemView.findViewById(R.id.score_username);
-            score = itemView.findViewById(R.id.score_marks);
+            username = itemView.findViewById(R.id.tvScoreUsername);
+            score = itemView.findViewById(R.id.tvScoreMark);
         }
     }
 
