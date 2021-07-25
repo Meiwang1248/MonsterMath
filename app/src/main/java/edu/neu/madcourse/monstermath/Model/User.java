@@ -6,13 +6,13 @@ public class User {
     private String id;
     private String username;
     private String token;
-    public int numOfStickersSent;
+    public int numOfGamesPlayed;
 
     public User(String id, String username, String token) {
         this.id = id;
         this.username = username;
         this.token = token;
-        numOfStickersSent = 0;
+        numOfGamesPlayed = 0;
     }
 
     public User() {
@@ -27,8 +27,8 @@ public class User {
         return username;
     }
 
-    public int getNumOfStickersSent() {
-        return numOfStickersSent;
+    public int getNumOfGamesPlayed() {
+        return numOfGamesPlayed;
     }
 
     public String getToken() {

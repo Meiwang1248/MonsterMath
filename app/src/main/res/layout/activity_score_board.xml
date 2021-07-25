@@ -26,12 +26,23 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"
             android:background="@color/colorPrimary"
-            android:text="Score Ranking"
+            android:text="Score Board"
             android:fontFamily="casual"
             android:textColor="@color/white"
             android:textSize="25dp"
             android:gravity="center"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNumOfGamesPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:fontFamily="casual"
+            android:textColor="@color/colorSecondary"
+            android:text="" />
 
         <TextView
             android:id="@+id/tvPersonalBestScore"
