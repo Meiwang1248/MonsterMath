@@ -95,7 +95,7 @@ public class Game {
         // 这里已经有时间了？
         timer.schedule(task1,2000);
 
-        timer.schedule(task2,3000);
+        timer.schedule(task2,5000);
 
         if(curPlayerAnswer == curAnswer){
             score += 10;
