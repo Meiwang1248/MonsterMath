@@ -31,9 +31,6 @@ public class GameSettingActivity extends AppCompatActivity {
                         case R.id.btnSettingGameDivide:
                             MainActivity.GAME_OPERATION = "divide";
                             break;
-                        case R.id.btnSettingGameMix:
-                            MainActivity.GAME_OPERATION = "mix";
-                            break;
                         case R.id.btnSettingGameMultiply:
                             MainActivity.GAME_OPERATION = "multiply";
                             break;

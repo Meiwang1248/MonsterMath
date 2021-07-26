@@ -8,14 +8,14 @@ import java.util.TimerTask;
 public class Game {
     String operation; // + - * / mix
     String difficultyLevel; // easy medium hard
-    Boolean singleMode; // single player is true, else false
+    boolean singleMode; // single player is true, else false
     int curStage; // single problem, like 2+3
     int score; // current score in this round
 
     int curNumber1; // randomly generate the first number
     int curNumber2; // randomly generate the second number
-    String curOperator; // + - * / mix in this round
-    HashSet options; // multiple choice
+    String curOperator; // + - * / in this round
+    HashSet<Integer> options; // generate multiple choices
     int bonus;  // 2 seconds will give 5 extra points; 5 seconds will give 2 extra points; over 5s no bonus
     int curAnswer; // right answer for the current question
 
@@ -23,7 +23,7 @@ public class Game {
 
     int curPlayerAnswer;
 
-    public Game(String operation, String difficultyLevel, Boolean singleMode, int curStage, int score) {
+    public Game(String operation, String difficultyLevel, boolean singleMode, int curStage, int score) {
         this.operation = operation;
         this.difficultyLevel = difficultyLevel;
         this.singleMode = singleMode;
@@ -67,9 +67,12 @@ public class Game {
 
 
     // Yihui part 4
+
+    /**
+     * Generates one game stage.
+     */
     public void generateOneStage(){
-        // bounds 还没算，还没加上时间
-        // https://blog.csdn.net/lintianlin/article/details/40540831
+        // @https://blog.csdn.net/lintianlin/article/details/40540831
         generateOptions();
         bonus = 5;
         Timer timer = new Timer();
@@ -77,8 +80,6 @@ public class Game {
             @Override
             public void run() {
                 //if时间过去2秒， bonus -3=2
-
-                //if时间又过去3秒，bonus -2=0
                 bonus -= 3;
             }
         };
@@ -86,78 +87,89 @@ public class Game {
         TimerTask task2 = new TimerTask() {
             @Override
             public void run() {
-                //if时间过去2秒， bonus -3=2
-
                 //if时间又过去3秒，bonus -2=0
                 bonus -= 2;
             }
         };
 
+        // 这里已经有时间了？
         timer.schedule(task1,2000);
 
-        timer.schedule(task2,5000);
-
-
+        timer.schedule(task2,3000);
 
         if(curPlayerAnswer == curAnswer){
             score += 10;
             score += bonus;
         } else {
+            // 为什么需要remove curPlayerAnswer?
             options.remove(curPlayerAnswer);
         }
     }
 
+    /**
+     * Generates two numbers for the math operation based on difficulty level.
+     */
     public void generateNumbers() {
-        if (operation == "+" || operation == "-") {
-            if (difficultyLevel == "easy") {
-                int upperBound = 11;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
-            } else if (difficultyLevel == "medium") {
-                int upperBound = 21;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
-            } else if (difficultyLevel == "hard") {
-                int upperBound = 101;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
+        int upperBound = 0;
+        if (operation.equals("add") || operation.equals("subtract")) {
+            if (difficultyLevel.equals("easy")) {
+                upperBound = 10;
+            } else if (difficultyLevel.equals("medium")) {
+                upperBound = 20;
+            } else if (difficultyLevel.equals("hard")) {
+                upperBound = 100;
             }
-
+        } else if (operation.equals("multiply") || operation.equals("divide")) {
+            if (difficultyLevel.equals("easy")) {
+                upperBound = 5;
+            } else if (difficultyLevel.equals("medium")) {
+                upperBound = 10;
+            } else if (difficultyLevel.equals("hard")) {
+                upperBound = 15;
+            }
         }
 
-        if (operation == "*" || operation == "/") {
-            if (difficultyLevel == "easy") {
-                int upperBound = 6;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
-            } else if (difficultyLevel == "medium") {
-                int upperBound = 11;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
-            } else if (difficultyLevel == "hard") {
-                int upperBound = 16;
-                curNumber1 = rand.nextInt(upperBound);
-                curNumber2 = rand.nextInt(upperBound);
+        // 区别对待divide，因为可能出现随机数无法整除的现象，必须保证两个数能够整除
+        if (operation.equals("divide")) {
+            // plus 1 to ensure 0 not included
+            curNumber2 = rand.nextInt(upperBound) + 1;
+            // find the quotient
+            int quotient = 1;
+            if (difficultyLevel.equals("easy")) {
+                quotient = rand.nextInt(3) + 1;
+            } else if (difficultyLevel.equals("medium")) {
+                quotient = rand.nextInt(5) + 1;
+            } else if (difficultyLevel.equals("hard")) {
+                quotient = rand.nextInt(10) + 1;
             }
-
+            // make sure curNumber2 can evenly divide curNumber1
+            curNumber1 = curNumber2 * quotient;
         }
+        curNumber1 = rand.nextInt(upperBound) + 1;
+        curNumber2 = rand.nextInt(upperBound) + 1;
     }
 
+    /**
+     * Generates five options for each question.
+     */
     public void generateOptions(){
         generateNumbers();
         options = new HashSet();
-        if (operation == "+") {
+        if (operation.equals("add")) {
             curAnswer = curNumber1 + curNumber2;
-        } else if (operation == "-") {
+        } else if (operation.equals("subtract")) {
             curAnswer = curNumber1 - curNumber2;
-        } else if (operation == "*") {
+        } else if (operation.equals("multiply")) {
             curAnswer = curNumber1 * curNumber2;
-        } else if (operation == "/") {
+        } else if (operation.equals("divide")) {
             curAnswer = curNumber1 / curNumber2;
         }
 
+        // add the correct answer to options
         options.add(curAnswer);
-        for(int i = 0; i < 4; i ++){
+
+        // ensure there are 5 options
+        while (options.size() < 5) {
             int option = rand.nextInt(101);
             options.add(option);
         }
