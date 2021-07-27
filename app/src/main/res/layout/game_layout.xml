@@ -48,65 +48,165 @@
         android:columnCount="6"
         android:rowCount="2">
 
-        <ImageView
-            android:id="@+id/imageView"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_row="0"
             android:layout_column="0"
             android:layout_columnWeight="3"
             android:layout_columnSpan="3"
             android:layout_rowWeight="1"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/asset_2" />
+            android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/imageView2"
+            <ImageView
+                android:id="@+id/ivMonster1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:srcCompat="@drawable/asset_2"/>
+
+            <Button
+                android:id="@+id/btnAnswer1"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:text="Button"
+                android:fontFamily="casual"
+                android:backgroundTint="@null"
+                android:background="@null"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_row="0"
             android:layout_column="3"
             android:layout_columnWeight="3"
             android:layout_columnSpan="3"
             android:layout_rowWeight="1"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/asset_3" />
+            android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/imageView3"
+            <ImageView
+                android:id="@+id/ivMonster2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:srcCompat="@drawable/asset_3"/>
+
+            <Button
+                android:id="@+id/btnAnswer2"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:text="Button"
+                android:fontFamily="casual"
+                android:backgroundTint="@null"
+                android:background="@null"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_row="1"
             android:layout_column="0"
             android:layout_columnWeight="2"
             android:layout_columnSpan="2"
             android:layout_rowWeight="1"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/asset_4" />
+            android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/imageView4"
+            <ImageView
+                android:id="@+id/ivMonster3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:srcCompat="@drawable/asset_4" />
+
+            <Button
+                android:id="@+id/btnAnswer3"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:text="Button"
+                android:fontFamily="casual"
+                android:backgroundTint="@null"
+                android:background="@null"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_row="1"
             android:layout_column="2"
             android:layout_columnWeight="2"
             android:layout_columnSpan="2"
             android:layout_rowWeight="1"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/asset_5" />
+            android:layout_margin="10dp">
 
-        <ImageView
-            android:id="@+id/imageView5"
+            <ImageView
+                android:id="@+id/ivMonster4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:srcCompat="@drawable/asset_5" />
+
+            <Button
+                android:id="@+id/btnAnswer4"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:text="Button"
+                android:fontFamily="casual"
+                android:backgroundTint="@null"
+                android:background="@null"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_row="1"
             android:layout_column="4"
             android:layout_columnWeight="2"
             android:layout_columnSpan="2"
             android:layout_rowWeight="1"
-            android:layout_margin="10dp"
-            app:srcCompat="@drawable/asset_6" />
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivMonster5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.8"
+                app:srcCompat="@drawable/asset_6" />
+
+            <Button
+                android:id="@+id/btnAnswer5"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:layout_gravity="center"
+                android:text="Button"
+                android:fontFamily="casual"
+                android:backgroundTint="@null"
+                android:background="@null"
+                android:textColor="#000000"/>
+
+        </LinearLayout>
 
     </GridLayout>
 
@@ -136,10 +236,45 @@
         app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
         app:layout_constraintStart_toStartOf="@id/glVertical2"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_below="@id/tvTimeCount"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="20sp"
         android:autoSizeMaxTextSize="80sp"
+        android:autoSizeStepGranularity="2sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvCompetitorTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="casual"
+        android:layout_marginStart="50dp"
+        android:text="You are playing against: "
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
+        app:layout_constraintStart_toStartOf="@id/glVertical1"
+        app:layout_constraintEnd_toStartOf="@id/tvCompetitorName"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMaxTextSize="50sp"
+        android:autoSizeStepGranularity="2sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvCompetitorName"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="casual"
+        android:layout_margin="10dp"
+        android:text="Name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
+        app:layout_constraintStart_toEndOf="@id/tvCompetitorTitle"
+        app:layout_constraintEnd_toStartOf="@id/glVertical2"
+        android:gravity="center"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMaxTextSize="50sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
 
