@@ -63,20 +63,20 @@
                 android:id="@+id/ivMonster1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.7"
                 app:srcCompat="@drawable/asset_2"/>
 
             <Button
                 android:id="@+id/btnAnswer1"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
-                android:backgroundTint="@null"
-                android:background="@null"
-                android:textColor="#000000"/>
+                android:backgroundTint="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -95,20 +95,20 @@
                 android:id="@+id/ivMonster2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.7"
                 app:srcCompat="@drawable/asset_3"/>
 
             <Button
                 android:id="@+id/btnAnswer2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
-                android:backgroundTint="@null"
-                android:background="@null"
-                android:textColor="#000000"/>
+                android:backgroundTint="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -127,20 +127,20 @@
                 android:id="@+id/ivMonster3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.7"
                 app:srcCompat="@drawable/asset_4" />
 
             <Button
                 android:id="@+id/btnAnswer3"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
-                android:backgroundTint="@null"
-                android:background="@null"
-                android:textColor="#000000"/>
+                android:backgroundTint="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -159,20 +159,20 @@
                 android:id="@+id/ivMonster4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.7"
                 app:srcCompat="@drawable/asset_5" />
 
             <Button
                 android:id="@+id/btnAnswer4"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
-                android:backgroundTint="@null"
-                android:background="@null"
-                android:textColor="#000000"/>
+                android:backgroundTint="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -191,20 +191,20 @@
                 android:id="@+id/ivMonster5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.8"
+                android:layout_weight="0.7"
                 app:srcCompat="@drawable/asset_6" />
 
             <Button
                 android:id="@+id/btnAnswer5"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.2"
+                android:layout_weight="0.3"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
-                android:backgroundTint="@null"
-                android:background="@null"
-                android:textColor="#000000"/>
+                android:backgroundTint="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
@@ -221,7 +221,7 @@
         app:layout_constraintStart_toStartOf="@id/glVertical2"
         app:layout_constraintEnd_toEndOf="parent"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMinTextSize="16sp"
         android:autoSizeMaxTextSize="80sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
@@ -237,7 +237,7 @@
         app:layout_constraintStart_toStartOf="@id/glVertical2"
         app:layout_constraintEnd_toEndOf="parent"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMinTextSize="16sp"
         android:autoSizeMaxTextSize="80sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
@@ -247,7 +247,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="casual"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="30dp"
         android:text="You are playing against: "
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
@@ -255,9 +255,10 @@
         app:layout_constraintEnd_toStartOf="@id/tvCompetitorName"
         android:gravity="center"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMinTextSize="16sp"
         android:autoSizeMaxTextSize="50sp"
         android:autoSizeStepGranularity="2sp"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold"/>
 
     <TextView
@@ -273,10 +274,11 @@
         app:layout_constraintEnd_toStartOf="@id/glVertical2"
         android:gravity="center"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMinTextSize="16sp"
         android:autoSizeMaxTextSize="50sp"
         android:autoSizeStepGranularity="2sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCompeteHome"
@@ -290,7 +292,7 @@
         android:fontFamily="casual"
         android:text="HOME"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="20sp"
+        android:autoSizeMinTextSize="10sp"
         android:autoSizeMaxTextSize="80sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
@@ -310,6 +312,7 @@
         android:autoSizeMinTextSize="24sp"
         android:autoSizeMaxTextSize="80sp"
         android:autoSizeStepGranularity="2sp"
+        android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
