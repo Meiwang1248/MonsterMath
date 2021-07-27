@@ -101,7 +101,6 @@ public class Game {
             score += 10;
             score += bonus;
         } else {
-            // 为什么需要remove curPlayerAnswer?
             options.remove(curPlayerAnswer);
         }
     }
@@ -144,9 +143,10 @@ public class Game {
             }
             // make sure curNumber2 can evenly divide curNumber1
             curNumber1 = curNumber2 * quotient;
+        } else {
+            curNumber1 = rand.nextInt(upperBound) + 1;
+            curNumber2 = rand.nextInt(upperBound) + 1;
         }
-        curNumber1 = rand.nextInt(upperBound) + 1;
-        curNumber2 = rand.nextInt(upperBound) + 1;
     }
 
     /**
@@ -170,7 +170,7 @@ public class Game {
 
         // ensure there are 5 options
         while (options.size() < 5) {
-            int option = rand.nextInt(101);
+            int option = curAnswer + (rand.nextInt(11) - 5) ;
             options.add(option);
         }
     }
