@@ -69,10 +69,10 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingModeSolo:
-                            GameActivity.GAME_MODE = "solo";
+                            GameActivity.GAME_MODE = true;
                             break;
                         case R.id.btnSettingModeComp:
-                            GameActivity.GAME_MODE = "competition";
+                            GameActivity.GAME_MODE = false;
                             break;
                     }
                 }

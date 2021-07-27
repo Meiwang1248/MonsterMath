@@ -51,18 +51,8 @@ public class Game {
         return score;
     }
 
-    public void gameStart() {
-
-        for(int i=0; i<10; i++){
-            generateOneStage();
-            curStage++;
-            // after finish each question, we will reset the following:
-            curNumber1 = 0;
-            curNumber2 = 0;
-            curAnswer = 0;
-            options.clear();
-        }
-        // 游戏结束， display your total score is ***
+    public void clearStage(){
+        options.clear();
     }
 
 
@@ -92,10 +82,23 @@ public class Game {
             }
         };
 
+        TimerTask task3 = new TimerTask() {
+            @Override
+            public void run() {
+                //if时间又过去5秒（共计10秒），question stop
+                if (curStage<10){
+                    generateOneStage();
+                }
+
+            }
+        };
+
         // 这里已经有时间了？
         timer.schedule(task1,2000);
 
         timer.schedule(task2,5000);
+
+
 
         if(curPlayerAnswer == curAnswer){
             score += 10;
@@ -103,7 +106,11 @@ public class Game {
         } else {
             options.remove(curPlayerAnswer);
         }
+        curStage++;
+        timer.schedule(task3,10000);
     }
+
+
 
     /**
      * Generates two numbers for the math operation based on difficulty level.
