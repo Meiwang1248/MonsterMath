@@ -20,10 +20,7 @@ public class MainActivity extends AppCompatActivity {
     User user;
     String usernameStr;
 
-    // game settings
-    static String GAME_LEVEL;
-    static String GAME_OPERATION;
-    static String GAME_MODE;
+
 
     // Previously set up for two dialogs
 //    Button btnSendDialog, btnHistory;

@@ -26,16 +26,16 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingGameAdd:
-                            MainActivity.GAME_OPERATION = "add";
+                            GameActivity.GAME_OPERATION = "add";
                             break;
                         case R.id.btnSettingGameDivide:
-                            MainActivity.GAME_OPERATION = "divide";
+                            GameActivity.GAME_OPERATION = "divide";
                             break;
                         case R.id.btnSettingGameMultiply:
-                            MainActivity.GAME_OPERATION = "multiply";
+                            GameActivity.GAME_OPERATION = "multiply";
                             break;
                         case R.id.btnSettingGameSubtract:
-                            MainActivity.GAME_OPERATION = "subtract";
+                            GameActivity.GAME_OPERATION = "subtract";
                             break;
                     }
                 }
@@ -49,13 +49,13 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingLevelEasy:
-                            MainActivity.GAME_LEVEL = "easy";
+                            GameActivity.GAME_LEVEL = "easy";
                             break;
                         case R.id.btnSettingLevelMedium:
-                            MainActivity.GAME_LEVEL = "medium";
+                            GameActivity.GAME_LEVEL = "medium";
                             break;
                         case R.id.btnSettingLevelHard:
-                            MainActivity.GAME_LEVEL = "hard";
+                            GameActivity.GAME_LEVEL = "hard";
                             break;
                     }
                 }
@@ -69,10 +69,10 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingModeSolo:
-                            MainActivity.GAME_MODE = "solo";
+                            GameActivity.GAME_MODE = "solo";
                             break;
                         case R.id.btnSettingModeComp:
-                            MainActivity.GAME_MODE = "competition";
+                            GameActivity.GAME_MODE = "competition";
                             break;
                     }
                 }
