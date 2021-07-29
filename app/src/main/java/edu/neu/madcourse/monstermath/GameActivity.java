@@ -3,6 +3,7 @@ package edu.neu.madcourse.monstermath;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -47,48 +48,11 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_layout);
 
-        //connect buttons and monsters with layout
-        // installing listener: we can pss the both the answer and monster to
-        option1 = findViewById(R.id.btnAnswer1);
-        m1 = findViewById(R.id.ivMonster1);
-        option1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAnswer(option1, m1);
-            }
-        });
-        option2 = findViewById(R.id.btnAnswer2);
-        m2 = findViewById(R.id.ivMonster2);
-        option2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAnswer(option2, m2);
-            }
-        });
-        option3 = findViewById(R.id.btnAnswer3);
-        m3 = findViewById(R.id.ivMonster3);
-        option3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAnswer(option3, m3);
-            }
-        });
-        option4 = findViewById(R.id.btnAnswer4);
-        m4 = findViewById(R.id.ivMonster4);
-        option4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAnswer(option4, m4);
-            }
-        });
-        option5 = findViewById(R.id.btnAnswer5);
-        m5 = findViewById(R.id.ivMonster5);
-        option5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                validateAnswer(option5, m5);
-            }
-        });
+        // connect multiple choices and monsters to UI
+        connectUIComponents();
+        // Install listeners to all multiple choices
+        installListeners();
+
         homeButton = findViewById(R.id.btnCompeteHome);
 
         //connect TextViews and layout
@@ -96,11 +60,16 @@ public class GameActivity extends AppCompatActivity {
         score = findViewById(R.id.tvScoreCount);
         time = findViewById(R.id.tvTimeCount);
 
+        initGame();
+
     }
+
+
+
+
 
     private void initGame(){
         game = new Game(GAME_OPERATION, GAME_LEVEL,true,1,0);
-
 
         game.generateOneStage();
         score.setText(game.score);
@@ -117,6 +86,9 @@ public class GameActivity extends AppCompatActivity {
             game.score += 10;
             game.score += game.bonus;
             score.setText(game.score);
+            Toast toast = Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
             if (game.curStage < 10) {
                 nextStage();
             } else {
@@ -128,7 +100,9 @@ public class GameActivity extends AppCompatActivity {
             game.options.remove(answer);
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
-
+            Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
         }
     }
 
@@ -169,5 +143,59 @@ public class GameActivity extends AppCompatActivity {
         m3.setVisibility(View.VISIBLE);
         m4.setVisibility(View.VISIBLE);
         m5.setVisibility(View.VISIBLE);
+    }
+
+    private void connectUIComponents() {
+        option1 = findViewById(R.id.btnAnswer1);
+        m1 = findViewById(R.id.ivMonster1);
+
+        option2 = findViewById(R.id.btnAnswer2);
+        m2 = findViewById(R.id.ivMonster2);
+
+        option3 = findViewById(R.id.btnAnswer3);
+        m3 = findViewById(R.id.ivMonster3);
+
+        option4 = findViewById(R.id.btnAnswer4);
+        m4 = findViewById(R.id.ivMonster4);
+
+        option5 = findViewById(R.id.btnAnswer5);
+        m5 = findViewById(R.id.ivMonster5);
+    }
+
+    private void installListeners() {
+        option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option1, m1);
+            }
+        });
+
+        option2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option2, m2);
+            }
+        });
+
+        option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option3, m3);
+            }
+        });
+
+        option4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option4, m4);
+            }
+        });
+
+        option5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option5, m5);
+            }
+        });
     }
 }
