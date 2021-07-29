@@ -3,6 +3,7 @@ package edu.neu.madcourse.monstermath;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -49,15 +50,44 @@ public class GameActivity extends AppCompatActivity {
         // installing listener: we can pss the both the answer and monster to
         option1 = findViewById(R.id.btnAnswer1);
         m1 = findViewById(R.id.ivMonster1);
-
+        option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option1, m1);
+            }
+        });
         option2 = findViewById(R.id.btnAnswer2);
         m2 = findViewById(R.id.ivMonster2);
+        option2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option2, m2);
+            }
+        });
         option3 = findViewById(R.id.btnAnswer3);
         m3 = findViewById(R.id.ivMonster3);
+        option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option3, m3);
+            }
+        });
         option4 = findViewById(R.id.btnAnswer4);
         m4 = findViewById(R.id.ivMonster4);
+        option4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option4, m4);
+            }
+        });
         option5 = findViewById(R.id.btnAnswer5);
         m5 = findViewById(R.id.ivMonster5);
+        option5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option5, m5);
+            }
+        });
         homeButton = findViewById(R.id.btnCompeteHome);
 
         //connect TextViews and layout
@@ -82,8 +112,8 @@ public class GameActivity extends AppCompatActivity {
     /*
     To be invoked when user click on an answer
      */
-    private void validateAnswer(int answer) {
-        if (answer == game.curAnswer) {
+    private void validateAnswer(Button answer, ImageView monster) {
+        if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             game.score += 10;
             game.score += game.bonus;
             if (game.curStage < 10) {
@@ -92,7 +122,10 @@ public class GameActivity extends AppCompatActivity {
 
         } else {
             game.options.remove(answer);
-            // 怪兽要disappear, 怎么知道要消失哪只呢？估计要把答案和怪兽connect起来
+
+            answer.setVisibility(View.INVISIBLE);
+            monster.setVisibility(View.INVISIBLE);
+
         }
     }
 
