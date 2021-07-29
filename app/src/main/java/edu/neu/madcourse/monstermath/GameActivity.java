@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity {
     // multiple choice buttons
@@ -100,12 +101,11 @@ public class GameActivity extends AppCompatActivity {
     private void initGame(){
         game = new Game(GAME_OPERATION, GAME_LEVEL,true,1,0);
 
-        for(int i=0; i<10; i++){
-            game.generateOneStage();
-            // update UI 10 times
-            score.setText(game.score);
-            question.setText(game.curNumber1+" "+game.operation+" "+game.curNumber2+" = ?");
-        }
+
+        game.generateOneStage();
+        score.setText(game.score);
+        question.setText(game.curNumber1+" "+game.operation+" "+game.curNumber2+" = ?");
+
         // 1. need to create a pop up window for game over 2. row 58 still need modify 3. each button need a listener
     }
 
@@ -116,13 +116,16 @@ public class GameActivity extends AppCompatActivity {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             game.score += 10;
             game.score += game.bonus;
+            score.setText(game.score);
             if (game.curStage < 10) {
                 nextStage();
+            } else {
+                // End Game
+                endGame();
             }
 
         } else {
             game.options.remove(answer);
-
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
 
@@ -130,6 +133,41 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextStage() {
+        game.generateOneStage();
+        score.setText(game.score);
+        question.setText(game.curNumber1 +game.operation + game.curNumber2 +" = ?");
+    }
 
+    private void endGame() {
+        // Set most UI components invisible
+        option1.setVisibility(View.INVISIBLE);
+        option2.setVisibility(View.INVISIBLE);
+        option3.setVisibility(View.INVISIBLE);
+        option4.setVisibility(View.INVISIBLE);
+        option5.setVisibility(View.INVISIBLE);
+
+        m1.setVisibility(View.INVISIBLE);
+        m2.setVisibility(View.INVISIBLE);
+        m3.setVisibility(View.INVISIBLE);
+        m4.setVisibility(View.INVISIBLE);
+        m5.setVisibility(View.INVISIBLE);
+
+        score.setVisibility(View.INVISIBLE);
+        time.setVisibility(View.INVISIBLE);
+        question.setVisibility(View.INVISIBLE);
+
+        if (game.getCurScore() >= 100) {
+            Toast.makeText(GameActivity.this, "Bravo! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        } else if (game.getCurScore() >= 90) {
+            Toast.makeText(GameActivity.this, "Good job! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(GameActivity.this, "Nice! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        }
+
+        m1.setVisibility(View.VISIBLE);
+        m2.setVisibility(View.VISIBLE);
+        m3.setVisibility(View.VISIBLE);
+        m4.setVisibility(View.VISIBLE);
+        m5.setVisibility(View.VISIBLE);
     }
 }
