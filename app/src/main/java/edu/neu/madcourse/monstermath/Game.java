@@ -1,5 +1,6 @@
 package edu.neu.madcourse.monstermath;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Timer;
@@ -20,6 +21,8 @@ public class Game {
     int curAnswer; // right answer for the current question
 
     Random rand = new Random();
+    long startTime;
+
 
     int curPlayerAnswer;
 
@@ -63,51 +66,11 @@ public class Game {
      */
     public void generateOneStage(){
         // @https://blog.csdn.net/lintianlin/article/details/40540831
+        generateNumbers();
         generateOptions();
-        bonus = 5;
-        Timer timer = new Timer();
-        TimerTask task1 = new TimerTask() {
-            @Override
-            public void run() {
-                //if时间过去2秒， bonus -3=2
-                bonus -= 3;
-            }
-        };
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        startTime = ts.getTime();
 
-        TimerTask task2 = new TimerTask() {
-            @Override
-            public void run() {
-                //if时间又过去3秒，bonus -2=0
-                bonus -= 2;
-            }
-        };
-
-        TimerTask task3 = new TimerTask() {
-            @Override
-            public void run() {
-                //if时间又过去5秒（共计10秒），question stop
-                if (curStage<10){
-                    generateOneStage();
-                }
-
-            }
-        };
-
-        // 这里已经有时间了？
-        timer.schedule(task1,2000);
-
-        timer.schedule(task2,5000);
-
-
-
-        if(curPlayerAnswer == curAnswer){
-            score += 10;
-            score += bonus;
-        } else {
-            options.remove(curPlayerAnswer);
-        }
-        curStage++;
-        timer.schedule(task3,10000);
     }
 
 

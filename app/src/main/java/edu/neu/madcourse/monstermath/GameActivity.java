@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
+
 public class GameActivity extends AppCompatActivity {
     // multiple choice buttons
     private Button option1;
@@ -39,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
     static boolean GAME_MODE;
 
     private Game game;
+
 
 
 
@@ -74,19 +77,32 @@ public class GameActivity extends AppCompatActivity {
         score.setText(game.score);
         question.setText(game.curNumber1+" "+game.operation+" "+game.curNumber2+" = ?");
 
-        // 1. need to create a pop up window for game over 2. row 58 still need modify 3. each button need a listener
     }
 
     /*
-    To be invoked when user click on an answer
+    To be invoked when user clicks on an answer
      */
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             // To do: 加声效 加背景音乐
+
             game.score += 10;
-            game.score += game.bonus;
+            // add bonus based on time
+            int bonus;
+            Timestamp ts = new Timestamp(System.currentTimeMillis());
+            long endTime = ts.getTime();
+            long duration = (endTime - game.startTime) / 1000;
+            if (duration <= 2) {
+                bonus = 5;
+            } else if (duration <= 5) {
+                bonus = 2;
+            } else {
+                bonus = 0;
+            }
+            game.score += bonus;
+
             score.setText(game.score);
-            Toast toast = Toast.makeText(GameActivity.this, "Correct!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + bonus + " points of bonus!", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
             if (game.curStage < 10) {
