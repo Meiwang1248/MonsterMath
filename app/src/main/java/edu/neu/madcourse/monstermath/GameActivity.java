@@ -31,7 +31,6 @@ public class GameActivity extends AppCompatActivity {
     // textviews
     private TextView question;
     private TextView score;
-    private TextView competitorScore;
     private TextView time;
 
     // game settings
@@ -83,6 +82,7 @@ public class GameActivity extends AppCompatActivity {
      */
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
+            // To do: 加声效 加背景音乐
             game.score += 10;
             game.score += game.bonus;
             score.setText(game.score);
@@ -107,6 +107,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextStage() {
+        // Start the timer here
         game.generateOneStage();
         score.setText(game.score);
         question.setText(game.curNumber1 +game.operation + game.curNumber2 +" = ?");
