@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "723854345742",
-    "project_id": "monstermath-cs5520",
-    "storage_bucket": "monstermath-cs5520.appspot.com"
+    "project_number": "413996487131",
+    "project_id": "monstermathforkids",
+    "storage_bucket": "monstermathforkids.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:723854345742:android:37863a6166b6d5720f5e5f",
+        "mobilesdk_app_id": "1:413996487131:android:5e0d6275e40a31830e17fe",
         "android_client_info": {
           "package_name": "edu.neu.madcourse.monstermath"
         }
       },
       "oauth_client": [
         {
-          "client_id": "723854345742-5b1cmu67vb966612dduacrlsudv16v66.apps.googleusercontent.com",
+          "client_id": "413996487131-cjrqqgekdrgl41ed61oct1uhsof8vi5q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAUFjnQEkrDSPTEEid74j52h1T0-ZGxziw"
+          "current_key": "AIzaSyAE0Rw6IRD1ZQydg_ARH3GdC-mwiyFbOnA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "723854345742-5b1cmu67vb966612dduacrlsudv16v66.apps.googleusercontent.com",
+              "client_id": "413996487131-cjrqqgekdrgl41ed61oct1uhsof8vi5q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

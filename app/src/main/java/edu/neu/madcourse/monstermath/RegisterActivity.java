@@ -23,7 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextInputEditText username, email;
+    TextInputEditText username, email, password;
     Button btnRegister;
 
     FirebaseAuth auth;
@@ -36,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+
         btnRegister = findViewById(R.id.btnRegister);
 
         auth = FirebaseAuth.getInstance();
@@ -45,19 +47,19 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String txtUsername = username.getText().toString();
                 String txtEmail = email.getText().toString();
+                String txtPassword = password.getText().toString();
 
-                if (TextUtils.isEmpty(txtUsername) || TextUtils.isEmpty(txtEmail)) {
+                if (TextUtils.isEmpty(txtUsername) || TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)) {
                     Toast.makeText(RegisterActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
-                    register(txtUsername, txtEmail);
+                    register(txtUsername, txtEmail, txtPassword);
                 }
             }
         });
     }
 
-    private void register(String username, String email) {
-        String defaultPassword = "000000";
-        auth.createUserWithEmailAndPassword(email, defaultPassword)
+    private void register(String username, String email, String password) {
+        auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -71,7 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
-                            hashMap.put("numOfStickersSent", 0);
+                            hashMap.put("numOfGamesPlayed", 0);
 
                             databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
 

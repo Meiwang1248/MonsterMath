@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    TextInputEditText email;
+    TextInputEditText email, password;
     Button btnLogin;
 
     FirebaseAuth auth;
@@ -29,6 +29,8 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+
         btnLogin = findViewById(R.id.btnLogin);
 
         auth = FirebaseAuth.getInstance();
@@ -37,12 +39,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String txtEmail = email.getText().toString();
-                String defaultPassword = "000000";
+                String txtPassword = password.getText().toString();
 
-                if (TextUtils.isEmpty(txtEmail)) {
+                if (TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)) {
                     Toast.makeText(LoginActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
                 } else {
-                    auth.signInWithEmailAndPassword(txtEmail, defaultPassword)
+                    auth.signInWithEmailAndPassword(txtEmail, txtPassword)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
