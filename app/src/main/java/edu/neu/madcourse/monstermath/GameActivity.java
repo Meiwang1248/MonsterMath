@@ -1,8 +1,11 @@
 package edu.neu.madcourse.monstermath;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -10,45 +13,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.sql.Timestamp;
+import java.util.HashMap;
+
+import edu.neu.madcourse.monstermath.Model.User;
 
 public class GameActivity extends AppCompatActivity {
     // multiple choice buttons
-    private Button option1;
-    private Button option2;
-    private Button option3;
-    private Button option4;
-    private Button option5;
+    private Button option1, option2, option3, option4, option5, homeButton;
 
     // images
-    private ImageView m1;
-    private ImageView m2;
-    private ImageView m3;
-    private ImageView m4;
-    private ImageView m5;
-
-
-    private Button homeButton;
+    private ImageView m1, m2, m3, m4, m5;
 
     // textviews
-    private TextView question;
-    private TextView score;
-    private TextView time;
+    private TextView question, score, time;
 
     // game settings
-    static String GAME_LEVEL;
-    static String GAME_OPERATION;
+    static String GAME_LEVEL, GAME_OPERATION;
     static boolean GAME_MODE;
-
     private Game game;
 
-
-
+    // Firebase settings
+    FirebaseUser currUser;
+    DatabaseReference databaseReference;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.game_layout);
+        setContentView(R.layout.acitivity_game);
 
         // connect multiple choices and monsters to UI
         connectUIComponents();
@@ -62,13 +66,59 @@ public class GameActivity extends AppCompatActivity {
         score = findViewById(R.id.tvScoreCount);
         time = findViewById(R.id.tvTimeCount);
 
+        // initialize game
         initGame();
 
+        // store game scores to Firebase
+        storeGameScore();
     }
 
+    private void storeGameScore() {
+        currUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Users").orderByChild("id")
+                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        user = child.getValue(User.class);
+                        String usernameStr = user.getUsername();
 
+                        // update real-time number of games played
+                        user.numOfGamesPlayed++;
+                        databaseReference.child("Users")
+                                .child(usernameStr)
+                                .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
 
+                        // add this round of score to current user's scores
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("score", score);
+                        databaseReference.child("Users")
+                                .child(usernameStr)
+                                .child("scores")
+                                .push()
+                                .setValue(hashMap);
 
+                        // add this round of score to all scores
+                        hashMap.put("level", GAME_LEVEL);
+                        hashMap.put("score", score);
+                        hashMap.put("username", usernameStr);
+                        databaseReference.child("Scores")
+                                .push()
+                                .setValue(hashMap);
+                    }
+                } catch(Exception e) {
+                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     private void initGame(){
         game = new Game(GAME_OPERATION, GAME_LEVEL,true,1,0);
@@ -180,6 +230,14 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void installListeners() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GameActivity.this, GameSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
