@@ -34,6 +34,13 @@ public class Game {
         this.score = score;
     }
 
+    public Game(String operation, String difficultyLevel, boolean singleMode, int curStage) {
+        this.operation = operation;
+        this.difficultyLevel = difficultyLevel;
+        this.singleMode = singleMode;
+        this.curStage = curStage;
+    }
+
     public String getOperation() {
         return operation;
     }
