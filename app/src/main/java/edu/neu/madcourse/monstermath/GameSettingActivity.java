@@ -29,19 +29,19 @@ public class GameSettingActivity extends AppCompatActivity {
                     switch (checkedId) {
                         case R.id.btnSettingGameAdd:
                             gameOperation = "add";
-                            GameActivity.GAME_OPERATION = "add";
+                            //GameActivity.GAME_OPERATION = "add";
                             break;
                         case R.id.btnSettingGameDivide:
                             gameOperation = "divide";
-                            GameActivity.GAME_OPERATION = "divide";
+                            //GameActivity.GAME_OPERATION = "divide";
                             break;
                         case R.id.btnSettingGameMultiply:
                             gameOperation = "multiply";
-                            GameActivity.GAME_OPERATION = "multiply";
+                            //GameActivity.GAME_OPERATION = "multiply";
                             break;
                         case R.id.btnSettingGameSubtract:
                             gameOperation = "subtract";
-                            GameActivity.GAME_OPERATION = "subtract";
+                            //GameActivity.GAME_OPERATION = "subtract";
                             break;
                     }
                 }
@@ -56,15 +56,15 @@ public class GameSettingActivity extends AppCompatActivity {
                     switch (checkedId) {
                         case R.id.btnSettingLevelEasy:
                             gameLevel = "easy";
-                            GameActivity.GAME_LEVEL = "easy";
+                            //GameActivity.GAME_LEVEL = "easy";
                             break;
                         case R.id.btnSettingLevelMedium:
                             gameLevel = "medium";
-                            GameActivity.GAME_LEVEL = "medium";
+                            //GameActivity.GAME_LEVEL = "medium";
                             break;
                         case R.id.btnSettingLevelHard:
                             gameLevel = "hard";
-                            GameActivity.GAME_LEVEL = "hard";
+                            //GameActivity.GAME_LEVEL = "hard";
                             break;
                     }
                 }
@@ -79,11 +79,11 @@ public class GameSettingActivity extends AppCompatActivity {
                     switch (checkedId) {
                         case R.id.btnSettingModeSolo:
                             gameMode = true;
-                            GameActivity.GAME_MODE = true;
+                            //GameActivity.GAME_MODE = true;
                             break;
                         case R.id.btnSettingModeComp:
                             gameMode = false;
-                            GameActivity.GAME_MODE = false;
+                            //GameActivity.GAME_MODE = false;
                             break;
                     }
                 }
@@ -113,11 +113,17 @@ public class GameSettingActivity extends AppCompatActivity {
 
     private void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("GAME_OPERATION", gameOperation);
+        intent.putExtra("GAME_LEVEL", gameLevel);
+        intent.putExtra("GAME_MODE", gameMode);
         startActivity(intent);
     }
 
     private void openMatchingActivity() {
         Intent intent = new Intent(this, MatchingActivity.class);
+        intent.putExtra("GAME_OPERATION", gameOperation);
+        intent.putExtra("GAME_LEVEL", gameLevel);
+        intent.putExtra("GAME_MODE", gameMode);
         startActivity(intent);
     }
 

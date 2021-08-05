@@ -3,6 +3,7 @@ package edu.neu.madcourse.monstermath;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -28,6 +29,7 @@ import edu.neu.madcourse.monstermath.Model.User;
 
 public class MatchingActivity extends AppCompatActivity {
     static final String TAG = AppCompatActivity.class.getSimpleName();
+    static String GAME_OPERATION, GAME_LEVEL;
     final String NONE = "none";
 
     Button btnShakeToJoin, btnCreateNewGame;
@@ -50,6 +52,7 @@ public class MatchingActivity extends AppCompatActivity {
         btnShakeToJoin = findViewById(R.id.btnShakeToJoin);
 
         getUsername();
+        getGameSettings();
 
         btnCreateNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,7 +77,7 @@ public class MatchingActivity extends AppCompatActivity {
         final DatabaseReference dbReference = mMatchmaker.push();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("player0", new Player(usernameStr, 0));
-        hashMap.put("game", new Game(GameActivity.GAME_OPERATION, GameActivity.GAME_LEVEL, false, 1));
+        hashMap.put("game", new Game(GAME_OPERATION, GAME_LEVEL, false, 1));
         hashMap.put("player1", null);
         dbReference.setValue(hashMap);
 
@@ -105,6 +108,11 @@ public class MatchingActivity extends AppCompatActivity {
         });
     }
 
+    private void getGameSettings() {
+        GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
+        GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
+    }
+
     /**
      * Joins an existing game waiting for others to join.
      */
@@ -123,6 +131,10 @@ public class MatchingActivity extends AppCompatActivity {
 
             }
         });
+
+        // open game activity
+        openGameActivity();
+
     }
 
     private void getUsername() {
@@ -176,7 +188,10 @@ public class MatchingActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-
+    private void openGameActivity() {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 }

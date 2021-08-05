@@ -54,28 +54,34 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_game);
 
+        // get game settings
+        getGameSettings();
         // connect multiple choices and monsters to UI
         connectUIComponents();
-        // Install listeners to all multiple choices
+        // install listeners to all multiple choices
         installListeners();
 
         homeButton = findViewById(R.id.btnCompeteHome);
 
-        //connect TextViews and layout
+        // connect TextViews and layout
         question = findViewById(R.id.tvQuestion);
         score = findViewById(R.id.tvScoreCount);
         time = findViewById(R.id.tvTimeCount);
 
         // if the user chooses solo mode
+        if (GAME_MODE == true) {
+            initGame();
+            storeGameScore();
+            // if the user chooses online mode
+        } else {
 
+        }
+    }
 
-        // if the user chooses online mode
-
-        // initialize game
-        initGame();
-
-        // store game scores to Firebase
-        storeGameScore();
+    private void getGameSettings() {
+        GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
+        GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
+        GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
     }
 
     private void storeGameScore() {
