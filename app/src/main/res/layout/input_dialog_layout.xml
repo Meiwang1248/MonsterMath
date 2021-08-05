@@ -49,53 +49,53 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/toggleBtnGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:singleSelection="true">
+<!--        <com.google.android.material.button.MaterialButtonToggleGroup-->
+<!--            android:id="@+id/toggleBtnGroup"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:singleSelection="true">-->
 
-            <Button
-                android:id="@+id/btnSmile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
-                android:backgroundTint="@color/white"
-                android:text="@string/smile" />
+<!--            <Button-->
+<!--                android:id="@+id/btnSmile"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:text="@string/smile" />-->
 
-            <Button
-                android:id="@+id/btnCry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
-                android:backgroundTint="@color/white"
-                android:text="@string/cry" />
+<!--            <Button-->
+<!--                android:id="@+id/btnCry"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:text="@string/cry" />-->
 
-            <Button
-                android:id="@+id/btnSad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
-                android:backgroundTint="@color/white"
-                android:text="@string/sad" />
+<!--            <Button-->
+<!--                android:id="@+id/btnSad"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:text="@string/sad" />-->
 
-            <Button
-                android:id="@+id/btnLaugh"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:layout_weight="1"
-                style="?attr/materialButtonOutlinedStyle"
-                android:backgroundTint="@color/white"
-                android:text="@string/laugh" />
+<!--            <Button-->
+<!--                android:id="@+id/btnLaugh"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="10dp"-->
+<!--                android:layout_weight="1"-->
+<!--                style="?attr/materialButtonOutlinedStyle"-->
+<!--                android:backgroundTint="@color/white"-->
+<!--                android:text="@string/laugh" />-->
 
-        </com.google.android.material.button.MaterialButtonToggleGroup>
+<!--        </com.google.android.material.button.MaterialButtonToggleGroup>-->
 
 
     <LinearLayout
