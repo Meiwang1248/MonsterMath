@@ -1,30 +1,30 @@
 package edu.neu.madcourse.monstermath;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
-    String operation; // + - * / mix
-    String difficultyLevel; // easy medium hard
-    boolean singleMode; // single player is true, else false
+    // instance variables
+    final String operation; // + - * / mix
+    final String difficultyLevel; // easy medium hard
+    final boolean singleMode; // single player is true, else false
     int curStage; // single problem, like 2+3
     int score; // current score in this round
+    // A hashmap to store all the questions and randomly generated options
+    HashMap<String, HashSet<Integer>> questions;
 
     int curNumber1; // randomly generate the first number
     int curNumber2; // randomly generate the second number
-    String curOperator; // + - * / in this round
     HashSet<Integer> options; // generate multiple choices
-    int bonus;  // 2 seconds will give 5 extra points; 5 seconds will give 2 extra points; over 5s no bonus
     int curAnswer; // right answer for the current question
 
     Random rand = new Random();
     long startTime;
-
-
-    int curPlayerAnswer;
 
     public Game(String operation, String difficultyLevel, boolean singleMode, int curStage, int score) {
         this.operation = operation;
@@ -32,6 +32,7 @@ public class Game {
         this.singleMode = singleMode;
         this.curStage = curStage;
         this.score = score;
+        generateQuestions();
     }
 
     public Game(String operation, String difficultyLevel, boolean singleMode, int curStage) {
@@ -39,6 +40,7 @@ public class Game {
         this.difficultyLevel = difficultyLevel;
         this.singleMode = singleMode;
         this.curStage = curStage;
+        generateQuestions();
     }
 
     public String getOperation() {
@@ -65,8 +67,18 @@ public class Game {
         options.clear();
     }
 
-
-    // Yihui part 4
+    /**
+     * Generates the 10 questions and 5 answer options for each question.
+     */
+    private void generateQuestions() {
+        for (int i = 0; i < 10; i++) {
+            generateNumbers();
+            generateOptions();
+            String question = curNumber1 + " " + operation + " " + curNumber2 + " = ?";
+            questions.put(question, options);
+            options.clear();
+        }
+    }
 
     /**
      * Generates one game stage.
@@ -79,8 +91,6 @@ public class Game {
         startTime = ts.getTime();
 
     }
-
-
 
     /**
      * Generates two numbers for the math operation based on difficulty level.

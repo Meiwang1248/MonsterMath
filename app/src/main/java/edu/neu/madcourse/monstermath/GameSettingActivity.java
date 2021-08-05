@@ -12,6 +12,8 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 public class GameSettingActivity extends AppCompatActivity {
     MaterialButtonToggleGroup tgBtnGrpOperation, tgBtnGrpLevel, tgBtnGrpMode;
     Button btnSettingDone, btnScoreBoard;
+    String gameOperation, gameLevel;
+    boolean gameMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +28,19 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingGameAdd:
+                            gameOperation = "add";
                             GameActivity.GAME_OPERATION = "add";
                             break;
                         case R.id.btnSettingGameDivide:
+                            gameOperation = "divide";
                             GameActivity.GAME_OPERATION = "divide";
                             break;
                         case R.id.btnSettingGameMultiply:
+                            gameOperation = "multiply";
                             GameActivity.GAME_OPERATION = "multiply";
                             break;
                         case R.id.btnSettingGameSubtract:
+                            gameOperation = "subtract";
                             GameActivity.GAME_OPERATION = "subtract";
                             break;
                     }
@@ -49,12 +55,15 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingLevelEasy:
+                            gameLevel = "easy";
                             GameActivity.GAME_LEVEL = "easy";
                             break;
                         case R.id.btnSettingLevelMedium:
+                            gameLevel = "medium";
                             GameActivity.GAME_LEVEL = "medium";
                             break;
                         case R.id.btnSettingLevelHard:
+                            gameLevel = "hard";
                             GameActivity.GAME_LEVEL = "hard";
                             break;
                     }
@@ -69,9 +78,11 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingModeSolo:
+                            gameMode = true;
                             GameActivity.GAME_MODE = true;
                             break;
                         case R.id.btnSettingModeComp:
+                            gameMode = false;
                             GameActivity.GAME_MODE = false;
                             break;
                     }
@@ -83,7 +94,11 @@ public class GameSettingActivity extends AppCompatActivity {
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openMainActivity();
+                if (gameMode = true) {
+                    openGameActivity();
+                } else {
+                    openMatchingActivity();
+                }
             }
         });
 
@@ -96,8 +111,13 @@ public class GameSettingActivity extends AppCompatActivity {
         });
     }
 
-    private void openMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openGameActivity() {
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
+    }
+
+    private void openMatchingActivity() {
+        Intent intent = new Intent(this, MatchingActivity.class);
         startActivity(intent);
     }
 

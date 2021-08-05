@@ -66,6 +66,11 @@ public class GameActivity extends AppCompatActivity {
         score = findViewById(R.id.tvScoreCount);
         time = findViewById(R.id.tvTimeCount);
 
+        // if the user chooses solo mode
+
+
+        // if the user chooses online mode
+
         // initialize game
         initGame();
 
