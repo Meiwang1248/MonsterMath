@@ -1,49 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".StartActivity">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Monster Math"
-        android:fontFamily="casual"
-        android:textSize="50sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/login"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
-        android:fontFamily="casual"
-        android:text="log in"
-        android:textSize="18sp"
-        app:backgroundTint="@null" />
-
-    <Button
-        android:id="@+id/register"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:background="@color/colorPrimary"
-        android:fontFamily="casual"
-        android:text="register"
-        android:textSize="18sp"
-        app:backgroundTint="@null" />
+    tools:context=".RegisterActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
         android:contentDescription="background_image"
-        android:scaleType="centerInside"
-        android:src="@drawable/background" />
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_start" />
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="56dp">
+
+        <Button
+            android:id="@+id/login"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="140dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="casual"
+            android:text="log in"
+            android:textSize="18sp"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/register"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:fontFamily="casual"
+            android:text="register"
+            android:textSize="18sp"
+            app:backgroundTint="@null" />
+
+    </LinearLayout>
+
+</RelativeLayout>
