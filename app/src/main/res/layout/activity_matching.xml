@@ -13,29 +13,22 @@
         android:orientation="vertical"
         android:padding="46dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Shake your phone to match an opponent!"
-            android:textSize="28sp"
-            android:fontFamily="casual"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvMatchStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Waiting for a match..."
-            android:textSize="18sp"
-            android:fontFamily="casual"
-            android:textStyle="bold" />
-
         <Button
-            android:id="@+id/btnCancelMatch"
+            android:id="@+id/btnShakeToJoin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Shake your phone to join an existing game"
+            android:fontFamily="casual"
             android:textStyle="bold"
-            android:text="Cancel match"
+            android:background="@color/colorPrimary"/>
+
+        <Button
+            android:id="@+id/btnCreateNewGame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:text="Create a new online game and wait for others to join"
             android:background="@color/colorPrimary"
             android:fontFamily="casual"
             android:textColor="@color/white"
