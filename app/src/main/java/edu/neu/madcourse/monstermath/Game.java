@@ -1,12 +1,9 @@
 package edu.neu.madcourse.monstermath;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Queue;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Game {
     // instance variables
@@ -15,12 +12,14 @@ public class Game {
     final boolean singleMode; // single player is true, else false
     int curStage; // single problem, like 2+3
     int score; // current score in this round
-    // A hashmap to store all the questions and randomly generated options
-    HashMap<String, HashSet<Integer>> questions;
+    Queue<String> questionQueue;
+    Queue<HashSet<Integer>> answerQueue;
 
     int curNumber1; // randomly generate the first number
     int curNumber2; // randomly generate the second number
-    HashSet<Integer> options; // generate multiple choices
+
+    HashSet<Integer> curOptions; // generate multiple choices
+    String curQuestion;
     int curAnswer; // right answer for the current question
 
     Random rand = new Random();
@@ -40,6 +39,7 @@ public class Game {
         this.difficultyLevel = difficultyLevel;
         this.singleMode = singleMode;
         this.curStage = curStage;
+        this.score = 0;
         generateQuestions();
     }
 
@@ -64,7 +64,7 @@ public class Game {
     }
 
     public void clearStage(){
-        options.clear();
+        curOptions.clear();
     }
 
     /**
@@ -75,9 +75,18 @@ public class Game {
             generateNumbers();
             generateOptions();
             String question = curNumber1 + " " + operation + " " + curNumber2 + " = ?";
-            questions.put(question, options);
-            options.clear();
+            questionQueue.offer(question);
+            answerQueue.offer(curOptions);
+            curOptions.clear();
         }
+    }
+
+    private void getCurrentQuestion() {
+        curQuestion = questionQueue.poll();
+    }
+
+    private void getCurrentOptions() {
+        curOptions = answerQueue.poll();
     }
 
     /**
@@ -85,11 +94,12 @@ public class Game {
      */
     public void generateOneStage(){
         // @https://blog.csdn.net/lintianlin/article/details/40540831
-        generateNumbers();
-        generateOptions();
+//        generateNumbers();
+//        generateOptions();
+        getCurrentQuestion();
+        getCurrentOptions();
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         startTime = ts.getTime();
-
     }
 
     /**
@@ -141,7 +151,7 @@ public class Game {
      */
     public void generateOptions(){
         generateNumbers();
-        options = new HashSet();
+        curOptions = new HashSet();
         if (operation.equals("add")) {
             curAnswer = curNumber1 + curNumber2;
         } else if (operation.equals("subtract")) {
@@ -153,12 +163,12 @@ public class Game {
         }
 
         // add the correct answer to options
-        options.add(curAnswer);
+        curOptions.add(curAnswer);
 
         // ensure there are 5 options
-        while (options.size() < 5) {
+        while (curOptions.size() < 5) {
             int option = curAnswer + (rand.nextInt(11) - 5) ;
-            options.add(option);
+            curOptions.add(option);
         }
     }
 }

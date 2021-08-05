@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,11 +19,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import edu.neu.madcourse.monstermath.Model.Player;
 import edu.neu.madcourse.monstermath.Model.User;
 
 public class GameActivity extends AppCompatActivity {
@@ -48,12 +46,21 @@ public class GameActivity extends AppCompatActivity {
     FirebaseUser currUser;
     DatabaseReference databaseReference;
     User user;
+    String usernameStr;
+
+    // Match settings
+    String matchId;
+    int playerNumber;
+    Player curPlayer;
+    Player opponentPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_game);
 
+        // get user name
+        getUsername();
         // get game settings
         getGameSettings();
         // connect multiple choices and monsters to UI
@@ -68,13 +75,10 @@ public class GameActivity extends AppCompatActivity {
         score = findViewById(R.id.tvScoreCount);
         time = findViewById(R.id.tvTimeCount);
 
-        // if the user chooses solo mode
         if (GAME_MODE == true) {
             initGame();
-            storeGameScore();
-            // if the user chooses online mode
         } else {
-
+            onlineGame();
         }
     }
 
@@ -84,7 +88,7 @@ public class GameActivity extends AppCompatActivity {
         GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
     }
 
-    private void storeGameScore() {
+    private void getUsername() {
         currUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         databaseReference.child("Users").orderByChild("id")
@@ -94,7 +98,29 @@ public class GameActivity extends AppCompatActivity {
                 try {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         user = child.getValue(User.class);
-                        String usernameStr = user.getUsername();
+                        usernameStr = user.getUsername();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void storeGameScore() {
+        currUser = FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        user = child.getValue(User.class);
 
                         // update real-time number of games played
                         user.numOfGamesPlayed++;
@@ -131,13 +157,71 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private void onlineGame() {
+        // find the match
+        databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    Player player0 = childSnapshot.child("player0").getValue(Player.class);
+                    String player0Name = player0.getUsername();
+                    Player player1 = childSnapshot.child("player1").getValue(Player.class);
+                    String player1Name = player1.getUsername();
+
+                    // check if the current user exists in the game
+                    if (usernameStr.equals(player0Name)) {
+                        matchId = childSnapshot.getKey();
+                        playerNumber = 0;
+                        game = childSnapshot.child("game").getValue(Game.class);
+                        curPlayer = player0;
+                    } else if (usernameStr.equals(player1Name)) {
+                        matchId = childSnapshot.getKey();
+                        game = childSnapshot.child("game").getValue(Game.class);
+                        playerNumber = 1;
+                        curPlayer = player1;
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        nextStage();
+        // show current question
+        showCurrentQuestion();
+        // show current options
+        showCurrentOptions();
+    }
+
     private void initGame(){
-        game = new Game(GAME_OPERATION, GAME_LEVEL,true,1,0);
+        game = new Game(GAME_OPERATION, GAME_LEVEL,GAME_MODE,1,0);
 
-        game.generateOneStage();
-        score.setText(game.score);
-        question.setText(game.curNumber1+" "+game.operation+" "+game.curNumber2+" = ?");
+        nextStage();
+        // show current question
+        showCurrentQuestion();
+        // show current options
+        showCurrentOptions();
+    }
 
+    private int getBonus() {
+        // add bonus based on time
+        int bonus;
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        long endTime = ts.getTime();
+        long duration = (endTime - game.startTime) / 1000;
+        if (duration <= 2) {
+            bonus = 5;
+        } else if (duration <= 5) {
+            bonus = 2;
+        } else {
+            bonus = 0;
+        }
+        return bonus;
     }
 
     /*
@@ -148,24 +232,20 @@ public class GameActivity extends AppCompatActivity {
             // To do: 加声效 加背景音乐
 
             game.score += 10;
-            // add bonus based on time
-            int bonus;
-            Timestamp ts = new Timestamp(System.currentTimeMillis());
-            long endTime = ts.getTime();
-            long duration = (endTime - game.startTime) / 1000;
-            if (duration <= 2) {
-                bonus = 5;
-            } else if (duration <= 5) {
-                bonus = 2;
-            } else {
-                bonus = 0;
-            }
-            game.score += bonus;
+            game.score += getBonus();
 
             score.setText(game.score);
-            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + bonus + " points of bonus!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
+
+            // add current score to online game database
+            if (GAME_MODE == false) {
+                curPlayer.setScore(game.score);
+                databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
+                databaseReference.child(matchId).child("player"+playerNumber).setValue(curPlayer);
+            }
+
             if (game.curStage < 10) {
                 nextStage();
             } else {
@@ -174,7 +254,7 @@ public class GameActivity extends AppCompatActivity {
             }
 
         } else {
-            game.options.remove(answer);
+            game.curOptions.remove(answer);
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
             Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);
@@ -183,11 +263,27 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private void showCurrentQuestion() {
+        question.setText(game.curQuestion);
+    }
+
+    private void showCurrentOptions() {
+        Iterator iterator = game.curOptions.iterator();
+        option1.setText(iterator.next().toString());
+        option2.setText(iterator.next().toString());
+        option3.setText(iterator.next().toString());
+        option4.setText(iterator.next().toString());
+        option5.setText(iterator.next().toString());
+    }
+
     private void nextStage() {
         // Start the timer here
         game.generateOneStage();
         score.setText(game.score);
-        question.setText(game.curNumber1 +game.operation + game.curNumber2 +" = ?");
+        // show current question
+        showCurrentQuestion();
+        // show current options
+        showCurrentOptions();
     }
 
     private void endGame() {
@@ -208,12 +304,11 @@ public class GameActivity extends AppCompatActivity {
         time.setVisibility(View.INVISIBLE);
         question.setVisibility(View.INVISIBLE);
 
-        if (game.getCurScore() >= 100) {
-            Toast.makeText(GameActivity.this, "Bravo! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
-        } else if (game.getCurScore() >= 90) {
-            Toast.makeText(GameActivity.this, "Good job! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        if (GAME_MODE) {
+            // TODO: change to sticker with a back button linked to GameSettingActivity
+            showSoloGameResult();
         } else {
-            Toast.makeText(GameActivity.this, "Nice! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+            showOnlineGameResult();
         }
 
         m1.setVisibility(View.VISIBLE);
@@ -221,8 +316,46 @@ public class GameActivity extends AppCompatActivity {
         m3.setVisibility(View.VISIBLE);
         m4.setVisibility(View.VISIBLE);
         m5.setVisibility(View.VISIBLE);
+        storeGameScore();
     }
 
+    private void showSoloGameResult() {
+        if (game.getCurScore() >= 100) {
+            Toast.makeText(GameActivity.this, "Bravo! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        } else if (game.getCurScore() >= 90) {
+            Toast.makeText(GameActivity.this, "Good job! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(GameActivity.this, "Nice! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void showOnlineGameResult() {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
+        databaseReference.child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
+
+                    // check if the current player has higher score
+                    if (game.score > opponentPlayer.getScore()) {
+                        Toast.makeText(GameActivity.this, "Your win!", Toast.LENGTH_LONG).show();
+                    } else if (game.score == opponentPlayer.getScore()) {
+                        Toast.makeText(GameActivity.this, "Tie!", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(GameActivity.this, "You lose!", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
     private void connectUIComponents() {
         option1 = findViewById(R.id.btnAnswer1);
         m1 = findViewById(R.id.ivMonster1);
