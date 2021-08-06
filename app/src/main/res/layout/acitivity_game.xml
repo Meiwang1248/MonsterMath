@@ -63,14 +63,14 @@
                 android:id="@+id/ivMonster1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 app:srcCompat="@drawable/monster1"/>
 
             <Button
                 android:id="@+id/btnAnswer1"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
@@ -95,14 +95,14 @@
                 android:id="@+id/ivMonster2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 app:srcCompat="@drawable/monster2"/>
 
             <Button
                 android:id="@+id/btnAnswer2"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
@@ -127,14 +127,14 @@
                 android:id="@+id/ivMonster3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 app:srcCompat="@drawable/monster3" />
 
             <Button
                 android:id="@+id/btnAnswer3"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
@@ -159,14 +159,14 @@
                 android:id="@+id/ivMonster4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 app:srcCompat="@drawable/monster4" />
 
             <Button
                 android:id="@+id/btnAnswer4"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
@@ -191,14 +191,14 @@
                 android:id="@+id/ivMonster5"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
+                android:layout_weight="0.6"
                 app:srcCompat="@drawable/monster5" />
 
             <Button
                 android:id="@+id/btnAnswer5"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_weight="0.3"
+                android:layout_weight="0.4"
                 android:layout_gravity="center"
                 android:text="Button"
                 android:fontFamily="casual"
@@ -221,8 +221,8 @@
         app:layout_constraintStart_toStartOf="@id/glVertical2"
         app:layout_constraintEnd_toEndOf="parent"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="16sp"
-        android:autoSizeMaxTextSize="80sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
 
@@ -237,8 +237,8 @@
         app:layout_constraintStart_toStartOf="@id/glVertical2"
         app:layout_constraintEnd_toEndOf="parent"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="16sp"
-        android:autoSizeMaxTextSize="80sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
 
@@ -255,8 +255,8 @@
         app:layout_constraintEnd_toStartOf="@id/tvCompetitorName"
         android:gravity="center"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="16sp"
-        android:autoSizeMaxTextSize="50sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="2sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"/>
@@ -266,7 +266,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="casual"
-        android:layout_margin="10dp"
         android:text="Name"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
@@ -274,8 +273,8 @@
         app:layout_constraintEnd_toStartOf="@id/glVertical2"
         android:gravity="center"
         android:autoSizeTextType="uniform"
-        android:autoSizeMinTextSize="16sp"
-        android:autoSizeMaxTextSize="50sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="24sp"
         android:autoSizeStepGranularity="2sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
@@ -293,7 +292,7 @@
         android:text="HOME"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="10sp"
-        android:autoSizeMaxTextSize="80sp"
+        android:autoSizeMaxTextSize="20sp"
         android:autoSizeStepGranularity="2sp"
         android:textStyle="bold"/>
 
@@ -310,7 +309,7 @@
         android:fontFamily="casual"
         android:autoSizeTextType="uniform"
         android:autoSizeMinTextSize="24sp"
-        android:autoSizeMaxTextSize="80sp"
+        android:autoSizeMaxTextSize="48sp"
         android:autoSizeStepGranularity="2sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold" />
