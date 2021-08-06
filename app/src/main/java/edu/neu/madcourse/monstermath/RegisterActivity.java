@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,15 +17,20 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextInputEditText TextInputUsername, textInputEmail, textInputPassword;
+    TextInputEditText textInputUsername, textInputEmail, textInputPassword;
     Button btnRegister;
+
+    ProgressBar progressBar;
 
     FirebaseAuth auth;
     DatabaseReference databaseReference;
@@ -38,7 +44,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        TextInputUsername = findViewById(R.id.username);
+        progressBar = findViewById(R.id.progressBar);
+
+        textInputUsername = findViewById(R.id.username);
         textInputEmail = findViewById(R.id.email);
         textInputPassword = findViewById(R.id.password);
 
@@ -49,13 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtUsername = TextInputUsername.getText().toString().trim();
+                String txtUsername = textInputUsername.getText().toString().trim();
                 String txtEmail = textInputEmail.getText().toString().trim();
                 String txtPassword = textInputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(txtUsername) || TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)) {
                     Toast.makeText(RegisterActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
-                } else if (!validateEmailAddress(txtEmail) || !validatePassword(txtPassword)) {
+                } else if (!validateUsername(txtUsername) || !validateEmailAddress(txtEmail) || !validatePassword(txtPassword)) {
                     Toast.makeText(RegisterActivity.this, "Invalid fields.", Toast.LENGTH_SHORT).show();
                 } else {
                     register(txtUsername, txtEmail, txtPassword);
@@ -65,6 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register(String username, String email, String password) {
+        progressBar.setVisibility(View.VISIBLE);
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -97,6 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 }
                             });
                         }
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
@@ -118,5 +128,31 @@ public class RegisterActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean validateUsername(String username) {
+        final boolean[] result = {true};
+        FirebaseDatabase
+                .getInstance()
+                .getReference("Users")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot childData: snapshot.getChildren()) {
+                            String thisUsername = childData.getKey();
+                            if (thisUsername.equals(username)) {
+                                result[0] = false;
+                                return;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+        textInputUsername.setError("Username exists.");
+        return result[0];
     }
 }
