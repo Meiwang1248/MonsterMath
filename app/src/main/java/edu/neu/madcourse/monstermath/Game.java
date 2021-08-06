@@ -95,6 +95,10 @@ public class Game {
         curOptions = optionsQueue.remove();
     }
 
+    private void getCurrentAnswer() {
+        curAnswer = correctOptionQueue.remove();
+    }
+
     /**
      * Generates one game stage.
      */
@@ -104,6 +108,7 @@ public class Game {
 //        generateOptions();
         getCurrentQuestion();
         getCurrentOptions();
+        getCurrentAnswer();
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         startTime = ts.getTime();
     }
