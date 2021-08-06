@@ -142,6 +142,7 @@ public class RegisterActivity extends AppCompatActivity {
                             String thisUsername = childData.getKey();
                             if (thisUsername.equals(username)) {
                                 result[0] = false;
+                                textInputUsername.setError("Username exists.");
                                 return;
                             }
                         }
@@ -152,7 +153,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                     }
                 });
-        textInputUsername.setError("Username exists.");
         return result[0];
     }
 }
