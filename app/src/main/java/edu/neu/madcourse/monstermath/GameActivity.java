@@ -269,17 +269,17 @@ public class GameActivity extends AppCompatActivity {
 
     private void showCurrentOptions() {
         Iterator iterator = game.curOptions.iterator();
-        option1.setText(iterator.next().toString());
-        option2.setText(iterator.next().toString());
-        option3.setText(iterator.next().toString());
-        option4.setText(iterator.next().toString());
-        option5.setText(iterator.next().toString());
+        option1.setText(String.valueOf(iterator.next()));
+        option2.setText(String.valueOf(iterator.next()));
+        option3.setText(String.valueOf(iterator.next()));
+        option4.setText(String.valueOf(iterator.next()));
+        option5.setText(String.valueOf(iterator.next()));
     }
 
     private void nextStage() {
         // Start the timer here
         game.generateOneStage();
-        score.setText(game.score);
+        score.setText("Score: " + game.score);
         // show current question
         showCurrentQuestion();
         // show current options
@@ -374,13 +374,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void installListeners() {
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GameActivity.this, GameSettingActivity.class);
-                startActivity(intent);
-            }
-        });
 
         option1.setOnClickListener(new View.OnClickListener() {
             @Override
