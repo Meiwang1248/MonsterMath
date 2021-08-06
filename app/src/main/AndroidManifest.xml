@@ -10,16 +10,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MonsterMath"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MatchingActivity"></activity>
-        <activity android:name=".GameActivity" />
-        <activity android:name=".GameSettingActivity" />
-        <activity android:name=".ScoreBoardActivity" />
+        <activity android:name=".MatchingActivity"
+            android:configChanges="orientation|screenSize"></activity>
+        <activity android:name=".GameActivity"
+            android:label="Monster Math"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".GameSettingActivity"
+            android:label="Settings"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".ScoreBoardActivity"
+            android:label="Score Board"
+            android:configChanges="orientation|screenSize"/>
         <activity
             android:name=".StartActivity"
+            android:label="Monster Math"
             android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

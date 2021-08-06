@@ -2,7 +2,6 @@ package edu.neu.madcourse.monstermath;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,22 +20,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
-    TextInputEditText username, email, password;
+    TextInputEditText TextInputUsername, textInputEmail, textInputPassword;
     Button btnRegister;
 
     FirebaseAuth auth;
     DatabaseReference databaseReference;
+
+    public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
+            Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        username = findViewById(R.id.username);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
+        TextInputUsername = findViewById(R.id.username);
+        textInputEmail = findViewById(R.id.email);
+        textInputPassword = findViewById(R.id.password);
 
         btnRegister = findViewById(R.id.btnRegister);
 
@@ -45,12 +49,14 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtUsername = username.getText().toString();
-                String txtEmail = email.getText().toString();
-                String txtPassword = password.getText().toString();
+                String txtUsername = TextInputUsername.getText().toString().trim();
+                String txtEmail = textInputEmail.getText().toString().trim();
+                String txtPassword = textInputPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(txtUsername) || TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)) {
                     Toast.makeText(RegisterActivity.this, "All fields are required.", Toast.LENGTH_SHORT).show();
+                } else if (!validateEmailAddress(txtEmail) || !validatePassword(txtPassword)) {
+                    Toast.makeText(RegisterActivity.this, "Invalid fields.", Toast.LENGTH_SHORT).show();
                 } else {
                     register(txtUsername, txtEmail, txtPassword);
                 }
@@ -90,5 +96,24 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean validateEmailAddress(String emailAddress) {
+        if (!VALID_EMAIL_ADDRESS_REGEX.matcher(emailAddress).find()){
+            textInputEmail.setError("Please enter a valid email");
+        } else {
+            textInputEmail.setError(null);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.length() < 8){
+            textInputPassword.setError("Password must have at least 8 characters");
+        } else {
+            return true;
+        }
+        return false;
     }
 }
