@@ -135,11 +135,11 @@ public class GameActivity extends AppCompatActivity {
                                 .child(usernameStr)
                                 .child("scores")
                                 .push()
-                                .setValue(hashMap);
+                                .setValue(game.score);
 
                         // add this round of score to all scores
                         hashMap.put("level", GAME_LEVEL);
-                        hashMap.put("score", score);
+                        hashMap.put("score", game.score);
                         hashMap.put("username", usernameStr);
                         databaseReference.child("Scores")
                                 .push()
@@ -234,10 +234,10 @@ public class GameActivity extends AppCompatActivity {
             game.score += 10;
             game.score += getBonus();
 
-            score.setText(game.score);
-            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+            score.setText("Score: " + game.score);
+//            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
 
             // add current score to online game database
             if (GAME_MODE == false) {
@@ -257,9 +257,9 @@ public class GameActivity extends AppCompatActivity {
             game.curOptions.remove(answer);
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
-            Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER, 0, 0);
-            toast.show();
+//            Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.CENTER, 0, 0);
+//            toast.show();
         }
     }
 

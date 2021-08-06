@@ -55,6 +55,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
         // default level is easy
         level = "easy";
 
+        // connect UI components
+        tvNumOfGamesPlayed = findViewById(R.id.tvNumOfGamesPlayed);
+        tvPersonalBestScore = findViewById(R.id.tvPersonalBestScore);
+
         // set up for RecyclerView
         rvScores = (RecyclerView) findViewById(R.id.rvScores);
         adapter = new ScoreAdapter(scoreList);
@@ -102,7 +106,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 numOfGamesPlayed = snapshot.getValue(Integer.class);
-                                tvNumOfGamesPlayed.setText(usernameStr + ", you have played" + numOfGamesPlayed + " rounds");
+                                tvNumOfGamesPlayed.setText(usernameStr + ", you have played " + numOfGamesPlayed + " rounds");
                             }
 
                             @Override
