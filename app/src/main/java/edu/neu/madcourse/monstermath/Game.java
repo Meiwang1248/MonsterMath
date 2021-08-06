@@ -1,12 +1,7 @@
 package edu.neu.madcourse.monstermath;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -19,7 +14,8 @@ public class Game {
     int curStage; // single problem, like 2+3
     int score; // current score in this round
     Queue<String> questionQueue;
-    Queue<HashSet<Integer>> answerQueue;
+    Queue<HashSet<Integer>> optionsQueue;
+    Queue<Integer> correctOptionQueue;
 
     int curNumber1; // randomly generate the first number
     int curNumber2; // randomly generate the second number
@@ -77,15 +73,17 @@ public class Game {
      * Generates the 10 questions and 5 answer options for each question.
      */
     private void generateQuestions() {
-        questionQueue = new LinkedList<String>();
-        answerQueue = new LinkedList<HashSet<Integer>>();
+        questionQueue = new LinkedList<>();
+        optionsQueue = new LinkedList<>();
+        correctOptionQueue = new LinkedList<>();
 
         for (int i = 0; i < 10; i++) {
             generateNumbers();
             generateOptions();
             String question = curNumber1 + " " + operation + " " + curNumber2 + " = ?";
             questionQueue.add(question);
-            answerQueue.add(curOptions);
+            optionsQueue.add(curOptions);
+            correctOptionQueue.add(curAnswer);
         }
     }
 
@@ -94,7 +92,7 @@ public class Game {
     }
 
     private void getCurrentOptions() {
-        curOptions = answerQueue.remove();
+        curOptions = optionsQueue.remove();
     }
 
     /**
