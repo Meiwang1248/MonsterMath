@@ -83,14 +83,16 @@ public class RegisterActivity extends AppCompatActivity {
                             assert firebaseUser != null;
                             String userid = firebaseUser.getUid();
 
-                            databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(username);
+                            databaseReference = FirebaseDatabase.getInstance().getReference();
 
                             HashMap<String, Object> hashMap = new HashMap<>();
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("numOfGamesPlayed", 0);
 
-                            databaseReference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            databaseReference.child("Users")
+                                    .child(username)
+                                    .setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
 
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
