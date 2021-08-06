@@ -1,7 +1,13 @@
 package edu.neu.madcourse.monstermath;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
@@ -71,22 +77,24 @@ public class Game {
      * Generates the 10 questions and 5 answer options for each question.
      */
     private void generateQuestions() {
+        questionQueue = new LinkedList<String>();
+        answerQueue = new LinkedList<HashSet<Integer>>();
+
         for (int i = 0; i < 10; i++) {
             generateNumbers();
             generateOptions();
             String question = curNumber1 + " " + operation + " " + curNumber2 + " = ?";
-            questionQueue.offer(question);
-            answerQueue.offer(curOptions);
-            curOptions.clear();
+            questionQueue.add(question);
+            answerQueue.add(curOptions);
         }
     }
 
     private void getCurrentQuestion() {
-        curQuestion = questionQueue.poll();
+        curQuestion = questionQueue.remove();
     }
 
     private void getCurrentOptions() {
-        curOptions = answerQueue.poll();
+        curOptions = answerQueue.remove();
     }
 
     /**
@@ -107,7 +115,7 @@ public class Game {
      */
     public void generateNumbers() {
         int upperBound = 0;
-        if (operation.equals("add") || operation.equals("subtract")) {
+        if (operation.equals("+") || operation.equals("-")) {
             if (difficultyLevel.equals("easy")) {
                 upperBound = 10;
             } else if (difficultyLevel.equals("medium")) {
@@ -115,7 +123,7 @@ public class Game {
             } else if (difficultyLevel.equals("hard")) {
                 upperBound = 100;
             }
-        } else if (operation.equals("multiply") || operation.equals("divide")) {
+        } else if (operation.equals("×") || operation.equals("÷")) {
             if (difficultyLevel.equals("easy")) {
                 upperBound = 5;
             } else if (difficultyLevel.equals("medium")) {
@@ -126,7 +134,7 @@ public class Game {
         }
 
         // 区别对待divide，因为可能出现随机数无法整除的现象，必须保证两个数能够整除
-        if (operation.equals("divide")) {
+        if (operation.equals("÷")) {
             // plus 1 to ensure 0 not included
             curNumber2 = rand.nextInt(upperBound) + 1;
             // find the quotient
@@ -150,15 +158,14 @@ public class Game {
      * Generates five options for each question.
      */
     public void generateOptions(){
-        generateNumbers();
         curOptions = new HashSet();
-        if (operation.equals("add")) {
+        if (operation.equals("+")) {
             curAnswer = curNumber1 + curNumber2;
-        } else if (operation.equals("subtract")) {
+        } else if (operation.equals("-")) {
             curAnswer = curNumber1 - curNumber2;
-        } else if (operation.equals("multiply")) {
+        } else if (operation.equals("×")) {
             curAnswer = curNumber1 * curNumber2;
-        } else if (operation.equals("divide")) {
+        } else if (operation.equals("÷")) {
             curAnswer = curNumber1 / curNumber2;
         }
 

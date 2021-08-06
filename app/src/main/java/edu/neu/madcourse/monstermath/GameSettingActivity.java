@@ -28,19 +28,19 @@ public class GameSettingActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnSettingGameAdd:
-                            gameOperation = "add";
-                            //GameActivity.GAME_OPERATION = "add";
+                            gameOperation = "+";
+                            //GameActivity.GAME_OPERATION = "+";
                             break;
                         case R.id.btnSettingGameDivide:
-                            gameOperation = "divide";
-                            //GameActivity.GAME_OPERATION = "divide";
+                            gameOperation = "÷";
+                            //GameActivity.GAME_OPERATION = "/";
                             break;
                         case R.id.btnSettingGameMultiply:
-                            gameOperation = "multiply";
+                            gameOperation = "×";
                             //GameActivity.GAME_OPERATION = "multiply";
                             break;
                         case R.id.btnSettingGameSubtract:
-                            gameOperation = "subtract";
+                            gameOperation = "-";
                             //GameActivity.GAME_OPERATION = "subtract";
                             break;
                     }
