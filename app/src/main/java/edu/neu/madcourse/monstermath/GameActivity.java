@@ -230,7 +230,7 @@ public class GameActivity extends AppCompatActivity {
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             // To do: 加声效 加背景音乐
-            if (game.optionsQueue.size() >= 1) {
+            if (game.optionsQueue.size() > 1) {
                 game.score += 10;
                 game.score += getBonus();
             }
