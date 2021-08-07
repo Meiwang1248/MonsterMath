@@ -249,6 +249,7 @@ public class GameActivity extends AppCompatActivity {
             if (game.curStage < 10) {
                 nextStage();
             } else {
+                storeGameScore();
                 // End Game
                 endGame();
             }
