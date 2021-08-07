@@ -230,9 +230,10 @@ public class GameActivity extends AppCompatActivity {
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             // To do: 加声效 加背景音乐
-
-            game.score += 10;
-            game.score += getBonus();
+            if (game.optionsQueue.size() >= 1) {
+                game.score += 10;
+                game.score += getBonus();
+            }
 
             score.setText("Score: " + game.score);
 //            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
@@ -249,7 +250,6 @@ public class GameActivity extends AppCompatActivity {
             if (game.curStage < 10) {
                 nextStage();
             } else {
-                storeGameScore();
                 // End Game
                 endGame();
             }
@@ -286,6 +286,7 @@ public class GameActivity extends AppCompatActivity {
         showCurrentQuestion();
         // show current options
         showCurrentOptions();
+        game.curStage++;
     }
 
     private void hideAllMonsters() {
