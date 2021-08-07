@@ -8,13 +8,13 @@
     tools:context=".GameSettingActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:adjustViewBounds="true"
         android:contentDescription="background_image"
         android:scaleType="fitXY"
-        android:src="@drawable/background" />
+        android:src="@drawable/bg_setting_1600x900" />
 
     <LinearLayout
         android:layout_width="match_parent"
