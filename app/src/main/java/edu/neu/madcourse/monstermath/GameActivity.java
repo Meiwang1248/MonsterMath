@@ -357,6 +357,9 @@ public class GameActivity extends AppCompatActivity {
                     opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
 
                     // check if the current player has higher score
+                    if (!opponentPlayer.isGameOver()) {
+                        Toast.makeText(GameActivity.this, "Waiting for your opponent to finish game!", Toast.LENGTH_LONG).show();
+                    }
                     if (game.score > opponentPlayer.getScore()) {
                         Toast.makeText(GameActivity.this, "Your win!", Toast.LENGTH_LONG).show();
                     } else if (game.score == opponentPlayer.getScore()) {
