@@ -277,7 +277,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextStage() {
-        // Start the timer here
+        // get all monsters back
+        showAllMonsters();
         game.generateOneStage();
         score.setText("Score: " + game.score);
         // show current question
@@ -286,8 +287,7 @@ public class GameActivity extends AppCompatActivity {
         showCurrentOptions();
     }
 
-    private void endGame() {
-        // Set most UI components invisible
+    private void hideAllMonsters() {
         option1.setVisibility(View.INVISIBLE);
         option2.setVisibility(View.INVISIBLE);
         option3.setVisibility(View.INVISIBLE);
@@ -299,6 +299,25 @@ public class GameActivity extends AppCompatActivity {
         m3.setVisibility(View.INVISIBLE);
         m4.setVisibility(View.INVISIBLE);
         m5.setVisibility(View.INVISIBLE);
+    }
+
+    private void showAllMonsters() {
+        option1.setVisibility(View.VISIBLE);
+        option2.setVisibility(View.VISIBLE);
+        option3.setVisibility(View.VISIBLE);
+        option4.setVisibility(View.VISIBLE);
+        option5.setVisibility(View.VISIBLE);
+
+        m1.setVisibility(View.VISIBLE);
+        m2.setVisibility(View.VISIBLE);
+        m3.setVisibility(View.VISIBLE);
+        m4.setVisibility(View.VISIBLE);
+        m5.setVisibility(View.VISIBLE);
+    }
+
+    private void endGame() {
+        // Set most UI components invisible
+        hideAllMonsters();
 
         score.setVisibility(View.INVISIBLE);
         time.setVisibility(View.INVISIBLE);
