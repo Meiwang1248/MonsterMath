@@ -113,40 +113,41 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void storeGameScore() {
-        currUser = FirebaseAuth.getInstance().getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child("Users").child(usernameStr).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        user = child.getValue(User.class);
+                if (snapshot.exists()) {
+                    user = snapshot.getValue(User.class);
 
-                        // update real-time number of games played
-                        user.numOfGamesPlayed++;
-                        databaseReference.child("Users")
-                                .child(usernameStr)
-                                .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
+                    // update real-time number of games played
+                    user.numOfGamesPlayed++;
+                    databaseReference.child("Users")
+                            .child(usernameStr)
+                            .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
 
-                        // add this round of score to current user's scores
-                        HashMap<String, Object> hashMap = new HashMap<>();
-                        hashMap.put("score", score);
-                        databaseReference.child("Users")
-                                .child(usernameStr)
-                                .child("scores")
-                                .push()
-                                .setValue(game.score);
+                    // add this round of score to current user's scores
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("score", score);
+                    databaseReference.child("Users")
+                            .child(usernameStr)
+                            .child("scores")
+                            .push()
+                            .setValue(game.score);
 
-                        // add this round of score to all scores
-                        hashMap.put("level", GAME_LEVEL);
-                        hashMap.put("score", game.score);
-                        hashMap.put("username", usernameStr);
-                        databaseReference.child("Scores")
-                                .push()
-                                .setValue(hashMap);
-                    }
-                } catch(Exception e) {
-                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                    // add this round of score to all scores
+                    hashMap = new HashMap<>();
+                    hashMap.put("level", GAME_LEVEL);
+                    hashMap.put("score", game.score);
+                    hashMap.put("username", usernameStr);
+                    databaseReference.child("Scores")
+                            .push()
+                            .setValue(hashMap);
+
+                    Toast.makeText(GameActivity.this, "Score stored successfully.", Toast.LENGTH_LONG).show();
+                } else {
+                    // pop message showing receiver does not exist
+                    Toast.makeText(GameActivity.this, "Username does not exist.", Toast.LENGTH_LONG).show();
                 }
             }
 
