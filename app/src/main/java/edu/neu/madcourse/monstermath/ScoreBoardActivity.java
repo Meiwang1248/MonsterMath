@@ -121,7 +121,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
                         // get personal best score and number of games played
                         databaseReference.child(usernameStr)
                                 .child("scores")
-                                .orderByChild("score")
+                                .orderByValue()
                                 .limitToLast(1)
                                 .addValueEventListener(new ValueEventListener() {
                             @Override
@@ -129,8 +129,10 @@ public class ScoreBoardActivity extends AppCompatActivity {
                                 if (!snapshot.exists()) {
                                     Toast.makeText(ScoreBoardActivity.this, "You have not played a game yet.", Toast.LENGTH_LONG).show();
                                 } else {
-                                    Integer personalBest = snapshot.getValue(Integer.class);
-                                    tvPersonalBestScore.setText("your personal best score: " + personalBest);
+                                    for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                                        Integer personalBest = childSnapshot.getValue(Integer.class);
+                                        tvPersonalBestScore.setText("your personal best score: " + personalBest);
+                                    }
                                 }
                             }
 

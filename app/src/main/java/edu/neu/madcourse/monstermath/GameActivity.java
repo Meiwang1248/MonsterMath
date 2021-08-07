@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -116,7 +117,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void storeGameScore() {
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(usernameStr).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -139,10 +140,11 @@ public class GameActivity extends AppCompatActivity {
 
                     // add this round of score to all scores
                     hashMap = new HashMap<>();
-                    hashMap.put("level", GAME_LEVEL);
+                    //hashMap.put("level", GAME_LEVEL);
                     hashMap.put("score", game.score);
                     hashMap.put("username", usernameStr);
                     databaseReference.child("Scores")
+                            .child(GAME_LEVEL)
                             .push()
                             .setValue(hashMap);
 
@@ -234,7 +236,9 @@ public class GameActivity extends AppCompatActivity {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
             // To do: 加声效 加背景音乐
             // We do not reward answer if the correct answer picked lastly
-            if (game.optionsQueue.size() > 1) {
+            Log.i("Testing", "" + game.curOptions.size());
+            if (game.curOptions.size() > 1) {
+                int test = game.curOptions.size();
                 game.score += 10;
                 game.score += getBonus();
             }
@@ -259,7 +263,7 @@ public class GameActivity extends AppCompatActivity {
             }
 
         } else {
-            game.curOptions.remove(answer);
+            game.curOptions.remove(Integer.valueOf(answer.getText().toString()));
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
 //            Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);

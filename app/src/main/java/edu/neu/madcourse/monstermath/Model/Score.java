@@ -1,11 +1,11 @@
 package edu.neu.madcourse.monstermath.Model;
 
 public class Score {
-    private String mark;
+    private int score;
     private String username;
 
-    public Score(String mark, String username) {
-        this.mark = mark;
+    public Score(int score, String username) {
+        this.score = score;
         this.username = username;
     }
 
@@ -13,8 +13,8 @@ public class Score {
 
     }
 
-    public String getMark() {
-        return mark;
+    public int getScore() {
+        return score;
     }
 
     public String getUsername() {
