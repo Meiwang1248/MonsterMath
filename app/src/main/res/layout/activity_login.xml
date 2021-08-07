@@ -14,7 +14,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="background_image"
         android:scaleType="fitXY"
-        android:src="@drawable/background" />
+        android:src="@drawable/bg_login_1600x900" />
 
     <ProgressBar
         android:id="@+id/progressBar2"
@@ -28,32 +28,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="46dp">
+        android:padding="56dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Log in"
-            android:textSize="20sp"
-            android:fontFamily="casual"
-            android:textStyle="bold" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:fontFamily="casual"
-            android:layout_marginTop="40dp"
             android:hint="Email Address" />
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:fontFamily="casual"
-            android:layout_marginTop="40dp"
             android:hint="Password" />
 
         <Button
@@ -61,11 +60,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:textSize="18sp"
-            android:text="log in"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:background="#668b8b"
             android:fontFamily="casual"
+            android:text="log in"
             android:textColor="@color/white"
+            android:textSize="18sp"
             app:backgroundTint="@null" />
 
     </LinearLayout>

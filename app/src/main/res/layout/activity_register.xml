@@ -13,7 +13,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="background_image"
         android:scaleType="fitXY"
-        android:src="@drawable/background" />
+        android:src="@drawable/bg_login_1600x900" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="Create a new account"
             android:fontFamily="casual"
+            android:layout_marginTop="15dp"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -44,7 +45,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:hint="Username" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -52,7 +55,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:hint="Email Address" />
 
         <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +65,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:hint="Password" />
 
         <Button
@@ -68,6 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="120dp"
+            android:layout_marginLeft="120dp"
             android:text="register"
             android:textColor="@color/white"
             android:background="#668b8b"
