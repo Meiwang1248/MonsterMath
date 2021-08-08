@@ -79,12 +79,15 @@ public class ScoreBoardActivity extends AppCompatActivity {
                     switch (checkedId) {
                         case R.id.btnScoreEasy:
                             level = "easy";
+                            readScoreRanking();
                             break;
                         case R.id.btnScoreMedium:
                             level = "medium";
+                            readScoreRanking();
                             break;
                         case R.id.btnScoreHard:
                             level = "hard";
+                            readScoreRanking();
                             break;
                     }
                 }
