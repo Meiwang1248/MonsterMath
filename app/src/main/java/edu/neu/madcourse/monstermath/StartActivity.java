@@ -36,12 +36,11 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-
         //background music start
         mainMusic = MediaPlayer.create(StartActivity.this, R.raw.bensound_ukulele);
         mainMusic.start();
         mainMusic.setLooping(true); //Set looping
-        mainMusic.setVolume(100, 100);
+        mainMusic.setVolume(80, 80);
 
         hideSystemUI();
 
@@ -76,4 +75,23 @@ public class StartActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mainMusic.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mainMusic.start();
+    }
+
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        mainMusic.stop();
+//        mainMusic.release();
+//    }
 }
