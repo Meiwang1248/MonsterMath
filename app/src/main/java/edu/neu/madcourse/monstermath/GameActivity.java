@@ -129,18 +129,11 @@ public class GameActivity extends AppCompatActivity {
                             .child(usernameStr)
                             .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
 
-                    // add this round of score to current user's scores
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("score", score);
-                    databaseReference.child("Users")
-                            .child(usernameStr)
-                            .child("scores")
-                            .push()
-                            .setValue(game.score);
+                    // update user's personal best score if user gets a higher score
+                    updaterPersonalBestScore();
 
                     // add this round of score to all scores
-                    hashMap = new HashMap<>();
-                    //hashMap.put("level", GAME_LEVEL);
+                    HashMap<String, Object> hashMap = new HashMap<>();
                     hashMap.put("score", game.score);
                     hashMap.put("username", usernameStr);
                     databaseReference.child("Scores")
@@ -160,6 +153,36 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updaterPersonalBestScore() {
+        switch (GAME_LEVEL) {
+            case "easy":
+                if (game.score > user.personalBestScoreEasy) {
+                    databaseReference.child("Users")
+                            .child(usernameStr)
+                            .child("personalBestScoreEasy")
+                            .setValue(game.score);
+                }
+                break;
+            case "medium":
+                if (game.score > user.personalBestScoreMedium) {
+                    databaseReference.child("Users")
+                            .child(usernameStr)
+                            .child("personalBestScoreMedium")
+                            .setValue(game.score);
+                }
+                break;
+            case "hard":
+                if (game.score > user.personalBestScoreHard) {
+                    databaseReference.child("Users")
+                            .child(usernameStr)
+                            .child("personalBestScoreHard")
+                            .setValue(game.score);
+                }
+                break;
+
+        };
     }
 
     private void onlineGame() {

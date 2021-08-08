@@ -56,7 +56,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
         hideSystemUI();
 
         // default level is easy
-        level = "easy";
+        level = "Easy";
 
         // connect UI components
         tvNumOfGamesPlayed = findViewById(R.id.tvNumOfGamesPlayed);
@@ -78,15 +78,18 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 if (isChecked) {
                     switch (checkedId) {
                         case R.id.btnScoreEasy:
-                            level = "easy";
+                            level = "Easy";
+                            readPersonalBestScore();
                             readScoreRanking();
                             break;
                         case R.id.btnScoreMedium:
-                            level = "medium";
+                            level = "Medium";
+                            readPersonalBestScore();
                             readScoreRanking();
                             break;
                         case R.id.btnScoreHard:
-                            level = "hard";
+                            level = "Hard";
+                            readPersonalBestScore();
                             readScoreRanking();
                             break;
                     }
@@ -107,8 +110,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
                         usernameStr = user.getUsername();
 
                         // get real-time number of games played
-                        databaseReference.child(user.getUsername())
-                                .child("numOfGamesPlayed").addValueEventListener(new ValueEventListener() {
+                        databaseReference.child(usernameStr)
+                                .child("numOfGamesPlayed")
+                                .addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 numOfGamesPlayed = snapshot.getValue(Integer.class);
@@ -121,29 +125,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
                             }
                         });
 
-                        // get personal best score and number of games played
-                        databaseReference.child(usernameStr)
-                                .child("scores")
-                                .orderByValue()
-                                .limitToLast(1)
-                                .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (!snapshot.exists()) {
-                                    Toast.makeText(ScoreBoardActivity.this, "You have not played a game yet.", Toast.LENGTH_LONG).show();
-                                } else {
-                                    for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                                        Integer personalBest = childSnapshot.getValue(Integer.class);
-                                        tvPersonalBestScore.setText("your personal best score: " + personalBest);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                        // read personal best score
+                        readPersonalBestScore();
 
                         // get current user's token
                         FirebaseMessaging.getInstance().getToken()
@@ -183,11 +166,34 @@ public class ScoreBoardActivity extends AppCompatActivity {
         readScoreRanking();
     }
 
+    private void readPersonalBestScore() {
+        // get personal best score and number of games played
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        databaseReference.child(usernameStr)
+                .child("personalBestScore" + level)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.exists()) {
+                            Toast.makeText(ScoreBoardActivity.this, "You have not played a game yet.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Integer personalBest = snapshot.getValue(Integer.class);
+                            tvPersonalBestScore.setText("Your personal best score: " + personalBest);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
     private void readScoreRanking() {
         FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Scores")
-                .child(level)
+                .child(level.toLowerCase())
                 .orderByChild("score")
                 .limitToLast(50)
                 .addValueEventListener(new ValueEventListener() {

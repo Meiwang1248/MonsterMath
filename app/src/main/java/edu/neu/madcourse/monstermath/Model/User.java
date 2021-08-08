@@ -6,6 +6,9 @@ public class User {
     private String id;
     private String username;
     private String token;
+    public int personalBestScoreEasy;
+    public int personalBestScoreHard;
+    public int personalBestScoreMedium;
     public int numOfGamesPlayed;
 
     public User(String id, String username, String token) {
@@ -13,6 +16,9 @@ public class User {
         this.username = username;
         this.token = token;
         numOfGamesPlayed = 0;
+        personalBestScoreEasy = 0;
+        personalBestScoreMedium = 0;
+        personalBestScoreHard = 0;
     }
 
     public User() {

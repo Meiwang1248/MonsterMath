@@ -91,6 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
                             hashMap.put("id", userid);
                             hashMap.put("username", username);
                             hashMap.put("numOfGamesPlayed", 0);
+                            hashMap.put("personalBestScoreEasy", 0);
+                            hashMap.put("personalBestScoreMedium", 0);
+                            hashMap.put("personalBestScoreHard", 0);
 
                             databaseReference.child("Users")
                                     .child(username)
