@@ -182,7 +182,8 @@ public class ScoreBoardActivity extends AppCompatActivity {
 
     private void readScoreRanking() {
         FirebaseDatabase.getInstance()
-                .getReference("Scores")
+                .getReference()
+                .child("Scores")
                 .child(level)
                 .orderByChild("score")
                 .limitToLast(50)
