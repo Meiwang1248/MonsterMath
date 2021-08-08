@@ -243,7 +243,7 @@ public class GameActivity extends AppCompatActivity {
                 game.score += getBonus();
             }
 
-            score.setText("Score: " + game.score);
+            score.setText("Score: " + game.score + " + " + getBonus());
 //            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
 //            toast.setGravity(Gravity.CENTER, 0, 0);
 //            toast.show();

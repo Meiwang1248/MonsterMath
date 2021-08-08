@@ -52,12 +52,12 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
 
         // Set item views based on views and data model
         holder.username.setText(score.getUsername());
-        holder.score.setText(score.getScore());
+        holder.score.setText(String.valueOf(score.getScore()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return scoreList.size();
     }
 
 
