@@ -1,12 +1,14 @@
 package edu.neu.madcourse.monstermath;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,6 +57,9 @@ public class GameActivity extends AppCompatActivity {
     Player curPlayer;
     Player opponentPlayer;
 
+    // sound effects
+    private SoundEffects sound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +88,11 @@ public class GameActivity extends AppCompatActivity {
         } else {
             onlineGame();
         }
+
+        //sound effects
+        sound = new SoundEffects(this);
     }
+
 
     private void getGameSettings() {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
@@ -257,7 +266,10 @@ public class GameActivity extends AppCompatActivity {
      */
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
-            // To do: 加声效 加背景音乐
+
+            //sound effect
+            sound.playHappySound();
+
             // We do not reward answer if the correct answer picked lastly
             Log.i("Testing", "" + game.curOptions.size());
             if (game.curOptions.size() > 1) {
@@ -282,12 +294,16 @@ public class GameActivity extends AppCompatActivity {
             } else {
                 // End Game
                 endGame();
+                //sound effect
+                sound.playEndSound();
             }
 
         } else {
             game.curOptions.remove(Integer.valueOf(answer.getText().toString()));
             answer.setVisibility(View.INVISIBLE);
             monster.setVisibility(View.INVISIBLE);
+            //sound effect
+            sound.playSadSound();
 //            Toast toast = Toast.makeText(GameActivity.this, "Oops! Try again", Toast.LENGTH_SHORT);
 //            toast.setGravity(Gravity.CENTER, 0, 0);
 //            toast.show();
@@ -477,4 +493,6 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
+
 }
