@@ -349,13 +349,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showSoloGameResult() {
-        if (game.getCurScore() >= 100) {
-            Toast.makeText(GameActivity.this, "Bravo! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
-        } else if (game.getCurScore() >= 90) {
-            Toast.makeText(GameActivity.this, "Good job! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(GameActivity.this, "Nice! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
-        }
+        openDialog(game.getCurScore());
+//        if (game.getCurScore() >= 100) {
+//            Toast.makeText(GameActivity.this, "Bravo! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+//        } else if (game.getCurScore() >= 90) {
+//            Toast.makeText(GameActivity.this, "Good job! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+//        } else {
+//            Toast.makeText(GameActivity.this, "Nice! Your Score is " + game.getCurScore(), Toast.LENGTH_LONG).show();
+//        }
+    }
+
+    private void openDialog(int gameScore) {
+        Dialog dialog = new Dialog(gameScore);
+        dialog.show(getSupportFragmentManager(), "result");
     }
 
     private void showOnlineGameResult() {
