@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class Dialog extends AppCompatDialogFragment {
 
-    private TextView gameScoreView;
+
     private TextView scoreMessageView;
     private int gameScore;
 
@@ -30,7 +30,6 @@ public class Dialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_dialog, null);
 
-        gameScoreView = view.findViewById(R.id.gameScore);
         scoreMessageView = view.findViewById(R.id.scoreMessage);
 
         String scoreMessage = "";
