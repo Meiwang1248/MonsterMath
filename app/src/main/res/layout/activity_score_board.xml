@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ScoreBoardActivity">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:adjustViewBounds="true"
+        android:contentDescription="background_image"
+        android:scaleType="fitXY"
+        android:src="@drawable/artboard"
+        tools:ignore="MissingConstraints" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,7 +61,7 @@
             android:layout_marginBottom="10dp"
             android:fontFamily="casual"
             android:text="Your personal best score: "
-            android:textColor="@color/colorSecondary"
+            android:textColor="@color/colorPrimary"
             android:textSize="20dp"
             android:textStyle="bold" />
 
