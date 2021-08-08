@@ -40,7 +40,7 @@ public class StartActivity extends AppCompatActivity {
         //background music start
         mainMusic = MediaPlayer.create(StartActivity.this, R.raw.bensound_ukulele);
         mainMusic.start();
-        mainMusic.setLooping(true); // Set looping
+        mainMusic.setLooping(true); //Set looping
         mainMusic.setVolume(100, 100);
 
         hideSystemUI();
