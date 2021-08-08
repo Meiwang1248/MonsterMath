@@ -261,7 +261,6 @@ public class GameActivity extends AppCompatActivity {
             // We do not reward answer if the correct answer picked lastly
             Log.i("Testing", "" + game.curOptions.size());
             if (game.curOptions.size() > 1) {
-                int test = game.curOptions.size();
                 game.score += 10;
                 game.score += getBonus();
             }
