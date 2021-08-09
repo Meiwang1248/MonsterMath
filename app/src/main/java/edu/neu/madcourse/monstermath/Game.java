@@ -151,6 +151,9 @@ public class Game {
             }
             // make sure curNumber2 can evenly divide curNumber1
             curNumber1 = curNumber2 * quotient;
+        } else if (operation.equals("-")) {
+            curNumber1 = rand.nextInt(upperBound) + 1;
+            curNumber2 = rand.nextInt(curNumber1) + 1;
         } else {
             curNumber1 = rand.nextInt(upperBound) + 1;
             curNumber2 = rand.nextInt(upperBound) + 1;
