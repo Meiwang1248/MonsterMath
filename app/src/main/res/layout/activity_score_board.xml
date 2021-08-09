@@ -13,7 +13,7 @@
         android:adjustViewBounds="true"
         android:contentDescription="background_image"
         android:scaleType="fitXY"
-        android:src="@drawable/artboard"
+        android:src="@drawable/bg_scoreboard_1600x900"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
@@ -27,37 +27,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tvScoreBoardTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="casual"
-            android:gravity="center"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="5dp"
-            android:text="Score Board"
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvNumOfGamesPlayed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="casual"
-            android:text="You have played"
-            android:textColor="@color/white"
-            android:textSize="20dp"
-            android:textStyle="bold" />
 
         <com.google.android.material.button.MaterialButtonToggleGroup
             android:id="@+id/toggleBtnGrpScore"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="130dp"
             app:checkedButton="@id/btnScoreEasy"
             app:singleSelection="true">
 
@@ -68,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:fontFamily="casual"
                 android:text="Easy" />
 
@@ -79,7 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:fontFamily="casual"
                 android:text="Medium" />
 
@@ -90,7 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
                 android:fontFamily="casual"
                 android:text="Hard" />
 
@@ -100,16 +81,29 @@
             android:id="@+id/tvPersonalBestScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:fontFamily="casual"
             android:text="Your personal best score: "
             android:textColor="@color/colorPrimary"
-            android:textSize="20dp"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvNumOfGamesPlayed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="casual"
+            android:text="You have played"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18dp"
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvScores"
             android:layout_width="match_parent"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
             android:layout_height="0dp"
             android:layout_weight="90"
             android:padding="5dp"
