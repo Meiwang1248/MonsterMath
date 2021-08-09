@@ -16,4 +16,5 @@
     <string name="setting_button_play_with_friend">Play against a Friend</string>
     <string name="setting_button_play">Play</string>
     <string name="score_board">Score Board</string>
+    <string name="setting_button_logout">Logout</string>
 </resources>

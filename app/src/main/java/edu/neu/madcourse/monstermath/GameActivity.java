@@ -77,6 +77,12 @@ public class GameActivity extends AppCompatActivity {
         installListeners();
 
         homeButton = findViewById(R.id.btnCompeteHome);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GameActivity.this, StartActivity.class));
+            }
+        });
 
         // connect TextViews and layout
         question = findViewById(R.id.tvQuestion);

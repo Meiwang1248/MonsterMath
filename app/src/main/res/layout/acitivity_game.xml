@@ -305,7 +305,7 @@
             app:layout_constraintEnd_toEndOf="@id/glVertical1"
             android:background="@color/colorPrimary"
             android:fontFamily="casual"
-            android:text="HOME"
+            android:text="BACK"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeMaxTextSize="20sp"
