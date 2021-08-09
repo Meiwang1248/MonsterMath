@@ -25,75 +25,9 @@ public class GameSettingActivity extends AppCompatActivity {
         hideSystemUI();
 
         // set onClickListener for toggle button groups
-        tgBtnGrpOperation = findViewById(R.id.toggleBtnGrpOperationSelection);
-        tgBtnGrpOperation.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingGameAdd:
-                            gameOperation = "+";
-                            //GameActivity.GAME_OPERATION = "+";
-                            break;
-                        case R.id.btnSettingGameDivide:
-                            gameOperation = "÷";
-                            //GameActivity.GAME_OPERATION = "/";
-                            break;
-                        case R.id.btnSettingGameMultiply:
-                            gameOperation = "×";
-                            //GameActivity.GAME_OPERATION = "multiply";
-                            break;
-                        case R.id.btnSettingGameSubtract:
-                            gameOperation = "-";
-                            //GameActivity.GAME_OPERATION = "subtract";
-                            break;
-                    }
-                }
-            }
-        });
-
-        tgBtnGrpLevel = findViewById(R.id.toggleBtnGrpLevelSelection);
-        tgBtnGrpLevel.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingLevelEasy:
-                            gameLevel = "easy";
-                            //GameActivity.GAME_LEVEL = "easy";
-                            break;
-                        case R.id.btnSettingLevelMedium:
-                            gameLevel = "medium";
-                            //GameActivity.GAME_LEVEL = "medium";
-                            break;
-                        case R.id.btnSettingLevelHard:
-                            gameLevel = "hard";
-                            //GameActivity.GAME_LEVEL = "hard";
-                            break;
-                    }
-                }
-            }
-        });
-
-        tgBtnGrpMode = findViewById(R.id.toggleBtnGrpModeSelection);
-        tgBtnGrpMode.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingModeSolo:
-                            gameMode = true;
-                            //GameActivity.GAME_MODE = true;
-                            break;
-                        case R.id.btnSettingModeComp:
-                            gameMode = false;
-                            //GameActivity.GAME_MODE = false;
-                            break;
-                    }
-                }
-            }
-        });
-
+        setGameOperation();
+        setGameLevel();
+        setGameMode();
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
@@ -120,6 +54,72 @@ public class GameSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logOut();
+            }
+        });
+    }
+
+    private void setGameOperation() {
+        tgBtnGrpOperation = findViewById(R.id.toggleBtnGrpOperationSelection);
+        tgBtnGrpOperation.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingGameAdd:
+                            gameOperation = "+";
+                            break;
+                        case R.id.btnSettingGameDivide:
+                            gameOperation = "÷";
+                            break;
+                        case R.id.btnSettingGameMultiply:
+                            gameOperation = "×";
+                            break;
+                        case R.id.btnSettingGameSubtract:
+                            gameOperation = "-";
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private void setGameLevel() {
+        tgBtnGrpLevel = findViewById(R.id.toggleBtnGrpLevelSelection);
+        tgBtnGrpLevel.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingLevelEasy:
+                            gameLevel = "easy";
+                            break;
+                        case R.id.btnSettingLevelMedium:
+                            gameLevel = "medium";
+                            break;
+                        case R.id.btnSettingLevelHard:
+                            gameLevel = "hard";
+                            break;
+                    }
+                }
+            }
+        });
+    }
+
+    private void setGameMode() {
+        tgBtnGrpMode = findViewById(R.id.toggleBtnGrpModeSelection);
+        tgBtnGrpMode.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingModeSolo:
+                            gameMode = true;
+                            break;
+                        case R.id.btnSettingModeComp:
+                            gameMode = false;
+                            break;
+                    }
+                }
             }
         });
     }

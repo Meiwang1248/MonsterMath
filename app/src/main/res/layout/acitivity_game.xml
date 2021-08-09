@@ -275,6 +275,7 @@
             android:autoSizeMaxTextSize="24sp"
             android:autoSizeStepGranularity="2sp"
             android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
             android:textStyle="bold"/>
 
         <TextView
@@ -293,6 +294,7 @@
             android:autoSizeMaxTextSize="24sp"
             android:autoSizeStepGranularity="2sp"
             android:textColor="@color/colorPrimary"
+            android:visibility="invisible"
             android:textStyle="bold" />
 
         <Button
@@ -303,7 +305,7 @@
             app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/glVertical1"
-            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:fontFamily="casual"
             android:text="BACK"
             android:autoSizeTextType="uniform"

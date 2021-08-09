@@ -1,14 +1,11 @@
 package edu.neu.madcourse.monstermath;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.media.MediaPlayer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -46,8 +43,8 @@ public class GameActivity extends AppCompatActivity {
     private Game game;
 
     // Firebase settings
-    FirebaseUser currUser;
-    DatabaseReference databaseReference;
+    FirebaseUser firebaseUser;
+    DatabaseReference rootDatabaseRef;
     User user;
     String usernameStr;
 
@@ -64,11 +61,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_game);
-
         hideSystemUI();
 
-        // get user name
-        getUsername();
+        // set root database reference
+        rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
+        // get user
+        getUser();
         // get game settings
         getGameSettings();
         // connect multiple choices and monsters to UI
@@ -80,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GameActivity.this, StartActivity.class));
+                startActivity(new Intent(GameActivity.this, GameSettingActivity.class));
             }
         });
 
@@ -106,11 +104,10 @@ public class GameActivity extends AppCompatActivity {
         GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
     }
 
-    private void getUsername() {
-        currUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").orderByChild("id")
-                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void getUser() {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        rootDatabaseRef.child("Users").orderByChild("id")
+                .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
@@ -131,36 +128,19 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void storeGameScore() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    user = snapshot.getValue(User.class);
+                // update real-time number of games played
+                updateNumOfGamesPlayed();
 
-                    // update real-time number of games played
-                    user.numOfGamesPlayed++;
-                    databaseReference.child("Users")
-                            .child(usernameStr)
-                            .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
+                // update user's personal best score if user gets a higher score
+                updaterPersonalBestScore();
 
-                    // update user's personal best score if user gets a higher score
-                    updaterPersonalBestScore();
+                // add this round of score to all scores
+                addToScores();
 
-                    // add this round of score to all scores
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("score", game.score);
-                    hashMap.put("username", usernameStr);
-                    databaseReference.child("Scores")
-                            .child(GAME_LEVEL)
-                            .push()
-                            .setValue(hashMap);
-
-                    Toast.makeText(GameActivity.this, "Score stored successfully.", Toast.LENGTH_LONG).show();
-                } else {
-                    // pop message showing receiver does not exist
-                    Toast.makeText(GameActivity.this, "Username does not exist.", Toast.LENGTH_LONG).show();
-                }
+                Toast.makeText(GameActivity.this, "Score stored successfully.", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -170,11 +150,28 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+    private void updateNumOfGamesPlayed() {
+        user.numOfGamesPlayed++;
+        rootDatabaseRef.child("Users")
+                .child(usernameStr)
+                .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
+    }
+
+    private void addToScores() {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("score", game.score);
+        hashMap.put("username", usernameStr);
+        rootDatabaseRef.child("Scores")
+                .child(GAME_LEVEL)
+                .push()
+                .setValue(hashMap);
+    }
+
     private void updaterPersonalBestScore() {
         switch (GAME_LEVEL) {
             case "easy":
                 if (game.score > user.personalBestScoreEasy) {
-                    databaseReference.child("Users")
+                    rootDatabaseRef.child("Users")
                             .child(usernameStr)
                             .child("personalBestScoreEasy")
                             .setValue(game.score);
@@ -182,7 +179,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case "medium":
                 if (game.score > user.personalBestScoreMedium) {
-                    databaseReference.child("Users")
+                    rootDatabaseRef.child("Users")
                             .child(usernameStr)
                             .child("personalBestScoreMedium")
                             .setValue(game.score);
@@ -190,7 +187,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case "hard":
                 if (game.score > user.personalBestScoreHard) {
-                    databaseReference.child("Users")
+                    rootDatabaseRef.child("Users")
                             .child(usernameStr)
                             .child("personalBestScoreHard")
                             .setValue(game.score);
@@ -202,8 +199,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void onlineGame() {
         // find the match
-        databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Matches").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
@@ -252,7 +248,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private int getBonus() {
-        // add bonus based on time
+        // add bonus based on response time
         int bonus;
         Timestamp ts = new Timestamp(System.currentTimeMillis());
         long endTime = ts.getTime();
@@ -276,23 +272,21 @@ public class GameActivity extends AppCompatActivity {
             //sound effect
             sound.playHappySound();
 
+            //TODO: add firework indicating user gets the right answer
+
             // We do not reward answer if the correct answer picked lastly
-            Log.i("Testing", "" + game.curOptions.size());
             if (game.curOptions.size() > 1) {
                 game.score += 10;
                 game.score += getBonus();
             }
 
-            score.setText("Score: " + game.score + " + " + getBonus());
-//            Toast toast = Toast.makeText(GameActivity.this, "Correct! You got 10 points along with " + getBonus() + " points of bonus!", Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.CENTER, 0, 0);
-//            toast.show();
+            score.setText("Score: " + game.score);
 
             // add current score to online game database
             if (GAME_MODE == false) {
                 curPlayer.setScore(game.score);
-                databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
-                databaseReference.child(matchId).child("player"+playerNumber).setValue(curPlayer);
+                rootDatabaseRef = FirebaseDatabase.getInstance().getReference("Matches");
+                rootDatabaseRef.child(matchId).child("player"+playerNumber).setValue(curPlayer);
             }
 
             if (game.curStage < 10) {
@@ -378,7 +372,6 @@ public class GameActivity extends AppCompatActivity {
         question.setVisibility(View.INVISIBLE);
 
         if (GAME_MODE) {
-            // TODO: change to sticker with a back button linked to GameSettingActivity
             showSoloGameResult();
         } else {
             showOnlineGameResult();
@@ -402,8 +395,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showOnlineGameResult() {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Matches");
-        databaseReference.child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef = FirebaseDatabase.getInstance().getReference("Matches");
+        rootDatabaseRef.child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
