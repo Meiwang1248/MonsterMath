@@ -13,8 +13,10 @@
     <string name="setting_button_medium">Medium</string>
     <string name="setting_button_hard">Hard</string>
     <string name="setting_button_single_player">Single Player</string>
-    <string name="setting_button_play_with_friend">Play against a Friend</string>
+    <string name="setting_button_play_with_friend">Play against Someone</string>
     <string name="setting_button_play">Play</string>
     <string name="score_board">Score Board</string>
     <string name="setting_button_logout">Logout</string>
+    <string name="matching_shake_phone_line">Shake your phone to join an existing game</string>
+    <string name="matching_create_game_line">Create a new online game and wait for others to join</string>
 </resources>

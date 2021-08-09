@@ -45,10 +45,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
                 android:fontFamily="casual"
-                android:text="Easy" />
+                android:text="Easy"
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnScoreMedium"
@@ -57,10 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
                 android:fontFamily="casual"
-                android:text="Medium" />
+                android:text="Medium"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btnScoreHard"
@@ -69,10 +69,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="10dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@color/white"
+                android:backgroundTint="@color/white"
                 android:fontFamily="casual"
-                android:text="Hard" />
+                android:text="Hard"
+                android:textStyle="bold" />
 
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -83,7 +83,6 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="casual"
             android:text="Your personal best score: "
-            android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:textStyle="bold" />
 
@@ -94,7 +93,6 @@
             android:layout_marginBottom="5dp"
             android:fontFamily="casual"
             android:text="You have played"
-            android:textColor="@color/colorPrimary"
             android:textSize="18dp"
             android:textStyle="bold" />
 

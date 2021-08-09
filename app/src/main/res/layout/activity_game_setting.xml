@@ -28,10 +28,13 @@
 
         <Button
             android:id="@+id/btnSettingLogout"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="300dp"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/colorPrimary"
             android:fontFamily="casual"
             android:textStyle="bold"
             android:text="@string/setting_button_logout" />
@@ -73,10 +76,10 @@
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_add"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -86,10 +89,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_subtract"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -99,10 +102,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_multiply"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -112,10 +115,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_divide"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -153,10 +156,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_easy"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -166,10 +169,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_medium"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -179,10 +182,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_hard"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -220,10 +223,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_single_player"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <Button
@@ -233,10 +236,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        android:backgroundTint="@color/colorSecondary"
+                        android:backgroundTint="@color/white"
+                        android:textColor="@color/colorPrimary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_play_with_friend"
-                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
