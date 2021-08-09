@@ -99,7 +99,7 @@ public class GameSettingActivity extends AppCompatActivity {
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gameMode = true) {
+                if (gameMode) {
                     openGameActivity();
                 } else {
                     openMatchingActivity();
