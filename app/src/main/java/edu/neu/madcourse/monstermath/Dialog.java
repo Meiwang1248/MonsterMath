@@ -52,12 +52,15 @@ public class Dialog extends AppCompatDialogFragment {
 
         scoreMessageView.setText(scoreMessage + this.gameScore + ".");
 
+        // set personal best notification
         tvPersonalBestNotification = view.findViewById(R.id.tvPersonalBestNotification);
 
         if (personalBestFlag) {
             tvPersonalBestNotification.setVisibility(View.VISIBLE);
         }
 
+        // set back to game setting button
+        btnBackToGameSetting = view.findViewById(R.id.btnBackToGameSetting);
         btnBackToGameSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
