@@ -11,7 +11,7 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 public class GameSettingActivity extends AppCompatActivity {
     MaterialButtonToggleGroup tgBtnGrpOperation, tgBtnGrpLevel, tgBtnGrpMode;
-    Button btnSettingDone, btnScoreBoard;
+    Button btnLogout, btnSettingDone, btnScoreBoard;
     String gameOperation, gameLevel;
     boolean gameMode;
 
@@ -91,6 +91,7 @@ public class GameSettingActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {

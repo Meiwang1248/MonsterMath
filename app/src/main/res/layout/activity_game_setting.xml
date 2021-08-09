@@ -19,9 +19,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btnSettingLogout"
+            android:layout_width="127dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="300dp"
+            android:text="@string/setting_button_logout" />
 
         <TableLayout
             android:layout_width="match_parent"
@@ -32,19 +43,19 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tvSettingGame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="casual"
                     android:layout_gravity="center"
                     android:layout_marginEnd="15dp"
-                    android:textStyle="bold"
+                    android:fontFamily="casual"
                     android:text="@string/setting_game"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleBtnGrpOperationSelection"
@@ -55,54 +66,54 @@
 
                     <Button
                         android:id="@+id/btnSettingGameAdd"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_add" />
+                        android:text="@string/setting_button_add"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingGameSubtract"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_subtract" />
+                        android:text="@string/setting_button_subtract"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingGameMultiply"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_multiply" />
+                        android:text="@string/setting_button_multiply"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingGameDivide"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
                         android:text="@string/setting_button_divide"
+                        android:textColor="@color/white"
                         android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
@@ -112,8 +123,8 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tvSettingLevel"
@@ -123,8 +134,8 @@
                     android:layout_marginEnd="15dp"
                     android:fontFamily="casual"
                     android:text="@string/setting_difficulty"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleBtnGrpLevelSelection"
@@ -135,42 +146,42 @@
 
                     <Button
                         android:id="@+id/btnSettingLevelEasy"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_easy" />
+                        android:text="@string/setting_button_easy"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingLevelMedium"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_medium" />
+                        android:text="@string/setting_button_medium"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingLevelHard"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_hard" />
+                        android:text="@string/setting_button_hard"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -179,19 +190,19 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tvSettingMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="15dp"
                     android:fontFamily="casual"
-                    android:layout_gravity="center"
                     android:text="@string/setting_playmode"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButtonToggleGroup
                     android:id="@+id/toggleBtnGrpModeSelection"
@@ -202,29 +213,29 @@
 
                     <Button
                         android:id="@+id/btnSettingModeSolo"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_single_player" />
+                        android:text="@string/setting_button_single_player"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/btnSettingModeComp"
+                        style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="10dp"
                         android:layout_weight="1"
-                        style="?attr/materialButtonOutlinedStyle"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/colorSecondary"
                         android:fontFamily="casual"
-                        android:text="@string/setting_button_play_with_friend" />
+                        android:text="@string/setting_button_play_with_friend"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -234,10 +245,10 @@
 
         <Button
             android:id="@+id/btnSettingDone"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            style="?attr/materialButtonOutlinedStyle"
             android:backgroundTint="@color/white"
             android:fontFamily="casual"
             android:includeFontPadding="false"
@@ -247,13 +258,13 @@
 
         <Button
             android:id="@+id/btnScoreBoard"
+            style="?attr/materialButtonOutlinedStyle"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            style="?attr/materialButtonOutlinedStyle"
-            android:fontFamily="casual"
-            android:text="@string/score_board"
             android:backgroundTint="@color/white"
+            android:fontFamily="casual"
             android:includeFontPadding="false"
+            android:text="@string/score_board"
             android:textSize="18sp"
             android:textStyle="bold" />
 
