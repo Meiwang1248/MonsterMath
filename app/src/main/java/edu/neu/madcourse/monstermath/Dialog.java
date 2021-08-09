@@ -2,6 +2,9 @@ package edu.neu.madcourse.monstermath;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +16,6 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 
 public class Dialog extends AppCompatDialogFragment {
-
 
     private TextView scoreMessageView;
     private int gameScore;
@@ -42,19 +44,31 @@ public class Dialog extends AppCompatDialogFragment {
             scoreMessage = "Nice! Your Score is ";
         }
 
-        scoreMessageView.setText(scoreMessage + this.gameScore);
+        scoreMessageView.setText(scoreMessage + this.gameScore + ".");
 
         builder.setView(view)
                 .setTitle("Result")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton("Back to game setting", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        openGameSettingActivity();
                     }
                 });
 
 
         return builder.create();
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+    }
+
+    private void openGameSettingActivity() {
+        Intent intent = new Intent(getContext(), GameSettingActivity.class);
+        startActivity(intent);
     }
 
 
