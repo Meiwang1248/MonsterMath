@@ -178,7 +178,9 @@ public class Game {
         // ensure there are 5 options
         while (curOptions.size() < 5) {
             int option = curAnswer + (rand.nextInt(11) - 5) ;
-            curOptions.add(option);
+            if (option >= 0) {
+                curOptions.add(option);
+            }
         }
     }
 }
