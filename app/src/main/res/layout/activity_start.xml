@@ -24,25 +24,25 @@
 
         <Button
             android:id="@+id/login"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="140dp"
-            android:background="@color/colorPrimary"
             android:fontFamily="casual"
             android:text="log in"
+            android:backgroundTint="@color/colorPrimary"
             android:textSize="18sp"
-            app:backgroundTint="@null" />
+            android:ems="8"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/register"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@color/colorPrimary"
             android:fontFamily="casual"
             android:text="register"
+            android:backgroundTint="@color/colorPrimary"
             android:textSize="18sp"
-            app:backgroundTint="@null" />
+            android:ems="8"/>
 
     </LinearLayout>
 
