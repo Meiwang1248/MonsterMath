@@ -79,8 +79,8 @@
                     android:id="@+id/ivMonster1"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="0.6"
-                    app:srcCompat="@drawable/monster1"/>
+                    android:layout_weight="0.8"
+                    app:srcCompat="@drawable/monster6"/>
 
                 <Button
                     android:id="@+id/btnAnswer1"
@@ -305,12 +305,13 @@
             app:layout_constraintBottom_toTopOf="@id/glHorizontal1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="@id/glVertical1"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/white"
             android:fontFamily="casual"
             android:text="BACK"
             android:autoSizeTextType="uniform"
             android:autoSizeMinTextSize="10sp"
             android:autoSizeMaxTextSize="20sp"
+            android:textColor="@color/colorPrimary"
             android:autoSizeStepGranularity="2sp"
             android:textStyle="bold"/>
 
