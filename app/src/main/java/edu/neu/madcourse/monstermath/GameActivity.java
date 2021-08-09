@@ -338,8 +338,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void nextStage() {
-        // get all monsters back
-
+        // get all monsters back and renew the time
+        turnOnTimer();
         showAllMonsters();
         game.generateOneStage();
         score.setText("Score: " + game.score);
@@ -532,7 +532,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void turnOnTimer() {
-        Timer timer =new Timer();
+        Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
