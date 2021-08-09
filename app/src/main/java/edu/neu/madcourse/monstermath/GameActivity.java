@@ -6,7 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import edu.neu.madcourse.monstermath.Model.Player;
 import edu.neu.madcourse.monstermath.Model.User;
@@ -32,10 +39,11 @@ public class GameActivity extends AppCompatActivity {
     private Button option1, option2, option3, option4, option5, homeButton;
 
     // images
-    private ImageView m1, m2, m3, m4, m5;
+    private ImageView m1, m2, m3, m4, m5, partyPopper;
 
     // textviews
     private TextView question, score, time;
+    private int seconds = 0;
 
     // game settings
     static String GAME_LEVEL, GAME_OPERATION;
@@ -273,10 +281,12 @@ public class GameActivity extends AppCompatActivity {
     private void validateAnswer(Button answer, ImageView monster) {
         if (Integer.parseInt(answer.getText().toString()) == game.curAnswer) {
 
-            //sound effect
+            //sound effect and shows a party popper
             sound.playHappySound();
 
             //TODO: add firework indicating user gets the right answer
+            fadeOutAndHideImage((ImageView) findViewById(R.id.party_popper));
+
 
             // We do not reward answer if the correct answer picked lastly
             if (game.curOptions.size() > 1) {
@@ -329,6 +339,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void nextStage() {
         // get all monsters back
+
         showAllMonsters();
         game.generateOneStage();
         score.setText("Score: " + game.score);
@@ -443,6 +454,9 @@ public class GameActivity extends AppCompatActivity {
 
         option5 = findViewById(R.id.btnAnswer5);
         m5 = findViewById(R.id.ivMonster5);
+
+        partyPopper = findViewById(R.id.party_popper);
+        partyPopper.setVisibility(View.INVISIBLE);
     }
 
     private void installListeners() {
@@ -483,6 +497,7 @@ public class GameActivity extends AppCompatActivity {
         });
     }
 
+
     private void hideSystemUI() {
         View decorView = getWindow().getDecorView();
         decorView.setSystemUiVisibility(
@@ -497,5 +512,34 @@ public class GameActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 
+    private void fadeOutAndHideImage(final ImageView img)
+    {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setInterpolator(new AccelerateInterpolator());
+        fadeOut.setDuration(1000);
+
+        fadeOut.setAnimationListener(new Animation.AnimationListener()
+        {
+            public void onAnimationEnd(Animation animation)
+            {
+                img.setVisibility(View.GONE);
+            }
+            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationStart(Animation animation) {}
+        });
+
+        img.startAnimation(fadeOut);
+    }
+
+    private void turnOnTimer() {
+        Timer timer =new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                time.setText("TIME: "+ seconds);
+                seconds++;
+            }
+        }, 1000, 1000);
+    }
 
 }

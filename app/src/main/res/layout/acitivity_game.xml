@@ -334,4 +334,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/party_popper"
+        android:layout_width="202dp"
+        android:layout_height="202dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="0.6"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/party_popper2" />
 </RelativeLayout>
+
