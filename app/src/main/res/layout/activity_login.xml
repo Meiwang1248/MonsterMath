@@ -78,13 +78,12 @@
             android:id="@+id/btnLogin"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:backgroundTint="@color/colorPrimary"
             android:layout_marginTop="10dp"
             android:fontFamily="casual"
             android:text="log in"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            app:backgroundTint="@null" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

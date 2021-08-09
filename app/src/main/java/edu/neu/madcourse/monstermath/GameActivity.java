@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
     static String GAME_LEVEL, GAME_OPERATION;
     static boolean GAME_MODE;
     private Game game;
+    private boolean personalBestFlag = false;
 
     // Firebase settings
     FirebaseUser firebaseUser;
@@ -175,6 +176,7 @@ public class GameActivity extends AppCompatActivity {
                             .child(usernameStr)
                             .child("personalBestScoreEasy")
                             .setValue(game.score);
+                    personalBestFlag = true;
                 }
                 break;
             case "medium":
@@ -183,6 +185,7 @@ public class GameActivity extends AppCompatActivity {
                             .child(usernameStr)
                             .child("personalBestScoreMedium")
                             .setValue(game.score);
+                    personalBestFlag = true;
                 }
                 break;
             case "hard":
@@ -191,6 +194,7 @@ public class GameActivity extends AppCompatActivity {
                             .child(usernameStr)
                             .child("personalBestScoreHard")
                             .setValue(game.score);
+                    personalBestFlag = true;
                 }
                 break;
 
@@ -390,7 +394,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void openDialog(int gameScore) {
-        Dialog dialog = new Dialog(gameScore);
+        Dialog dialog = new Dialog(gameScore, personalBestFlag);
         dialog.show(getSupportFragmentManager(), "result");
     }
 

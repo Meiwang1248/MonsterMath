@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +18,16 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class Dialog extends AppCompatDialogFragment {
 
-    private TextView scoreMessageView;
+    private TextView scoreMessageView, tvPersonalBestNotification;
+    private Button btnBackToGameSetting;
     private int gameScore;
+    private boolean personalBestFlag;
 
     //constructor
-    public Dialog(int gameScore){
+    public Dialog(int gameScore, boolean personalBestFlag){
+
         this.gameScore = gameScore;
+        this.personalBestFlag = personalBestFlag;
     }
 
     @Override
@@ -32,6 +37,7 @@ public class Dialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_dialog, null);
 
+        // set score message
         scoreMessageView = view.findViewById(R.id.scoreMessage);
 
         String scoreMessage = "";
@@ -46,16 +52,20 @@ public class Dialog extends AppCompatDialogFragment {
 
         scoreMessageView.setText(scoreMessage + this.gameScore + ".");
 
-        builder.setView(view)
-                .setTitle("Result")
-                .setPositiveButton("Back to game setting", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        openGameSettingActivity();
-                    }
-                });
+        tvPersonalBestNotification = view.findViewById(R.id.tvPersonalBestNotification);
 
+        if (personalBestFlag) {
+            tvPersonalBestNotification.setVisibility(View.VISIBLE);
+        }
 
+        btnBackToGameSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGameSettingActivity();
+            }
+        });
+
+        builder.setView(view);
         return builder.create();
     }
 

@@ -97,9 +97,8 @@
             android:layout_marginTop="10dp"
             android:text="register"
             android:textColor="@color/white"
-            android:background="@color/colorPrimary"
-            android:fontFamily="casual"
-            app:backgroundTint="@null" />
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="casual" />
 
     </LinearLayout>
 

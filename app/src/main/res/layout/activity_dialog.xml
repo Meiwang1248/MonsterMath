@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_margin="10dp"
     android:background="@drawable/shape_background">
+
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/tvPersonalBestNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="casual"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/colorPrimary"
+        android:visibility="invisible"
+        android:text="New Personal Best!"/>
 
     <TextView
         android:layout_margin="10dp"
         android:id="@+id/scoreMessage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        />
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/btnBackToGameSetting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Back to Game Setting"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="casual"/>
+
+
+</LinearLayout>
