@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView m1, m2, m3, m4, m5;
 
     // textviews
-    private TextView question, score, time;
+    private TextView question, score, time, opponentName;
 
     // game settings
     static String GAME_LEVEL, GAME_OPERATION;
@@ -218,11 +218,13 @@ public class GameActivity extends AppCompatActivity {
                         playerNumber = 0;
                         game = childSnapshot.child("game").getValue(Game.class);
                         curPlayer = player0;
+                        opponentPlayer = player1;
                     } else if (usernameStr.equals(player1Name)) {
                         matchId = childSnapshot.getKey();
                         game = childSnapshot.child("game").getValue(Game.class);
                         playerNumber = 1;
                         curPlayer = player1;
+                        opponentPlayer = player0;
                     }
 
                 }
@@ -234,6 +236,9 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
+        // show opponent name
+        showOpponentInfo();
+        // move to next stage
         nextStage();
         // show current question
         showCurrentQuestion();
@@ -244,6 +249,9 @@ public class GameActivity extends AppCompatActivity {
     private void initGame(){
         game = new Game(GAME_OPERATION, GAME_LEVEL,GAME_MODE,1,0);
 
+        // hide online game info
+        hideOpponentInfo();
+        // move to next stage
         nextStage();
         // show current question
         showCurrentQuestion();
@@ -351,6 +359,18 @@ public class GameActivity extends AppCompatActivity {
         m3.setVisibility(View.INVISIBLE);
         m4.setVisibility(View.INVISIBLE);
         m5.setVisibility(View.INVISIBLE);
+    }
+
+    private void showOpponentInfo() {
+        opponentName = findViewById(R.id.tvCompetitorName);
+        opponentName.setText(opponentPlayer.getUsername());
+        findViewById(R.id.tvCompetitorTitle).setVisibility(View.VISIBLE);
+        opponentName.setVisibility(View.VISIBLE);
+    }
+
+    private void hideOpponentInfo() {
+        findViewById(R.id.tvCompetitorTitle).setVisibility(View.INVISIBLE);
+        opponentName.setVisibility(View.INVISIBLE);
     }
 
     private void showAllMonsters() {
