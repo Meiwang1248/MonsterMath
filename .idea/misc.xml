@@ -4,13 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/ruiil/Documents/NEU/5520/MonsterMath/app/src/main/res/layout/activity_dialog.xml" value="0.3038949275362319" />
-        <entry key="app/src/main/res/layout/acitivity_game.xml" value="0.3" />
+        <entry key="app/src/main/res/layout/acitivity_game.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_game_setting.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.21920289855072464" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.28072916666666664" />
         <entry key="app/src/main/res/layout/activity_score_board.xml" value="0.3015625" />
         <entry key="app/src/main/res/layout/activity_start.xml" value="0.21920289855072464" />
         <entry key="app/src/main/res/layout/score_item.xml" value="0.28072916666666664" />
+        <entry key="app/src/main/res/layout/test.xml" value="0.28072916666666664" />
       </map>
     </option>
   </component>
