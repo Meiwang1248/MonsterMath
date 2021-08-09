@@ -28,10 +28,12 @@
 
         <Button
             android:id="@+id/btnSettingLogout"
-            android:layout_width="127dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="300dp"
+            android:fontFamily="casual"
+            android:textStyle="bold"
             android:text="@string/setting_button_logout" />
 
         <TableLayout

@@ -112,6 +112,17 @@ public class GameSettingActivity extends AppCompatActivity {
                 openScoreBoard();
             }
         });
+        
+        btnLogout = findViewById(R.id.btnSettingLogout);
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+            }
+        });
+    }
+
+    private void logOut() {
     }
 
     private void openGameActivity() {
