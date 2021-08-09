@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class GameSettingActivity extends AppCompatActivity {
     MaterialButtonToggleGroup tgBtnGrpOperation, tgBtnGrpLevel, tgBtnGrpMode;
     Button btnLogout, btnSettingDone, btnScoreBoard;
     String gameOperation, gameLevel;
     boolean gameMode;
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,8 +125,15 @@ public class GameSettingActivity extends AppCompatActivity {
     }
 
     private void logOut() {
+        auth = FirebaseAuth.getInstance();
+        auth.signOut();
+        openStartActivity();
     }
 
+    private void openStartActivity() {
+        Intent intent = new Intent(this, StartActivity.class);
+        startActivity(intent);
+    }
     private void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("GAME_OPERATION", gameOperation);
