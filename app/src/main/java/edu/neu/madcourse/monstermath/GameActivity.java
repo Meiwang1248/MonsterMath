@@ -43,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
     // textviews
     private TextView question, score, time;
-    private int seconds = 0;
+    private int seconds;
 
     // game settings
     static String GAME_LEVEL, GAME_OPERATION;
@@ -251,7 +251,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void initGame(){
         game = new Game(GAME_OPERATION, GAME_LEVEL,GAME_MODE,1,0);
-
+        // Start the timer
+        turnOnTimer();
         nextStage();
         // show current question
         showCurrentQuestion();
@@ -339,7 +340,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void nextStage() {
         // get all monsters back and renew the time
-        turnOnTimer();
+        seconds = 0;
         showAllMonsters();
         game.generateOneStage();
         score.setText("Score: " + game.score);
@@ -539,7 +540,7 @@ public class GameActivity extends AppCompatActivity {
                 time.setText("TIME: "+ seconds);
                 seconds++;
             }
-        }, 1000, 1000);
+        }, 500, 1000);
     }
 
 }
