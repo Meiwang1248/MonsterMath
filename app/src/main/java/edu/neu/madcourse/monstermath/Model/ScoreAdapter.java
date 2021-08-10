@@ -51,9 +51,9 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
         Score score = scoreList.get(position);
 
         // Set item views based on views and data model
-        holder.username.setText(score.getUsername());
-        holder.score.setText(String.valueOf(score.getScore()));
-        holder.rank.setText(String.valueOf(holder.getAdapterPosition() + 1));
+        holder.username.setText(score.getUsername().trim());
+        holder.score.setText(String.valueOf(score.getScore()).trim());
+        holder.rank.setText(String.valueOf(holder.getAdapterPosition() + 1).trim());
     }
 
     @Override
