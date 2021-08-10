@@ -16,13 +16,13 @@ import edu.neu.madcourse.monstermath.R;
 public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView username;
-        public TextView score;
+        public TextView username, score, rank;
 
         public ViewHolder(View itemView) {
             super(itemView);
             username = itemView.findViewById(R.id.tvScoreUsername);
             score = itemView.findViewById(R.id.tvScoreMark);
+            rank = itemView.findViewById(R.id.tvScoreRank);
         }
     }
 
@@ -53,6 +53,7 @@ public class ScoreAdapter extends RecyclerView.Adapter<ScoreAdapter.ViewHolder> 
         // Set item views based on views and data model
         holder.username.setText(score.getUsername());
         holder.score.setText(String.valueOf(score.getScore()));
+        holder.rank.setText(String.valueOf(50 - holder.getAdapterPosition()));
     }
 
     @Override
