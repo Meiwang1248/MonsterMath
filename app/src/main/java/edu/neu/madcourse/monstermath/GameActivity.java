@@ -5,10 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -284,8 +281,6 @@ public class GameActivity extends AppCompatActivity {
 
             //sound effect and shows a party popper
             sound.playHappySound();
-
-            //TODO: add firework indicating user gets the right answer
             fadeOutAndHideImage((ImageView) findViewById(R.id.party_popper));
 
 
@@ -300,8 +295,7 @@ public class GameActivity extends AppCompatActivity {
             // add current score to online game database
             if (GAME_MODE == false) {
                 curPlayer.setScore(game.score);
-                rootDatabaseRef = FirebaseDatabase.getInstance().getReference("Matches");
-                rootDatabaseRef.child(matchId).child("player"+playerNumber).setValue(curPlayer);
+                rootDatabaseRef.child("Matches").child(matchId).child("player"+playerNumber).setValue(curPlayer);
             }
 
             if (game.curStage < 10) {
@@ -388,6 +382,7 @@ public class GameActivity extends AppCompatActivity {
         question.setVisibility(View.INVISIBLE);
 
         if (GAME_MODE) {
+            changeOnlineGameoverStatus();
             showSoloGameResult();
         } else {
             showOnlineGameResult();
@@ -401,27 +396,32 @@ public class GameActivity extends AppCompatActivity {
         storeGameScore();
     }
 
-    private void showSoloGameResult() {
-        openDialog(game.getCurScore());
+    private void changeOnlineGameoverStatus() {
+        curPlayer.setGameOver(true);
+        rootDatabaseRef.child("Matches").child(matchId).child("player"+playerNumber).setValue(curPlayer);
     }
 
-    private void openDialog(int gameScore) {
-        Dialog dialog = new Dialog(gameScore, personalBestFlag);
-        dialog.show(getSupportFragmentManager(), "result");
+    private void showSoloGameResult() {
+        openGameResultDialog(game.getCurScore());
+    }
+
+    private void openGameResultDialog(int gameScore) {
+        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag);
+        gameResultDialog.show(getSupportFragmentManager(), "result");
     }
 
     private void showOnlineGameResult() {
-        rootDatabaseRef = FirebaseDatabase.getInstance().getReference("Matches");
-        rootDatabaseRef.child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Matches").child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
                     opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
 
                     // check if the current player has higher score
-                    if (!opponentPlayer.isGameOver()) {
+                    while (!opponentPlayer.isGameOver()) {
                         Toast.makeText(GameActivity.this, "Waiting for your opponent to finish game!", Toast.LENGTH_LONG).show();
                     }
+                    // when both player finishes
                     if (game.score > opponentPlayer.getScore()) {
                         Toast.makeText(GameActivity.this, "Your win!", Toast.LENGTH_LONG).show();
                     } else if (game.score == opponentPlayer.getScore()) {
@@ -429,6 +429,8 @@ public class GameActivity extends AppCompatActivity {
                     } else {
                         Toast.makeText(GameActivity.this, "You lose!", Toast.LENGTH_LONG).show();
                     }
+                    // destroy current match
+                    rootDatabaseRef.child("Matches").child(matchId).removeValue();
                 }
             }
 

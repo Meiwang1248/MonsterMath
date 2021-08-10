@@ -86,6 +86,9 @@ public class MatchingActivity extends AppCompatActivity {
         matchmaker = dbReference.getKey();
         final String newMatchmaker = matchmaker;
 
+
+        openMatchingResultDialog(false, "", matchmaker);
+
 //        mMatchmaker.runTransaction(new Transaction.Handler() {
 //            @Override
 //            public Transaction.Result doTransaction(MutableData mutableData) {
@@ -121,10 +124,14 @@ public class MatchingActivity extends AppCompatActivity {
         mMatchmaker.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String matchmaker = dataSnapshot.getKey();
-                Log.d(TAG, "mMatchmaker: " + matchmaker);
-
-                findMatchSecondArriver(matchmaker);
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    if (!snapshot.child("player1").exists()) {
+                        final String matchmaker = dataSnapshot.getKey();
+                        String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
+                        Log.d(TAG, "mMatchmaker: " + matchmaker);
+                        findMatchSecondArriver(matchmaker, opponentName);
+                    }
+                }
             }
 
             @Override
@@ -133,10 +140,15 @@ public class MatchingActivity extends AppCompatActivity {
             }
         });
 
+    }
 
-        // open game activity
-        //openGameActivity();
-
+    private void openMatchingResultDialog(boolean matchingDone, String opponentName, String matchId) {
+        MatchingResultDialog matchingResultDialog = new MatchingResultDialog(GAME_OPERATION,
+                GAME_LEVEL,
+                opponentName,
+                matchingDone,
+                matchId);
+        matchingResultDialog.show(getSupportFragmentManager(), "matching");
     }
 
     private void getUsername() {
@@ -168,7 +180,7 @@ public class MatchingActivity extends AppCompatActivity {
      * itself to the game, so that player0 gets a notification that the game was joined.
      * @param matchmaker
      */
-    private void findMatchSecondArriver(final String matchmaker) {
+    private void findMatchSecondArriver(final String matchmaker, String opponentName) {
         // get game settings
         mMatchmaker.child(matchmaker).child("game").addValueEventListener(new ValueEventListener() {
             @Override
@@ -184,6 +196,7 @@ public class MatchingActivity extends AppCompatActivity {
 
             }
         });
+
         mMatchmaker.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -200,9 +213,9 @@ public class MatchingActivity extends AppCompatActivity {
             public void onComplete(DatabaseError databaseError, boolean committed,
                                    DataSnapshot dataSnapshot) {
                 if (committed) {
-                    DatabaseReference gameReference = mMatchmaker.child(matchmaker);
                     // add the second player to Matching database
-                    gameReference.child("player1").setValue(new Player(usernameStr, 0));
+                    mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
+                    openMatchingResultDialog(true, opponentName, matchmaker);
                 }
             }
         });
@@ -211,7 +224,8 @@ public class MatchingActivity extends AppCompatActivity {
     private void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("GAME_OPERATION", GAME_OPERATION);
-        intent.putExtra("GAME_LEVEL", false);
+        intent.putExtra("GAME_LEVEL", GAME_LEVEL);
+        intent.putExtra("GAME_MODE", false);
         startActivity(intent);
     }
 

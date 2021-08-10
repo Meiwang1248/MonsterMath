@@ -1,7 +1,5 @@
 package edu.neu.madcourse.monstermath;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,13 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 
-public class Dialog extends AppCompatDialogFragment {
+public class GameResultDialog extends AppCompatDialogFragment {
 
     private TextView scoreMessageView, tvPersonalBestNotification;
     private Button btnBackToGameSetting;
@@ -24,7 +21,7 @@ public class Dialog extends AppCompatDialogFragment {
     private boolean personalBestFlag;
 
     //constructor
-    public Dialog(int gameScore, boolean personalBestFlag){
+    public GameResultDialog(int gameScore, boolean personalBestFlag){
 
         this.gameScore = gameScore;
         this.personalBestFlag = personalBestFlag;
@@ -35,7 +32,7 @@ public class Dialog extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.activity_dialog, null);
+        View view = inflater.inflate(R.layout.activity_game_result_dialog, null);
 
         // set score message
         scoreMessageView = view.findViewById(R.id.scoreMessage);
