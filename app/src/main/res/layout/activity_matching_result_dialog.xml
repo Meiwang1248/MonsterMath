@@ -26,6 +26,16 @@
             android:layout_height="wrap_content"
             android:text="Waiting for others to join..." />
 
+        <Button
+            android:id="@+id/btnCancelMatching"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/colorPrimary"
+            android:fontFamily="casual"/>
+
     </LinearLayout>
 
     <LinearLayout

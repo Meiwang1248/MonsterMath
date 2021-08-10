@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MatchingResultDialog extends AppCompatDialogFragment {
     private LinearLayout layoutMatchingRunning, layoutMatchingDone;
     private TextView tvMatchingResultTitle, tvMatchingOpponentInfo;
-    private Button btnStartOnlineGame;
+    private Button btnStartOnlineGame, btnCancelMatching;
     private String operation, level, opponentName, matchId;
     private boolean matchingDone;
 
@@ -44,6 +44,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         tvMatchingOpponentInfo = view.findViewById(R.id.tvMatchingOpponentInfo);
         tvMatchingResultTitle = view.findViewById(R.id.tvMatchingResultTitle);
         btnStartOnlineGame = view.findViewById(R.id.btnStartOnlineGame);
+        btnCancelMatching = view.findViewById(R.id.btnCancelMatching);
 
         if (matchingDone) {
             showMatchingDone();
@@ -56,11 +57,14 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         btnStartOnlineGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (matchingDone) {
-                    openGameActivity();
-                } else {
-                    cancelMatching();
-                }
+                openGameActivity();
+            }
+        });
+
+        btnCancelMatching.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelMatching();
             }
         });
 
@@ -79,14 +83,11 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         // set matching info
         tvMatchingResultTitle.setText("Match found!");
         tvMatchingOpponentInfo.setText("You are playing against: " + opponentName);
-        btnStartOnlineGame.setText("Start Competition!");
     }
 
     private void showMatchingRunning() {
         layoutMatchingDone.setVisibility(View.INVISIBLE);
         layoutMatchingRunning.setVisibility(View.VISIBLE);
-        btnStartOnlineGame.setText("Cancel");
-        btnStartOnlineGame.setVisibility(View.VISIBLE);
     }
     @Override
     public void onStart() {
