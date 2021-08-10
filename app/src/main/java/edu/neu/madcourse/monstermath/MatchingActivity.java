@@ -86,28 +86,27 @@ public class MatchingActivity extends AppCompatActivity {
         matchmaker = dbReference.getKey();
         final String newMatchmaker = matchmaker;
 
-        mMatchmaker.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                if (mutableData.getValue(String.class).equals(NONE)) {
-                    mutableData.setValue(newMatchmaker);
-                    return Transaction.success(mutableData);
-                }
-                // someone beat us to posting a game, so fail and retry later
-                return Transaction.abort();
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean commit, DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(),
-                        commit ? "transaction success" : "transaction failed",
-                        Toast.LENGTH_SHORT).show();
-                if (!commit) {
-                    // we failed to post the game, so destroy the game so we don't leave trash.
-                    dbReference.removeValue();
-                }
-            }
-        });
+//        mMatchmaker.runTransaction(new Transaction.Handler() {
+//            @Override
+//            public Transaction.Result doTransaction(MutableData mutableData) {
+//                if (mutableData.getKey().equals(NONE)) {
+//                    return Transaction.success(mutableData);
+//                }
+//                // someone beat us to posting a game, so fail and retry later
+//                return Transaction.abort();
+//            }
+//
+//            @Override
+//            public void onComplete(DatabaseError databaseError, boolean commit, DataSnapshot dataSnapshot) {
+//                Toast.makeText(getApplicationContext(),
+//                        commit ? "transaction success" : "transaction failed",
+//                        Toast.LENGTH_SHORT).show();
+//                if (!commit) {
+//                    // we failed to post the game, so destroy the game so we don't leave trash.
+//                    dbReference.removeValue();
+//                }
+//            }
+//        });
     }
 
     private void getGameSettings() {
@@ -122,7 +121,7 @@ public class MatchingActivity extends AppCompatActivity {
         mMatchmaker.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                final String matchmaker = dataSnapshot.getValue(String.class);
+                final String matchmaker = dataSnapshot.getKey();
                 Log.d(TAG, "mMatchmaker: " + matchmaker);
 
                 findMatchSecondArriver(matchmaker);
@@ -134,8 +133,9 @@ public class MatchingActivity extends AppCompatActivity {
             }
         });
 
+
         // open game activity
-        openGameActivity();
+        //openGameActivity();
 
     }
 
@@ -169,9 +169,25 @@ public class MatchingActivity extends AppCompatActivity {
      * @param matchmaker
      */
     private void findMatchSecondArriver(final String matchmaker) {
+        // get game settings
+        mMatchmaker.child(matchmaker).child("game").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Game newGame = snapshot.getValue(Game.class);
+                GAME_LEVEL = newGame.getDifficultyLevel();
+                GAME_OPERATION = newGame.getOperation();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         mMatchmaker.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
+                String test = mutableData.getValue(String.class);
                 if (mutableData.getValue(String.class).equals(matchmaker)) {
                     mutableData.setValue(NONE);
                     return Transaction.success(mutableData);
@@ -194,8 +210,11 @@ public class MatchingActivity extends AppCompatActivity {
 
     private void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("GAME_OPERATION", GAME_OPERATION);
+        intent.putExtra("GAME_LEVEL", false);
         startActivity(intent);
     }
+
 
     private void hideSystemUI() {
         View decorView = getWindow().getDecorView();
