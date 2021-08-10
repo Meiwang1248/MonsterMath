@@ -64,10 +64,9 @@
             android:columnCount="6"
             android:rowCount="2">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_row="0"
                 android:layout_column="0"
                 android:layout_columnWeight="3"
@@ -78,28 +77,28 @@
                 <ImageView
                     android:id="@+id/ivMonster1"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.8"
-                    app:srcCompat="@drawable/monster6"/>
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/monster1"/>
 
                 <Button
                     android:id="@+id/btnAnswer1"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_gravity="center"
                     android:text="Button"
                     android:fontFamily="casual"
+                    android:textSize="20sp"
                     android:backgroundTint="@color/white"
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_row="0"
                 android:layout_column="3"
                 android:layout_columnWeight="3"
@@ -110,15 +109,16 @@
                 <ImageView
                     android:id="@+id/ivMonster2"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_height="match_parent"
                     app:srcCompat="@drawable/monster2"/>
 
                 <Button
                     android:id="@+id/btnAnswer2"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="20sp"
                     android:layout_gravity="center"
                     android:text="Button"
                     android:fontFamily="casual"
@@ -126,12 +126,11 @@
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_row="1"
                 android:layout_column="0"
                 android:layout_columnWeight="2"
@@ -142,15 +141,16 @@
                 <ImageView
                     android:id="@+id/ivMonster3"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_height="match_parent"
                     app:srcCompat="@drawable/monster3" />
 
                 <Button
                     android:id="@+id/btnAnswer3"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="20sp"
                     android:layout_gravity="center"
                     android:text="Button"
                     android:fontFamily="casual"
@@ -158,12 +158,11 @@
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_row="1"
                 android:layout_column="2"
                 android:layout_columnWeight="2"
@@ -174,15 +173,16 @@
                 <ImageView
                     android:id="@+id/ivMonster4"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/monster4" />
 
                 <Button
                     android:id="@+id/btnAnswer4"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="20sp"
                     android:layout_gravity="center"
                     android:text="Button"
                     android:fontFamily="casual"
@@ -190,12 +190,11 @@
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 android:layout_row="1"
                 android:layout_column="4"
                 android:layout_columnWeight="2"
@@ -206,15 +205,16 @@
                 <ImageView
                     android:id="@+id/ivMonster5"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content"
                     app:srcCompat="@drawable/monster5" />
 
                 <Button
                     android:id="@+id/btnAnswer5"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="20sp"
                     android:layout_gravity="center"
                     android:text="Button"
                     android:fontFamily="casual"
@@ -222,7 +222,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textStyle="bold"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         </GridLayout>
 
@@ -337,10 +337,11 @@
 
     <ImageView
         android:id="@+id/party_popper"
-        android:layout_width="180dp"
+        android:layout_width="120dp"
         android:layout_height="180dp"
         android:layout_centerInParent="true"
         android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
         app:srcCompat="@drawable/party_popper2" />
 </RelativeLayout>
 
