@@ -86,6 +86,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         layoutMatchingDone.setVisibility(View.INVISIBLE);
         layoutMatchingRunning.setVisibility(View.VISIBLE);
         btnStartOnlineGame.setText("Cancel");
+        btnStartOnlineGame.setVisibility(View.VISIBLE);
     }
     @Override
     public void onStart() {
