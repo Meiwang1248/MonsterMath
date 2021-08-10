@@ -20,7 +20,8 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
                 android:textColor="@color/colorPrimary"
                 android:id="@+id/tvScoreRank"
                 android:fontFamily="casual"
+                android:text="rank"
                 android:textSize="16sp"/>
 
             <TextView
@@ -38,6 +40,7 @@
                 android:textColor="@color/colorPrimary"
                 android:id="@+id/tvScoreMark"
                 android:fontFamily="casual"
+                android:text="score"
                 android:textSize="16sp"/>
 
             <TextView
@@ -47,6 +50,7 @@
                 android:textColor="@color/colorPrimary"
                 android:id="@+id/tvScoreUsername"
                 android:fontFamily="casual"
+                android:text="username"
                 android:textSize="16sp"/>
 
         </TableRow>
