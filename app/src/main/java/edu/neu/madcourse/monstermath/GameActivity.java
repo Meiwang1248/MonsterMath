@@ -464,7 +464,14 @@ public class GameActivity extends AppCompatActivity {
 
     private void installListeners() {
 
+        // add onClick listener for button and image view
         option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option1, m1);
+            }
+        });
+        m1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validateAnswer(option1, m1);
@@ -477,8 +484,20 @@ public class GameActivity extends AppCompatActivity {
                 validateAnswer(option2, m2);
             }
         });
+        m2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option2, m2);
+            }
+        });
 
         option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option3, m3);
+            }
+        });
+        m3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validateAnswer(option3, m3);
@@ -491,8 +510,20 @@ public class GameActivity extends AppCompatActivity {
                 validateAnswer(option4, m4);
             }
         });
+        m4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option4, m4);
+            }
+        });
 
         option5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                validateAnswer(option5, m5);
+            }
+        });
+        m5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 validateAnswer(option5, m5);
