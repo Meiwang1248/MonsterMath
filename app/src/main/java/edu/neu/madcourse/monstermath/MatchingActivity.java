@@ -26,6 +26,8 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 import edu.neu.madcourse.monstermath.Model.Player;
@@ -109,6 +111,7 @@ public class MatchingActivity extends AppCompatActivity {
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
 
+        onShake();
     }
 
     @Override
@@ -128,41 +131,18 @@ public class MatchingActivity extends AppCompatActivity {
     private void createNewGame() {
         String matchmaker;
 
-        // create a new child
+        // create a new match
         final DatabaseReference dbReference = mMatchmaker.push();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("player0", new Player(usernameStr, 0));
         hashMap.put("game", new Game(GAME_OPERATION, GAME_LEVEL, false, 1));
-        hashMap.put("player1", null);
         dbReference.setValue(hashMap);
 
+        // get match id
         matchmaker = dbReference.getKey();
-        final String newMatchmaker = matchmaker;
 
-
-        openMatchingResultDialog(false, "", matchmaker);
-
-//        mMatchmaker.runTransaction(new Transaction.Handler() {
-//            @Override
-//            public Transaction.Result doTransaction(MutableData mutableData) {
-//                if (mutableData.getKey().equals(NONE)) {
-//                    return Transaction.success(mutableData);
-//                }
-//                // someone beat us to posting a game, so fail and retry later
-//                return Transaction.abort();
-//            }
-//
-//            @Override
-//            public void onComplete(DatabaseError databaseError, boolean commit, DataSnapshot dataSnapshot) {
-//                Toast.makeText(getApplicationContext(),
-//                        commit ? "transaction success" : "transaction failed",
-//                        Toast.LENGTH_SHORT).show();
-//                if (!commit) {
-//                    // we failed to post the game, so destroy the game so we don't leave trash.
-//                    dbReference.removeValue();
-//                }
-//            }
-//        });
+        // open matching result dialog
+        openMatchingResultDialog(false, matchmaker);
     }
 
     private void onShake() {
@@ -186,11 +166,20 @@ public class MatchingActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    // if match is not done
                     if (!snapshot.child("player1").exists()) {
+                        // get match id
                         final String matchmaker = dataSnapshot.getKey();
+                        // get opponent player
                         String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
-                        Log.d(TAG, "mMatchmaker: " + matchmaker);
-                        findMatchSecondArriver(matchmaker, opponentName);
+                        // create new player
+                        mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
+                        // get game settings
+                        Game newGame = snapshot.child("game").getValue(Game.class);
+                        GAME_LEVEL = newGame.getDifficultyLevel();
+                        GAME_OPERATION = newGame.getOperation();
+                        // open matching result dialog
+                        openMatchingResultDialog(true, opponentName, matchmaker);
                     }
                 }
             }
@@ -207,6 +196,14 @@ public class MatchingActivity extends AppCompatActivity {
         MatchingResultDialog matchingResultDialog = new MatchingResultDialog(GAME_OPERATION,
                 GAME_LEVEL,
                 opponentName,
+                matchingDone,
+                matchId);
+        matchingResultDialog.show(getSupportFragmentManager(), "matching");
+    }
+
+    private void openMatchingResultDialog(boolean matchingDone, String matchId) {
+        MatchingResultDialog matchingResultDialog = new MatchingResultDialog(GAME_OPERATION,
+                GAME_LEVEL,
                 matchingDone,
                 matchId);
         matchingResultDialog.show(getSupportFragmentManager(), "matching");
@@ -234,62 +231,6 @@ public class MatchingActivity extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * The second arriver needs atomically (i.e., with a transcation) verify that the game is
-     * still available to join and then remove the game from the matchmaker.  It then adds
-     * itself to the game, so that player0 gets a notification that the game was joined.
-     * @param matchmaker
-     */
-    private void findMatchSecondArriver(final String matchmaker, String opponentName) {
-        // get game settings
-        mMatchmaker.child(matchmaker).child("game").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Game newGame = snapshot.getValue(Game.class);
-                GAME_LEVEL = newGame.getDifficultyLevel();
-                GAME_OPERATION = newGame.getOperation();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-        mMatchmaker.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                String test = mutableData.getValue(String.class);
-                if (mutableData.getValue(String.class).equals(matchmaker)) {
-                    mutableData.setValue(NONE);
-                    return Transaction.success(mutableData);
-                }
-                // someone beat us to joining this game, so fail and retry later
-                return Transaction.abort();
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean committed,
-                                   DataSnapshot dataSnapshot) {
-                if (committed) {
-                    // add the second player to Matching database
-                    mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
-                    openMatchingResultDialog(true, opponentName, matchmaker);
-                }
-            }
-        });
-    }
-
-    private void openGameActivity() {
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("GAME_OPERATION", GAME_OPERATION);
-        intent.putExtra("GAME_LEVEL", GAME_LEVEL);
-        intent.putExtra("GAME_MODE", false);
-        startActivity(intent);
-    }
-
 
     private void hideSystemUI() {
         View decorView = getWindow().getDecorView();

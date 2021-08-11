@@ -10,10 +10,19 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
+
+import edu.neu.madcourse.monstermath.Model.Player;
 
 public class MatchingResultDialog extends AppCompatDialogFragment {
     private LinearLayout layoutMatchingRunning, layoutMatchingDone;
@@ -21,14 +30,22 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
     private Button btnStartOnlineGame, btnCancelMatching;
     private String operation, level, opponentName, matchId;
     private boolean matchingDone;
+    DatabaseReference rootFirebaseRef;
 
-    //constructor
+    //constructors
     public MatchingResultDialog(String operation, String level, String opponentName, boolean matchingDone, String matchId) {
         this.operation = operation;
         this.level = level;
         this.opponentName = opponentName;
         this.matchingDone = matchingDone;
         this.matchId = matchId;
+    }
+
+    public MatchingResultDialog(String operation, String level, boolean matchingDone, String matchId) {
+        this.operation = operation;
+        this.level = level;
+        this.matchId = matchId;
+        this.matchingDone = matchingDone;
     }
 
     @Override
@@ -38,6 +55,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.activity_matching_result_dialog, null);
 
+        rootFirebaseRef = FirebaseDatabase.getInstance().getReference();
         // set visibility for layouts
         layoutMatchingRunning = view.findViewById(R.id.layoutMatchingRunning);
         layoutMatchingDone = view.findViewById(R.id.layoutMatchingDone);
@@ -51,7 +69,6 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         } else {
             showMatchingRunning();
         }
-
 
         // set start online game button
         btnStartOnlineGame.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +90,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
     }
 
     private void cancelMatching() {
-        FirebaseDatabase.getInstance().getReference().child("Matches").child(matchId).removeValue();
+        rootFirebaseRef.child("Matches").child(matchId).removeValue();
         startActivity(new Intent(getContext(), GameSettingActivity.class));
     }
 
@@ -88,6 +105,24 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
     private void showMatchingRunning() {
         layoutMatchingDone.setVisibility(View.INVISIBLE);
         layoutMatchingRunning.setVisibility(View.VISIBLE);
+        // show matching result as soon as matching done
+        rootFirebaseRef.child("Matches")
+                .child(matchId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                if (snapshot.child("player1").exists()) {
+                    // get opponent name
+                    opponentName = snapshot.child("player1").getValue(Player.class).getUsername();
+                    // show matching done
+                    showMatchingDone();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+            }
+        });
     }
     @Override
     public void onStart() {
