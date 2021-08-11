@@ -3,9 +3,14 @@ package edu.neu.madcourse.monstermath;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +27,6 @@ import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.Random;
 
 import edu.neu.madcourse.monstermath.Model.Player;
 import edu.neu.madcourse.monstermath.Model.User;
@@ -43,18 +47,44 @@ public class MatchingActivity extends AppCompatActivity {
     User user;
     String usernameStr = "";
 
+    // Sensor settings
+    SensorManager mSensorManager;
+    private float mAccel; // acceleration apart from gravity
+    private float mAccelCurrent; // current acceleration including gravity
+    private float mAccelLast; // last acceleration including gravity
+
+    private final SensorEventListener mSensorListener = new SensorEventListener() {
+        @Override
+        public void onSensorChanged(SensorEvent event) {
+            float x = event.values[0];
+            float y = event.values[1];
+            float z = event.values[2];
+            mAccelLast = mAccelCurrent;
+            mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
+            float delta = mAccelCurrent - mAccelLast;
+            mAccel = mAccel * 0.9f + delta; // perform low-cut filter
+        }
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+        }
+    };
+
+
+    @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching);
+        hideSystemUI();
 
+        // link buttons
         btnCreateNewGame = findViewById(R.id.btnCreateNewGame);
         btnShakeToJoin = findViewById(R.id.btnShakeToJoin);
 
         getUsername();
         getGameSettings();
-
-        hideSystemUI();
 
         btnCreateNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,6 +100,29 @@ public class MatchingActivity extends AppCompatActivity {
             }
         });
 
+        // Sensor settings
+        mSensorManager = (SensorManager) getSystemService(Context.SEARCH_SERVICE);
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+        mAccel = 0.00f;
+        mAccelCurrent = SensorManager.GRAVITY_EARTH;
+        mAccelLast = SensorManager.GRAVITY_EARTH;
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSensorManager.registerListener(mSensorListener,
+                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+                SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
+    @Override
+    protected void onPause() {
+        mSensorManager.unregisterListener(mSensorListener);
+        super.onPause();
     }
 
     private void createNewGame() {
@@ -111,6 +164,14 @@ public class MatchingActivity extends AppCompatActivity {
 //            }
 //        });
     }
+
+    private void onShake() {
+        if (mAccel > 12) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Shake activity detected!", Toast.LENGTH_LONG);
+            toast.show();
+        }
+    }
+
 
     private void getGameSettings() {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
@@ -243,4 +304,5 @@ public class MatchingActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
+
 }
