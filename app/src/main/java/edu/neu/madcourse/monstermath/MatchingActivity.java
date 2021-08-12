@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Queue;
 
 import edu.neu.madcourse.monstermath.Model.Player;
 import edu.neu.madcourse.monstermath.Model.User;
@@ -134,9 +136,23 @@ public class MatchingActivity extends AppCompatActivity {
         // create a new match
         final DatabaseReference dbReference = mMatchmaker.push();
         HashMap<String, Object> hashMap = new HashMap<>();
+        Game newGame = new Game(GAME_OPERATION, GAME_LEVEL, false, 1);
         hashMap.put("player0", new Player(usernameStr, 0));
-        hashMap.put("game", new Game(GAME_OPERATION, GAME_LEVEL, false, 1));
+        hashMap.put("game", newGame);
         dbReference.setValue(hashMap);
+
+        // put questions, options, and correct answers in game
+        DatabaseReference dbGame = dbReference.child("game");
+        Queue<String> questionQueue = newGame.getQuestionQueue();
+        Queue<HashSet<Integer>> optionsQueue = newGame.getOptionsQueue();
+        Queue<Integer> correctOptionQueue = newGame.getCorrectOptionQueue();
+        for (int i = 1; i <= 10; i++) {
+            dbGame.child("questions").child("question" + i).setValue(questionQueue.remove());
+            dbGame.child("correctOptions").child("correctOption" + i).setValue(correctOptionQueue.remove());
+            for (int j = 1; j <= 5; j++) {
+                dbGame.child("options").child("options" + i).child("option" + j).setValue(optionsQueue.remove().toArray()[j]);
+            }
+        }
 
         // get match id
         matchmaker = dbReference.getKey();

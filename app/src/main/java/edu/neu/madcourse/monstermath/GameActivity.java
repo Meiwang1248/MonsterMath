@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView m1, m2, m3, m4, m5, partyPopper;
 
     // textviews
-    private TextView question, score, time;
+    private TextView tvQuestion, tvScore, tvTime, tvOpponentName;
     private int seconds;
 
     // game settings
@@ -107,9 +107,9 @@ public class GameActivity extends AppCompatActivity {
         });
 
         // connect TextViews and layout
-        question = findViewById(R.id.tvQuestion);
-        score = findViewById(R.id.tvScoreCount);
-        time = findViewById(R.id.tvTimeCount);
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvScore = findViewById(R.id.tvScoreCount);
+        tvTime = findViewById(R.id.tvTimeCount);
 
         if (GAME_MODE == true) {
             // get game settings
@@ -237,42 +237,44 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onlineGame() {
+        tvOpponentName = findViewById(R.id.tvCompetitorName);
+        // create new game
+        Game game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
+        game.questionQueue.clear();
+        game.correctOptionQueue.clear();
+        game.optionsQueue.clear();
+
         // find the match
         rootDatabaseRef.child("Matches").child(MATCH_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-//                    Player player0 = childSnapshot.child("player0").getValue(Player.class);
-//                    String player0Name = player0.getUsername();
-//                    Player player1 = childSnapshot.child("player1").getValue(Player.class);
-//                    String player1Name = player1.getUsername();
-//
-//                    // check if the current user exists in the game
-//                    if (usernameStr.equals(player0Name)) {
-//                        matchId = childSnapshot.getKey();
-//                        playerNumber = 0;
-//                        game = childSnapshot.child("game").getValue(Game.class);
-//                        curPlayer = player0;
-//                    } else if (usernameStr.equals(player1Name)) {
-//                        matchId = childSnapshot.getKey();
-//                        game = childSnapshot.child("game").getValue(Game.class);
-//                        playerNumber = 1;
-//                        curPlayer = player1;
-//                    }
-//
-//                }
 
-                game = snapshot.child("game").getValue(Game.class);
+                // retrieve questions and options
+                for (int i = 1; i <= 10; i++) {
+                    game.questionQueue.add(snapshot.child("game").child("questions").child("question" + i).getValue(String.class));
+                    game.correctOptionQueue.add(snapshot.child("game").child("correctOptions").child("correctOption" + i).getValue(Integer.class));
+                    HashSet<Integer> options = new HashSet<>();
+                    for (int j = 0; j < 5; j++) {
+                        options.add(snapshot.child("game").child("options").child("options"+i).child("option"+j).getValue(Integer.class));
+                    }
+                    game.optionsQueue.add(options);
+                }
+
                 Player player0 = snapshot.child("player0").getValue(Player.class);
                 String player0Name = player0.getUsername();
                 Player player1 = snapshot.child("player1").getValue(Player.class);
                 String player1Name = player1.getUsername();
+
                 if (usernameStr.equals(player0Name)) {
                         playerNumber = 0;
                         curPlayer = player0;
+                        opponentPlayer = player1;
+                        tvOpponentName.setText(opponentPlayer.getUsername());
                     } else if (usernameStr.equals(player1Name)) {
                         playerNumber = 1;
                         curPlayer = player1;
+                        opponentPlayer = player0;
+                        tvOpponentName.setText(opponentPlayer.getUsername());
                     }
             }
 
@@ -333,7 +335,7 @@ public class GameActivity extends AppCompatActivity {
                 game.score += getBonus();
             }
 
-            score.setText("Score: " + game.score);
+            tvScore.setText("Score: " + game.score);
 
             // add current score to online game database
             if (GAME_MODE == false) {
@@ -363,7 +365,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showCurrentQuestion() {
-        question.setText(game.curQuestion);
+        tvQuestion.setText(game.curQuestion);
     }
 
     private void showCurrentOptions() {
@@ -380,7 +382,7 @@ public class GameActivity extends AppCompatActivity {
         seconds = 0;
         showAllMonsters();
         game.generateOneStage();
-        score.setText("Score: " + game.score);
+        tvScore.setText("Score: " + game.score);
         // show current question
         showCurrentQuestion();
         // show current options
@@ -420,9 +422,9 @@ public class GameActivity extends AppCompatActivity {
         // Set most UI components invisible
         hideAllMonsters();
 
-        score.setVisibility(View.INVISIBLE);
-        time.setVisibility(View.INVISIBLE);
-        question.setVisibility(View.INVISIBLE);
+        tvScore.setVisibility(View.INVISIBLE);
+        tvTime.setVisibility(View.INVISIBLE);
+        tvQuestion.setVisibility(View.INVISIBLE);
 
         if (GAME_MODE) {
             showSoloGameResult();
@@ -613,7 +615,7 @@ public class GameActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                time.setText("TIME: "+ seconds);
+                tvTime.setText("TIME: "+ seconds);
                 seconds++;
             }
         }, 500, 1000);
