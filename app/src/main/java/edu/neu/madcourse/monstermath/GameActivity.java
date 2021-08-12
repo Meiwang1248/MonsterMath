@@ -468,8 +468,8 @@ public class GameActivity extends AppCompatActivity {
                 personalBestFlag,
                 GAME_MODE,
                 onlineGameFinished,
-                opponentNumber,
-                opponentPlayer.getUsername(),MATCH_ID);
+                opponentPlayer.getUsername(),
+                opponentNumber,MATCH_ID);
         gameResultDialog.show(getSupportFragmentManager(), "result");
     }
 
@@ -479,7 +479,12 @@ public class GameActivity extends AppCompatActivity {
      * @param opponentScore the opponent's total game score
      */
     private void openGameResultDialog(int gameScore, int opponentScore) {
-        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag, GAME_MODE, true, opponentPlayer.getUsername(), opponentScore);
+        GameResultDialog gameResultDialog = new GameResultDialog(gameScore,
+                personalBestFlag,
+                GAME_MODE,
+                true,
+                opponentPlayer.getUsername(),
+                opponentScore);
         gameResultDialog.show(getSupportFragmentManager(), "result");
     }
 
