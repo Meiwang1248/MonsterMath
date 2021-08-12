@@ -73,6 +73,7 @@ public class GameActivity extends AppCompatActivity {
         rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
         // get user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference test = rootDatabaseRef.child("Users").orderByChild("id").equalTo(firebaseUser.getUid()).getRef();
         rootDatabaseRef.child("Users").orderByChild("id")
                 .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
