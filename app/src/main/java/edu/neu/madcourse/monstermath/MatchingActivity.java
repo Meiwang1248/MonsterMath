@@ -150,7 +150,7 @@ public class MatchingActivity extends AppCompatActivity {
             dbGame.child("questions").child("question" + i).setValue(questionQueue.remove());
             dbGame.child("correctOptions").child("correctOption" + i).setValue(correctOptionQueue.remove());
             for (int j = 1; j <= 5; j++) {
-                dbGame.child("options").child("option" + i).child("option" + j).setValue(optionsQueue.remove().toArray()[j]);
+                dbGame.child("options").child("options" + i).child("option" + j).setValue(optionsQueue.remove().toArray()[j]);
             }
         }
 

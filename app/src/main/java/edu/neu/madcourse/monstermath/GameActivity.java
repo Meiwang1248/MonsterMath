@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -237,36 +238,33 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onlineGame() {
+        // create new game
+        Game game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
+        game.questionQueue.clear();
+        game.correctOptionQueue.clear();
+        game.optionsQueue.clear();
+
         // find the match
         rootDatabaseRef.child("Matches").child(MATCH_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-//                    Player player0 = childSnapshot.child("player0").getValue(Player.class);
-//                    String player0Name = player0.getUsername();
-//                    Player player1 = childSnapshot.child("player1").getValue(Player.class);
-//                    String player1Name = player1.getUsername();
-//
-//                    // check if the current user exists in the game
-//                    if (usernameStr.equals(player0Name)) {
-//                        matchId = childSnapshot.getKey();
-//                        playerNumber = 0;
-//                        game = childSnapshot.child("game").getValue(Game.class);
-//                        curPlayer = player0;
-//                    } else if (usernameStr.equals(player1Name)) {
-//                        matchId = childSnapshot.getKey();
-//                        game = childSnapshot.child("game").getValue(Game.class);
-//                        playerNumber = 1;
-//                        curPlayer = player1;
-//                    }
-//
-//                }
 
-                game = snapshot.child("game").getValue(Game.class);
+                // retrieve questions and options
+                for (int i = 1; i <= 10; i++) {
+                    game.questionQueue.add(snapshot.child("game").child("questions").child("question" + i).getValue(String.class));
+                    game.correctOptionQueue.add(snapshot.child("game").child("correctOptions").child("correctOption" + i).getValue(Integer.class));
+                    HashSet<Integer> options = new HashSet<>();
+                    for (int j = 0; j < 5; j++) {
+                        options.add(snapshot.child("game").child("options").child("options"+i).child("option"+j).getValue(Integer.class));
+                    }
+                    game.optionsQueue.add(options);
+                }
+
                 Player player0 = snapshot.child("player0").getValue(Player.class);
                 String player0Name = player0.getUsername();
                 Player player1 = snapshot.child("player1").getValue(Player.class);
                 String player1Name = player1.getUsername();
+
                 if (usernameStr.equals(player0Name)) {
                         playerNumber = 0;
                         curPlayer = player0;
