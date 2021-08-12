@@ -47,7 +47,7 @@ public class MatchingActivity extends AppCompatActivity {
     DatabaseReference mUsers = database.getReference("Users");
 
     User user;
-    String usernameStr = "";
+    String usernameStr= "";
 
     // Sensor settings
     SensorManager mSensorManager;
