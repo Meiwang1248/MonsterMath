@@ -30,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Queue;
 
 import edu.neu.madcourse.monstermath.Model.Player;
@@ -143,14 +144,22 @@ public class MatchingActivity extends AppCompatActivity {
 
         // put questions, options, and correct answers in game
         DatabaseReference dbGame = dbReference.child("game");
-        Queue<String> questionQueue = newGame.getQuestionQueue();
-        Queue<HashSet<Integer>> optionsQueue = newGame.getOptionsQueue();
-        Queue<Integer> correctOptionQueue = newGame.getCorrectOptionQueue();
+        Queue<String> questionQueue = newGame.questionQueue;
+        Queue<HashSet<Integer>> optionsQueue = newGame.optionsQueue;
+        Queue<Integer> correctOptionQueue = newGame.correctOptionQueue;
         for (int i = 1; i <= 10; i++) {
-            dbGame.child("questions").child("question" + i).setValue(questionQueue.remove());
-            dbGame.child("correctOptions").child("correctOption" + i).setValue(correctOptionQueue.remove());
-            for (int j = 1; j <= 5; j++) {
-                dbGame.child("options").child("options" + i).child("option" + j).setValue(optionsQueue.remove().toArray()[j]);
+            dbGame.child("questions")
+                    .child("question" + i)
+                    .setValue(questionQueue.remove());
+            dbGame.child("correctOptions")
+                    .child("correctOption" + i)
+                    .setValue(correctOptionQueue.remove());
+            Iterator iterator = optionsQueue.remove().iterator();
+            for (int j = 0; j < 5; j++) {
+                dbGame.child("options")
+                        .child("options" + i)
+                        .child("option" + j)
+                        .setValue(iterator.next());
             }
         }
 

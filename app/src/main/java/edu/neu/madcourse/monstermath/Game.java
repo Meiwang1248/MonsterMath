@@ -45,27 +45,27 @@ public class Game {
         generateQuestions();
     }
 
-    public Game(Queue<String> questionQueue, Queue<HashSet<Integer>> optionsQueue, Queue<Integer> correctOptionQueue) {
-        this.questionQueue = questionQueue;
-        this.optionsQueue = optionsQueue;
-        this.correctOptionQueue = correctOptionQueue;
-    }
+//    public Game(Queue<String> questionQueue, Queue<HashSet<Integer>> optionsQueue, Queue<Integer> correctOptionQueue) {
+//        this.questionQueue = questionQueue;
+//        this.optionsQueue = optionsQueue;
+//        this.correctOptionQueue = correctOptionQueue;
+//    }
 
     public Game() {
 
     }
-
-    public Queue<String> getQuestionQueue() {
-        return questionQueue;
-    }
-
-    public Queue<HashSet<Integer>> getOptionsQueue() {
-        return optionsQueue;
-    }
-
-    public Queue<Integer> getCorrectOptionQueue() {
-        return correctOptionQueue;
-    }
+//
+//    public Queue<String> getQuestionQueue() {
+//        return questionQueue;
+//    }
+//
+//    public Queue<HashSet<Integer>> getOptionsQueue() {
+//        return optionsQueue;
+//    }
+//
+//    public Queue<Integer> getCorrectOptionQueue() {
+//        return correctOptionQueue;
+//    }
 
     public String getOperation() {
         return operation;

@@ -239,13 +239,13 @@ public class GameActivity extends AppCompatActivity {
     private void onlineGame() {
         tvOpponentName = findViewById(R.id.tvCompetitorName);
         // create new game
-        Game game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
+        game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
         game.questionQueue.clear();
         game.correctOptionQueue.clear();
         game.optionsQueue.clear();
 
         // find the match
-        rootDatabaseRef.child("Matches").child(MATCH_ID).addValueEventListener(new ValueEventListener() {
+        rootDatabaseRef.child("Matches").child(MATCH_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
