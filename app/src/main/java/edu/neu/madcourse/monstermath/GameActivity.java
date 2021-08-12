@@ -481,18 +481,17 @@ public class GameActivity extends AppCompatActivity {
         rootDatabaseRef.child("Matches").child(MATCH_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                    // opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
 
-                    // check if the current player has higher score
-                    if (!childSnapshot.child("player" + (1 - playerNumber)).child("gameOver").getValue(Boolean.TYPE)) {
-                        openGameResultDialog(game.score, false);
-                    } else {
-                        int opponentPlayerScore = childSnapshot.child("player" + (1 - playerNumber)).child("score").getValue(Integer.class);
-                        openGameResultDialog(game.score, opponentPlayerScore);
-                        // destroy current match
-                        rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
-                    }
+                // opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
+
+                // check if the current player has higher score
+                if (!snapshot.child("player" + (1 - playerNumber)).child("gameOver").getValue(Boolean.TYPE)) {
+                    openGameResultDialog(game.score, false);
+                } else {
+                    int opponentPlayerScore = snapshot.child("player" + (1 - playerNumber)).child("score").getValue(Integer.class);
+                    openGameResultDialog(game.score, opponentPlayerScore);
+                    // destroy current match
+                    rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
                 }
             }
 
