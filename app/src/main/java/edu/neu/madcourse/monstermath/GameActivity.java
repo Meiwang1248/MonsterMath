@@ -463,7 +463,13 @@ public class GameActivity extends AppCompatActivity {
      * @param onlineGameFinished boolean value showing if the opponent in an online game has finished or not
      */
     private void openGameResultDialog(int gameScore, boolean onlineGameFinished) {
-        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag, GAME_MODE, onlineGameFinished, opponentPlayer.getUsername());
+        String opponentNumber = "player" + (1 - playerNumber);
+        GameResultDialog gameResultDialog = new GameResultDialog(gameScore,
+                personalBestFlag,
+                GAME_MODE,
+                onlineGameFinished,
+                opponentNumber,
+                opponentPlayer.getUsername(),MATCH_ID);
         gameResultDialog.show(getSupportFragmentManager(), "result");
     }
 

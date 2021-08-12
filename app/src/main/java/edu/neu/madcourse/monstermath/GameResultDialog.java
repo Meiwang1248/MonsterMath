@@ -11,8 +11,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 
 public class GameResultDialog extends AppCompatDialogFragment {
@@ -21,7 +29,7 @@ public class GameResultDialog extends AppCompatDialogFragment {
     private Button btnBackToGameSetting;
     private int gameScore, opponentScore;
     private boolean personalBestFlag, gameMode, onlineGameFinished;
-    private String opponentName;
+    private String opponentName, opponentNumber, matchID;
 
     //constructor
     public GameResultDialog(boolean gameMode, int gameScore, boolean personalBestFlag) {
@@ -30,21 +38,23 @@ public class GameResultDialog extends AppCompatDialogFragment {
         this.personalBestFlag = personalBestFlag;
     }
 
-    public GameResultDialog(int gameScore, boolean personalBestFlag, boolean gameMode, boolean onlineGameFinished, String opponentName) {
+    public GameResultDialog(int gameScore, boolean personalBestFlag, boolean gameMode, boolean onlineGameFinished, String opponentName, String opponentNumber, String matchID) {
         this.gameScore = gameScore;
         this.personalBestFlag = personalBestFlag;
         this.gameMode = gameMode;
         this.opponentName = opponentName;
         this.onlineGameFinished = onlineGameFinished;
+        this.matchID = matchID;
+        this.opponentNumber = opponentNumber;
     }
 
-    public GameResultDialog(int gameScore, boolean personalBestFlag, boolean gameMode, boolean onlineGameFinished, String opponentName, int oppoentScore) {
+    public GameResultDialog(int gameScore, boolean personalBestFlag, boolean gameMode, boolean onlineGameFinished, String opponentName, int opponentScore) {
         this.gameScore = gameScore;
         this.personalBestFlag = personalBestFlag;
         this.gameMode = gameMode;
         this.opponentName = opponentName;
         this.onlineGameFinished = onlineGameFinished;
-        this.opponentScore = oppoentScore;
+        this.opponentScore = opponentScore;
     }
 
     @Override
@@ -90,6 +100,24 @@ public class GameResultDialog extends AppCompatDialogFragment {
 
     private void onlineGameWaiting() {
         gameResultWaiting.setVisibility(View.VISIBLE);
+        FirebaseDatabase.getInstance().getReference()
+                .child("Matches")
+                .child(matchID)
+                .child(opponentNumber)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child("gameOver").getValue(Boolean.TYPE)) {
+                            opponentScore = snapshot.child("score").getValue(Integer.class);
+                            showOnlineGameResult();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
     }
 
     private void showOnlineGameResult() {
