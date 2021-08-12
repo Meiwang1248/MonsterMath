@@ -276,6 +276,15 @@ public class GameActivity extends AppCompatActivity {
                         opponentPlayer = player0;
                         tvOpponentName.setText(opponentPlayer.getUsername());
                     }
+
+                // turn on timer
+                turnOnTimer();
+                // initialize next stage
+                nextStage();
+                // show current question
+                showCurrentQuestion();
+                // show current options
+                showCurrentOptions();
             }
 
             @Override
@@ -283,12 +292,6 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
-
-        nextStage();
-        // show current question
-        showCurrentQuestion();
-        // show current options
-        showCurrentOptions();
     }
 
     private void initGame(){
