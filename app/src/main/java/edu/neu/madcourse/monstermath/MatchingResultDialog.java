@@ -135,6 +135,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         intent.putExtra("GAME_OPERATION", operation);
         intent.putExtra("GAME_LEVEL", level);
         intent.putExtra("GAME_MODE", false);
+        intent.putExtra("MATCH_ID", matchId);
         startActivity(intent);
     }
 

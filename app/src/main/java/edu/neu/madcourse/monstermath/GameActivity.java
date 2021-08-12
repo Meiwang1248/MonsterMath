@@ -48,6 +48,7 @@ public class GameActivity extends AppCompatActivity {
     static boolean GAME_MODE;
     private Game game;
     private boolean personalBestFlag = false;
+    static String MATCH_ID;
 
     // Firebase settings
     FirebaseUser firebaseUser;
@@ -56,7 +57,6 @@ public class GameActivity extends AppCompatActivity {
     String usernameStr;
 
     // Match settings
-    String matchId;
     int playerNumber;
     Player curPlayer;
     Player opponentPlayer;
@@ -93,8 +93,6 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
-        // get game settings
-        getGameSettings();
         // connect multiple choices and monsters to UI
         connectUIComponents();
         // install listeners to all multiple choices
@@ -114,8 +112,11 @@ public class GameActivity extends AppCompatActivity {
         time = findViewById(R.id.tvTimeCount);
 
         if (GAME_MODE == true) {
+            // get game settings
+            getGameSettings();
             initGame();
         } else {
+            getGameSettingOnline();
             onlineGame();
         }
 
@@ -128,6 +129,15 @@ public class GameActivity extends AppCompatActivity {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
         GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
         GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
+    }
+
+    private void getGameSettingOnline() {
+
+        GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
+        GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
+        GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
+        MATCH_ID = getIntent().getExtras().getString("MATCH_ID");
+
     }
 
     private void getUser() {
@@ -228,29 +238,42 @@ public class GameActivity extends AppCompatActivity {
 
     private void onlineGame() {
         // find the match
-        rootDatabaseRef.child("Matches").addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Matches").child(MATCH_ID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                    Player player0 = childSnapshot.child("player0").getValue(Player.class);
-                    String player0Name = player0.getUsername();
-                    Player player1 = childSnapshot.child("player1").getValue(Player.class);
-                    String player1Name = player1.getUsername();
+//                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+//                    Player player0 = childSnapshot.child("player0").getValue(Player.class);
+//                    String player0Name = player0.getUsername();
+//                    Player player1 = childSnapshot.child("player1").getValue(Player.class);
+//                    String player1Name = player1.getUsername();
+//
+//                    // check if the current user exists in the game
+//                    if (usernameStr.equals(player0Name)) {
+//                        matchId = childSnapshot.getKey();
+//                        playerNumber = 0;
+//                        game = childSnapshot.child("game").getValue(Game.class);
+//                        curPlayer = player0;
+//                    } else if (usernameStr.equals(player1Name)) {
+//                        matchId = childSnapshot.getKey();
+//                        game = childSnapshot.child("game").getValue(Game.class);
+//                        playerNumber = 1;
+//                        curPlayer = player1;
+//                    }
+//
+//                }
 
-                    // check if the current user exists in the game
-                    if (usernameStr.equals(player0Name)) {
-                        matchId = childSnapshot.getKey();
+                game = snapshot.child("game").getValue(Game.class);
+                Player player0 = snapshot.child("player0").getValue(Player.class);
+                String player0Name = player0.getUsername();
+                Player player1 = snapshot.child("player1").getValue(Player.class);
+                String player1Name = player1.getUsername();
+                if (usernameStr.equals(player0Name)) {
                         playerNumber = 0;
-                        game = childSnapshot.child("game").getValue(Game.class);
                         curPlayer = player0;
                     } else if (usernameStr.equals(player1Name)) {
-                        matchId = childSnapshot.getKey();
-                        game = childSnapshot.child("game").getValue(Game.class);
                         playerNumber = 1;
                         curPlayer = player1;
                     }
-
-                }
             }
 
             @Override
@@ -315,7 +338,7 @@ public class GameActivity extends AppCompatActivity {
             // add current score to online game database
             if (GAME_MODE == false) {
                 curPlayer.setScore(game.score);
-                rootDatabaseRef.child("Matches").child(matchId).child("player"+playerNumber).setValue(curPlayer);
+                rootDatabaseRef.child("Matches").child(MATCH_ID).child("player"+playerNumber).setValue(curPlayer);
             }
 
             if (game.curStage < 10) {
@@ -418,7 +441,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void changeOnlineGameoverStatus() {
         curPlayer.setGameOver(true);
-        rootDatabaseRef.child("Matches").child(matchId).child("player"+playerNumber).setValue(curPlayer);
+        rootDatabaseRef.child("Matches").child(MATCH_ID).child("player"+playerNumber).setValue(curPlayer);
     }
 
     private void showSoloGameResult() {
@@ -431,7 +454,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showOnlineGameResult() {
-        rootDatabaseRef.child("Matches").child(matchId).addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Matches").child(MATCH_ID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
@@ -450,7 +473,7 @@ public class GameActivity extends AppCompatActivity {
                         Toast.makeText(GameActivity.this, "You lose!", Toast.LENGTH_LONG).show();
                     }
                     // destroy current match
-                    rootDatabaseRef.child("Matches").child(matchId).removeValue();
+                    rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
                 }
             }
 

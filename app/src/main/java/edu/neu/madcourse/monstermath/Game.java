@@ -8,9 +8,9 @@ import java.util.Random;
 
 public class Game {
     // instance variables
-    final String operation; // + - * / mix
-    final String difficultyLevel; // easy medium hard
-    final boolean singleMode; // single player is true, else false
+    String operation; // + - * / mix
+    String difficultyLevel; // easy medium hard
+    boolean singleMode; // single player is true, else false
     int curStage; // single problem, like 2+3
     int score; // current score in this round
     Queue<String> questionQueue;
@@ -43,6 +43,16 @@ public class Game {
         this.curStage = curStage;
         this.score = 0;
         generateQuestions();
+    }
+
+    public Game(Queue<String> questionQueue, Queue<HashSet<Integer>> optionsQueue, Queue<Integer> correctOptionQueue) {
+        this.questionQueue = questionQueue;
+        this.optionsQueue = optionsQueue;
+        this.correctOptionQueue = correctOptionQueue;
+    }
+
+    public Game() {
+
     }
 
     public String getOperation() {
