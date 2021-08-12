@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -41,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView m1, m2, m3, m4, m5, partyPopper;
 
     // textviews
-    private TextView question, score, time;
+    private TextView tvQuestion, tvScore, tvTime, tvOpponentName;
     private int seconds;
 
     // game settings
@@ -108,9 +107,9 @@ public class GameActivity extends AppCompatActivity {
         });
 
         // connect TextViews and layout
-        question = findViewById(R.id.tvQuestion);
-        score = findViewById(R.id.tvScoreCount);
-        time = findViewById(R.id.tvTimeCount);
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvScore = findViewById(R.id.tvScoreCount);
+        tvTime = findViewById(R.id.tvTimeCount);
 
         if (GAME_MODE == true) {
             // get game settings
@@ -238,6 +237,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onlineGame() {
+        tvOpponentName = findViewById(R.id.tvCompetitorName);
         // create new game
         Game game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
         game.questionQueue.clear();
@@ -268,9 +268,13 @@ public class GameActivity extends AppCompatActivity {
                 if (usernameStr.equals(player0Name)) {
                         playerNumber = 0;
                         curPlayer = player0;
+                        opponentPlayer = player1;
+                        tvOpponentName.setText(opponentPlayer.getUsername());
                     } else if (usernameStr.equals(player1Name)) {
                         playerNumber = 1;
                         curPlayer = player1;
+                        opponentPlayer = player0;
+                        tvOpponentName.setText(opponentPlayer.getUsername());
                     }
             }
 
@@ -331,7 +335,7 @@ public class GameActivity extends AppCompatActivity {
                 game.score += getBonus();
             }
 
-            score.setText("Score: " + game.score);
+            tvScore.setText("Score: " + game.score);
 
             // add current score to online game database
             if (GAME_MODE == false) {
@@ -361,7 +365,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void showCurrentQuestion() {
-        question.setText(game.curQuestion);
+        tvQuestion.setText(game.curQuestion);
     }
 
     private void showCurrentOptions() {
@@ -378,7 +382,7 @@ public class GameActivity extends AppCompatActivity {
         seconds = 0;
         showAllMonsters();
         game.generateOneStage();
-        score.setText("Score: " + game.score);
+        tvScore.setText("Score: " + game.score);
         // show current question
         showCurrentQuestion();
         // show current options
@@ -418,9 +422,9 @@ public class GameActivity extends AppCompatActivity {
         // Set most UI components invisible
         hideAllMonsters();
 
-        score.setVisibility(View.INVISIBLE);
-        time.setVisibility(View.INVISIBLE);
-        question.setVisibility(View.INVISIBLE);
+        tvScore.setVisibility(View.INVISIBLE);
+        tvTime.setVisibility(View.INVISIBLE);
+        tvQuestion.setVisibility(View.INVISIBLE);
 
         if (GAME_MODE) {
             showSoloGameResult();
@@ -611,7 +615,7 @@ public class GameActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                time.setText("TIME: "+ seconds);
+                tvTime.setText("TIME: "+ seconds);
                 seconds++;
             }
         }, 500, 1000);
