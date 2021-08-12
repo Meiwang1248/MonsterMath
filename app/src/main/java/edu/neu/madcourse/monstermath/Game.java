@@ -55,6 +55,18 @@ public class Game {
 
     }
 
+    public Queue<String> getQuestionQueue() {
+        return questionQueue;
+    }
+
+    public Queue<HashSet<Integer>> getOptionsQueue() {
+        return optionsQueue;
+    }
+
+    public Queue<Integer> getCorrectOptionQueue() {
+        return correctOptionQueue;
+    }
+
     public String getOperation() {
         return operation;
     }
