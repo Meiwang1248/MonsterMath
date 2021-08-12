@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity {
     private ImageView m1, m2, m3, m4, m5, partyPopper;
 
     // textviews
-    private TextView tvQuestion, tvScore, tvTime, tvOpponentName;
+    private TextView tvQuestion, tvScore, tvTime, tvOpponentName, tvOpponentTitle;
     private int seconds;
 
     // game settings
@@ -98,19 +98,6 @@ public class GameActivity extends AppCompatActivity {
         // install listeners to all multiple choices
         installListeners();
 
-        homeButton = findViewById(R.id.btnCompeteHome);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GameActivity.this, GameSettingActivity.class));
-            }
-        });
-
-        // connect TextViews and layout
-        tvQuestion = findViewById(R.id.tvQuestion);
-        tvScore = findViewById(R.id.tvScoreCount);
-        tvTime = findViewById(R.id.tvTimeCount);
-
         if (GAME_MODE == true) {
             // get game settings
             getGameSettings();
@@ -120,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
             onlineGame();
         }
 
-        //sound effects
+        // add sound effects
         sound = new SoundEffects(this);
     }
 
@@ -237,7 +224,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void onlineGame() {
-        tvOpponentName = findViewById(R.id.tvCompetitorName);
         // create new game
         game = new Game(GAME_OPERATION, GAME_LEVEL, GAME_MODE, 1, 0);
         game.questionQueue.clear();
@@ -269,14 +255,15 @@ public class GameActivity extends AppCompatActivity {
                         playerNumber = 0;
                         curPlayer = player0;
                         opponentPlayer = player1;
-                        tvOpponentName.setText(opponentPlayer.getUsername());
                     } else if (usernameStr.equals(player1Name)) {
                         playerNumber = 1;
                         curPlayer = player1;
                         opponentPlayer = player0;
-                        tvOpponentName.setText(opponentPlayer.getUsername());
                     }
 
+                tvOpponentName.setText(opponentPlayer.getUsername());
+                // show opponent info
+                showOpponentInfo();
                 // turn on timer
                 turnOnTimer();
                 // initialize next stage
@@ -292,6 +279,16 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void showOpponentInfo() {
+        tvOpponentTitle.setVisibility(View.VISIBLE);
+        tvOpponentName.setVisibility(View.VISIBLE);
+    }
+
+    private void hideOpponentInfo() {
+        tvOpponentTitle.setVisibility(View.INVISIBLE);
+        tvOpponentName.setVisibility(View.INVISIBLE);
     }
 
     private void initGame(){
@@ -429,6 +426,8 @@ public class GameActivity extends AppCompatActivity {
         tvTime.setVisibility(View.INVISIBLE);
         tvQuestion.setVisibility(View.INVISIBLE);
 
+        hideOpponentInfo();
+
         if (GAME_MODE) {
             showSoloGameResult();
         } else {
@@ -454,7 +453,27 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void openGameResultDialog(int gameScore) {
-        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag);
+        GameResultDialog gameResultDialog = new GameResultDialog(GAME_MODE, gameScore, personalBestFlag);
+        gameResultDialog.show(getSupportFragmentManager(), "result");
+    }
+
+    /**
+     * Opening a dialog telling the user in an online game to wait for his opponent to finish game.
+     * @param gameScore the user's total game score
+     * @param onlineGameFinished boolean value showing if the opponent in an online game has finished or not
+     */
+    private void openGameResultDialog(int gameScore, boolean onlineGameFinished) {
+        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag, GAME_MODE, onlineGameFinished, opponentPlayer.getUsername());
+        gameResultDialog.show(getSupportFragmentManager(), "result");
+    }
+
+    /**
+     * Opening a dialog showing the final result of an online game.
+     * @param gameScore the user's total game score
+     * @param opponentScore the opponent's total game score
+     */
+    private void openGameResultDialog(int gameScore, int opponentScore) {
+        GameResultDialog gameResultDialog = new GameResultDialog(gameScore, personalBestFlag, GAME_MODE, true, opponentPlayer.getUsername(), opponentScore);
         gameResultDialog.show(getSupportFragmentManager(), "result");
     }
 
@@ -463,22 +482,17 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot childSnapshot: snapshot.getChildren()) {
-                    opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
+                    // opponentPlayer = childSnapshot.child("player" + (1 - playerNumber)).getValue(Player.class);
 
                     // check if the current player has higher score
-                    while (!opponentPlayer.isGameOver()) {
-                        Toast.makeText(GameActivity.this, "Waiting for your opponent to finish game!", Toast.LENGTH_LONG).show();
-                    }
-                    // when both player finishes
-                    if (game.score > opponentPlayer.getScore()) {
-                        Toast.makeText(GameActivity.this, "Your win!", Toast.LENGTH_LONG).show();
-                    } else if (game.score == opponentPlayer.getScore()) {
-                        Toast.makeText(GameActivity.this, "Tie!", Toast.LENGTH_LONG).show();
+                    if (!childSnapshot.child("player" + (1 - playerNumber)).child("gameOver").getValue(Boolean.TYPE)) {
+                        openGameResultDialog(game.score, false);
                     } else {
-                        Toast.makeText(GameActivity.this, "You lose!", Toast.LENGTH_LONG).show();
+                        int opponentPlayerScore = childSnapshot.child("player" + (1 - playerNumber)).child("score").getValue(Integer.class);
+                        openGameResultDialog(game.score, opponentPlayerScore);
+                        // destroy current match
+                        rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
                     }
-                    // destroy current match
-                    rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
                 }
             }
 
@@ -508,6 +522,15 @@ public class GameActivity extends AppCompatActivity {
 
         partyPopper = findViewById(R.id.party_popper);
         partyPopper.setVisibility(View.INVISIBLE);
+
+        tvOpponentName = findViewById(R.id.tvCompetitorName);
+        tvOpponentTitle = findViewById(R.id.tvCompetitorTitle);
+
+        homeButton = findViewById(R.id.btnCompeteHome);
+
+        tvQuestion = findViewById(R.id.tvQuestion);
+        tvScore = findViewById(R.id.tvScoreCount);
+        tvTime = findViewById(R.id.tvTimeCount);
     }
 
     private void installListeners() {
@@ -575,6 +598,13 @@ public class GameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 validateAnswer(option5, m5);
+            }
+        });
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GameActivity.this, GameSettingActivity.class));
             }
         });
     }
