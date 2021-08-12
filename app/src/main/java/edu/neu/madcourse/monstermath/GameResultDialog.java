@@ -110,6 +110,10 @@ public class GameResultDialog extends AppCompatDialogFragment {
                         if (snapshot.child("gameOver").getValue(Boolean.TYPE)) {
                             opponentScore = snapshot.child("score").getValue(Integer.class);
                             showOnlineGameResult();
+                            // destroy match
+                            FirebaseDatabase.getInstance().getReference()
+                                    .child("Matches")
+                                    .child(matchID).removeValue();
                         }
                     }
 

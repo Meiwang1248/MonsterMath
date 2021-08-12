@@ -174,6 +174,7 @@ public class MatchingActivity extends AppCompatActivity {
         if (mAccel > 12) {
             Toast toast = Toast.makeText(getApplicationContext(), "Shake activity detected!", Toast.LENGTH_LONG);
             toast.show();
+            joinExistingGame();
         }
     }
 
@@ -200,12 +201,15 @@ public class MatchingActivity extends AppCompatActivity {
                         // create new player
                         mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
                         // get game settings
-//                        Game newGame = snapshot.child("game").getValue(Game.class);
                         GAME_LEVEL = snapshot.child("game").child("difficultyLevel").getValue(String.class);
                         GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
                         // open matching result dialog
                         openMatchingResultDialog(true, opponentName, matchmaker);
+                    } else {
+                        // if no match is found
+                        Toast.makeText(getApplicationContext(), "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
                     }
+
                 }
             }
 
