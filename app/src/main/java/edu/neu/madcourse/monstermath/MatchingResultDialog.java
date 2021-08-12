@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.jetbrains.annotations.NotNull;
+
 
 import edu.neu.madcourse.monstermath.Model.Player;
 
@@ -109,7 +109,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         rootFirebaseRef.child("Matches")
                 .child(matchId).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("player1").exists()) {
                     // get opponent name
                     opponentName = snapshot.child("player1").getValue(Player.class).getUsername();
@@ -119,7 +119,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
             }
 
             @Override
-            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });

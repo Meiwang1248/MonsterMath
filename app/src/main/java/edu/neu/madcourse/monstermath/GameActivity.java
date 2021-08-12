@@ -72,7 +72,26 @@ public class GameActivity extends AppCompatActivity {
         // set root database reference
         rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
         // get user
-        getUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        rootDatabaseRef.child("Users").orderByChild("id")
+                .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        user = child.getValue(User.class);
+                        usernameStr = user.getUsername();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         // get game settings
         getGameSettings();
         // connect multiple choices and monsters to UI
@@ -382,9 +401,9 @@ public class GameActivity extends AppCompatActivity {
         question.setVisibility(View.INVISIBLE);
 
         if (GAME_MODE) {
-            changeOnlineGameoverStatus();
             showSoloGameResult();
         } else {
+            changeOnlineGameoverStatus();
             showOnlineGameResult();
         }
 

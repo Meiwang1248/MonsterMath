@@ -21,7 +21,7 @@ public class GameResultDialog extends AppCompatDialogFragment {
     private boolean personalBestFlag;
 
     //constructor
-    public GameResultDialog(int gameScore, boolean personalBestFlag){
+    public GameResultDialog(int gameScore, boolean personalBestFlag) {
 
         this.gameScore = gameScore;
         this.personalBestFlag = personalBestFlag;
