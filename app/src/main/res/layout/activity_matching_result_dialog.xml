@@ -48,7 +48,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvMatchingResultTitle"/>
+            android:gravity="center"
+            android:id="@+id/tvMatchingResultTitle"
+            android:fontFamily="casual"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:layout_margin="10dp"
@@ -57,11 +62,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="casual"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/colorPrimary"
-            android:visibility="invisible"
-            android:gravity="center"
-            android:text="New Personal Best!"/>
+            android:gravity="center"/>
 
         <Button
             android:id="@+id/btnStartOnlineGame"

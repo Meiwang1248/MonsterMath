@@ -11,6 +11,8 @@ public class Player {
         this.gameOver = false;
     }
 
+    public Player() {}
+
     public String getUsername() {
         return username;
     }

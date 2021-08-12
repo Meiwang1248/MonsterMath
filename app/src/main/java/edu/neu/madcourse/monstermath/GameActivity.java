@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -73,7 +74,6 @@ public class GameActivity extends AppCompatActivity {
         rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
         // get user
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference test = rootDatabaseRef.child("Users").orderByChild("id").equalTo(firebaseUser.getUid()).getRef();
         rootDatabaseRef.child("Users").orderByChild("id")
                 .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

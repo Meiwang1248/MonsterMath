@@ -103,7 +103,7 @@ public class MatchingActivity extends AppCompatActivity {
         });
 
         // Sensor settings
-        mSensorManager = (SensorManager) getSystemService(Context.SEARCH_SERVICE);
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         mSensorManager.registerListener(mSensorListener,
                 mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
@@ -169,15 +169,15 @@ public class MatchingActivity extends AppCompatActivity {
                     // if match is not done
                     if (!snapshot.child("player1").exists()) {
                         // get match id
-                        final String matchmaker = dataSnapshot.getKey();
+                        final String matchmaker = snapshot.getKey();
                         // get opponent player
                         String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
                         // create new player
                         mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
                         // get game settings
-                        Game newGame = snapshot.child("game").getValue(Game.class);
-                        GAME_LEVEL = newGame.getDifficultyLevel();
-                        GAME_OPERATION = newGame.getOperation();
+//                        Game newGame = snapshot.child("game").getValue(Game.class);
+                        GAME_LEVEL = snapshot.child("game").child("difficultyLevel").getValue(String.class);
+                        GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
                         // open matching result dialog
                         openMatchingResultDialog(true, opponentName, matchmaker);
                     }
