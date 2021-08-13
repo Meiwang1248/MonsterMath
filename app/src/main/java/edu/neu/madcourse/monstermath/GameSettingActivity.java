@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import edu.neu.madcourse.monstermath.Model.User;
 
@@ -27,6 +31,7 @@ public class GameSettingActivity extends AppCompatActivity {
     boolean gameMode;
     FirebaseAuth auth;
     String usernameString = "";
+    FirebaseUser currUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,31 +45,35 @@ public class GameSettingActivity extends AppCompatActivity {
         setGameMode();
 
         // get username
-        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
-                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()) {
-                    User user = child.getValue(User.class);
-                    usernameString = user.getUsername();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+//        FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
+//                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot child : snapshot.getChildren()) {
+//                    User user = child.getValue(User.class);
+//                    usernameString = user.getUsername();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+        currUser = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+        readUsername(dbRef, new OnGetDataListener() {
+                    @Override
+                    public void onSuccess(String dataSnapShotValue) {
+                        usernameString = dataSnapShotValue;
+                    }
+                });
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // make sure usernameString is not empty
-                while (TextUtils.isEmpty(usernameString)) {
-
-                }
                 // make sure all buttons are checked
                 if (tgBtnGrpLevel.getCheckedButtonId() == View.NO_ID
                         || tgBtnGrpOperation.getCheckedButtonId() == View.NO_ID
@@ -84,9 +93,6 @@ public class GameSettingActivity extends AppCompatActivity {
         btnScoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                while (TextUtils.isEmpty(usernameString)) {
-
-                }
                 openScoreBoard();
             }
         });
@@ -96,6 +102,24 @@ public class GameSettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logOut();
+            }
+        });
+    }
+
+    private void readUsername(DatabaseReference ref, final OnGetDataListener listener) {
+        ref.child("Users").orderByChild("id").equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    User user = child.getValue(User.class);
+                    usernameString = user.getUsername();
+                    listener.onSuccess(usernameString);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
             }
         });
     }
@@ -176,6 +200,7 @@ public class GameSettingActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
     }
+
     private void openGameActivity() {
         Intent intent = new Intent(this, GameActivity.class);
         intent.putExtra("GAME_OPERATION", gameOperation);
