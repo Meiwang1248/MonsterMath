@@ -191,11 +191,13 @@ public class MatchingActivity extends AppCompatActivity {
         mMatchmaker.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getChildrenCount() == 0) {
+                    Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    if (!snapshot.exists()) {
-                        Toast.makeText(getApplicationContext(), "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
-                        return;
-                    }
                     // if match is not done
                     if (!snapshot.child("player1").exists()) {
                         // get match id
@@ -211,7 +213,7 @@ public class MatchingActivity extends AppCompatActivity {
                         openMatchingResultDialog(true, opponentName, matchmaker);
                     } else {
                         // if no match is found
-                        Toast.makeText(getApplicationContext(), "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
                     }
 
                 }
