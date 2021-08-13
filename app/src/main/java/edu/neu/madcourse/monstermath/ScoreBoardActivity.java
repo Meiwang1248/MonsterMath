@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +42,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     // personal best score settings
     private TextView tvPersonalBestScore, tvNumOfGamesPlayed;
     private int numOfGamesPlayed;
+    private Button btnScoreBoardHome;
 
     // Firebase settings
     DatabaseReference rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
@@ -60,6 +63,14 @@ public class ScoreBoardActivity extends AppCompatActivity {
         // connect UI components
         tvNumOfGamesPlayed = findViewById(R.id.tvNumOfGamesPlayed);
         tvPersonalBestScore = findViewById(R.id.tvPersonalBestScore);
+        btnScoreBoardHome = findViewById(R.id.btnScoreBoardHome);
+
+        btnScoreBoardHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ScoreBoardActivity.this, GameSettingActivity.class));
+            }
+        });
 
         // set up for RecyclerView
         rvScores = (RecyclerView) findViewById(R.id.rvScores);
