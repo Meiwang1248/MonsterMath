@@ -26,7 +26,7 @@ public class GameSettingActivity extends AppCompatActivity {
     String gameOperation, gameLevel;
     boolean gameMode;
     FirebaseAuth auth;
-    String usernameString;
+    String usernameString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,39 +39,44 @@ public class GameSettingActivity extends AppCompatActivity {
         setGameLevel();
         setGameMode();
 
+        // get username
+        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
+                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()) {
+                    User user = child.getValue(User.class);
+                    usernameString = user.getUsername();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-                FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
-                        .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot child : snapshot.getChildren()) {
-                            User user = child.getValue(User.class);
-                            usernameString = user.getUsername();
-                        }
-                        // make sure all buttons are checked
-                        if (tgBtnGrpLevel.getCheckedButtonId() == View.NO_ID
-                                || tgBtnGrpOperation.getCheckedButtonId() == View.NO_ID
-                                || tgBtnGrpMode.getCheckedButtonId() == View.NO_ID) {
-                            Toast.makeText(GameSettingActivity.this, "All settings required", Toast.LENGTH_SHORT).show();
-                            return;
-                        } else {
-                            if (gameMode) {
-                                openGameActivity();
-                            } else {
-                                openMatchingActivity();
-                            }
-                        }
-                    }
+                // make sure usernameString is not empty
+                while (TextUtils.isEmpty(usernameString)) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                }
+                // make sure all buttons are checked
+                if (tgBtnGrpLevel.getCheckedButtonId() == View.NO_ID
+                        || tgBtnGrpOperation.getCheckedButtonId() == View.NO_ID
+                        || tgBtnGrpMode.getCheckedButtonId() == View.NO_ID) {
+                    Toast.makeText(GameSettingActivity.this, "All settings required!", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (gameMode) {
+                        openGameActivity();
+                    } else {
+                        openMatchingActivity();
                     }
-                });
+                }
             }
         });
 
@@ -79,24 +84,10 @@ public class GameSettingActivity extends AppCompatActivity {
         btnScoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-                FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
-                        .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot child : snapshot.getChildren()) {
-                            User user = child.getValue(User.class);
-                            usernameString = user.getUsername();
-                        }
-                        openScoreBoard();
-                    }
+                while (TextUtils.isEmpty(usernameString)) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+                }
+                openScoreBoard();
             }
         });
         
