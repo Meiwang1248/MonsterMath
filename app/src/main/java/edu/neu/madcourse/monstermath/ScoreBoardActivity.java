@@ -23,8 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import edu.neu.madcourse.monstermath.Model.Score;
@@ -34,6 +32,7 @@ import edu.neu.madcourse.monstermath.Model.User;
 public class ScoreBoardActivity extends AppCompatActivity {
     static final String TAG = MainActivity.class.getSimpleName();
     private String level;
+    static String USERNAME;
     private ArrayList<Score> scoreList = new ArrayList<>();
     private RecyclerView rvScores;
     private ScoreAdapter adapter;
@@ -41,12 +40,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
     // personal best score settings
     private TextView tvPersonalBestScore, tvNumOfGamesPlayed;
     private int numOfGamesPlayed;
-    String usernameStr;
 
     // Firebase settings
-    FirebaseUser currUser;
-    DatabaseReference databaseReference;
-    User user;
+    DatabaseReference rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +50,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_score_board);
 
         hideSystemUI();
+
+        // get username
+        getUsername();
 
         // default level is easy
         level = "Easy";
@@ -69,6 +68,62 @@ public class ScoreBoardActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rvScores.setLayoutManager(layoutManager);
 
+        setScoreLevel();
+
+        // get real-time number of games played
+        readNumOfGamesPlayed();
+
+        // read personal best score
+        readPersonalBestScore();
+
+        // read score rankings
+        readScoreRanking();
+
+        // get current user's device token
+        getCurrentToken();
+    }
+
+    private void getCurrentToken() {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+                        String token = task.getResult();
+
+                        rootDatabaseRef
+                                .child("Users")
+                                .child(USERNAME)
+                                .child("token")
+                                .setValue(token);
+                    }
+                });
+    }
+
+    private void readNumOfGamesPlayed() {
+        // get real-time number of games played
+        rootDatabaseRef
+                .child("Users")
+                .child(USERNAME)
+                .child("numOfGamesPlayed")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        numOfGamesPlayed = snapshot.getValue(Integer.class);
+                        tvNumOfGamesPlayed.setText(USERNAME + ", you have played " + numOfGamesPlayed + " rounds");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    private void setScoreLevel() {
         // set up for toggle button group
         MaterialButtonToggleGroup toggleButtonGroupScore = findViewById(R.id.toggleBtnGrpScore);
         // add on button checked listener
@@ -96,80 +151,16 @@ public class ScoreBoardActivity extends AppCompatActivity {
                 }
             }
         });
-
-        // read personal best score and number of games played
-        currUser = FirebaseAuth.getInstance().getCurrentUser();
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.orderByChild("id")
-                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        user = child.getValue(User.class);
-                        usernameStr = user.getUsername();
-
-                        // get real-time number of games played
-                        databaseReference.child(usernameStr)
-                                .child("numOfGamesPlayed")
-                                .addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                numOfGamesPlayed = snapshot.getValue(Integer.class);
-                                tvNumOfGamesPlayed.setText(usernameStr + ", you have played " + numOfGamesPlayed + " rounds");
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-                        // read personal best score
-                        readPersonalBestScore();
-
-                        // read score rankings
-                        readScoreRanking();
-
-                        // get current user's token
-                        FirebaseMessaging.getInstance().getToken()
-                                .addOnCompleteListener(new OnCompleteListener<String>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<String> task) {
-                                        if (!task.isSuccessful()) {
-                                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                                            return;
-                                        }
-                                        String token = task.getResult();
-
-                                        FirebaseDatabase
-                                                .getInstance()
-                                                .getReference()
-                                                .child("Users")
-                                                .child(usernameStr)
-                                                .child("token")
-                                                .setValue(token);
-                                    }
-                                });
-
-                    }
-                } catch(Exception e) {
-                    Toast.makeText(ScoreBoardActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+    }
+    private void getUsername() {
+        USERNAME = getIntent().getExtras().getString("USERNAME");
     }
 
     private void readPersonalBestScore() {
-        // get personal best score and number of games played
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-        databaseReference.child(usernameStr)
+        // get personal best score
+        rootDatabaseRef
+                .child("Users")
+                .child(USERNAME)
                 .child("personalBestScore" + level)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -190,8 +181,7 @@ public class ScoreBoardActivity extends AppCompatActivity {
     }
 
     private void readScoreRanking() {
-        FirebaseDatabase.getInstance()
-                .getReference()
+        rootDatabaseRef
                 .child("Scores")
                 .child(level.toLowerCase())
                 .orderByChild("score")

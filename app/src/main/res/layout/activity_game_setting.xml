@@ -69,7 +69,7 @@
                     app:selectionRequired="true"
                     app:singleSelection="true">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingGameAdd"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                         android:text="@string/setting_button_add"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingGameSubtract"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
                         android:text="@string/setting_button_subtract"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingGameMultiply"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -108,7 +108,7 @@
                         android:text="@string/setting_button_multiply"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingGameDivide"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
                     app:selectionRequired="true"
                     app:singleSelection="true">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingLevelEasy"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
                         android:text="@string/setting_button_easy"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingLevelMedium"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -175,7 +175,7 @@
                         android:text="@string/setting_button_medium"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingLevelHard"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -216,7 +216,7 @@
                     app:selectionRequired="true"
                     app:singleSelection="true">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingModeSolo"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"
@@ -229,7 +229,7 @@
                         android:text="@string/setting_button_single_player"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnSettingModeComp"
                         style="?attr/materialButtonOutlinedStyle"
                         android:layout_width="wrap_content"

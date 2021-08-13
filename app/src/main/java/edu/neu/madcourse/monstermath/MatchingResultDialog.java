@@ -1,5 +1,6 @@
 package edu.neu.madcourse.monstermath;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -28,22 +29,42 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
     private LinearLayout layoutMatchingRunning, layoutMatchingDone;
     private TextView tvMatchingResultTitle, tvMatchingOpponentInfo;
     private Button btnStartOnlineGame, btnCancelMatching;
-    private String operation, level, opponentName, matchId;
+    private String operation, level, opponentName, matchId, username;
     private boolean matchingDone;
     DatabaseReference rootFirebaseRef;
 
     //constructors
-    public MatchingResultDialog(String operation, String level, String opponentName, boolean matchingDone, String matchId) {
+
+    /**
+     * Constructor for a finished match.
+     * @param operation operation of the game
+     * @param level level of the game
+     * @param username username of the current user
+     * @param opponentName username of the opponent
+     * @param matchingDone boolean value showing if the matching is done
+     * @param matchId match ID
+     */
+    public MatchingResultDialog(String operation, String level, String username, String opponentName, boolean matchingDone, String matchId) {
         this.operation = operation;
         this.level = level;
+        this.username = username;
         this.opponentName = opponentName;
         this.matchingDone = matchingDone;
         this.matchId = matchId;
     }
 
-    public MatchingResultDialog(String operation, String level, boolean matchingDone, String matchId) {
+    /**
+     * Constructor for an unfinished match.
+     * @param operation operation of the game
+     * @param level level of the game
+     * @param username username of the game
+     * @param matchingDone boolean value showing if the matching is done
+     * @param matchId match ID
+     */
+    public MatchingResultDialog(String operation, String level, String username, boolean matchingDone, String matchId) {
         this.operation = operation;
         this.level = level;
+        this.username = username;
         this.matchId = matchId;
         this.matchingDone = matchingDone;
     }
@@ -106,7 +127,8 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         layoutMatchingDone.setVisibility(View.INVISIBLE);
         layoutMatchingRunning.setVisibility(View.VISIBLE);
         // show matching result as soon as matching done
-        rootFirebaseRef.child("Matches")
+        rootFirebaseRef
+                .child("Matches")
                 .child(matchId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,7 +149,11 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog dialog = getDialog();
+        // set transparent window
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // disable closing dialog on outside touch
+        dialog.setCanceledOnTouchOutside(false);
     }
 
     private void openGameActivity() {
@@ -136,6 +162,7 @@ public class MatchingResultDialog extends AppCompatDialogFragment {
         intent.putExtra("GAME_LEVEL", level);
         intent.putExtra("GAME_MODE", false);
         intent.putExtra("MATCH_ID", matchId);
+        intent.putExtra("USERNAME", username);
         startActivity(intent);
     }
 

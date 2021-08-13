@@ -44,17 +44,15 @@ public class GameActivity extends AppCompatActivity {
     private int seconds;
 
     // game settings
-    static String GAME_LEVEL, GAME_OPERATION;
+    static String GAME_LEVEL, GAME_OPERATION, USERNAME;
     static boolean GAME_MODE;
     private Game game;
     private boolean personalBestFlag = false;
     static String MATCH_ID;
 
     // Firebase settings
-    FirebaseUser firebaseUser;
     DatabaseReference rootDatabaseRef;
     User user;
-    String usernameStr;
 
     // Match settings
     int playerNumber;
@@ -81,35 +79,12 @@ public class GameActivity extends AppCompatActivity {
 
         // set root database reference
         rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
-        // get user
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        rootDatabaseRef.child("Users").orderByChild("id")
-                .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        user = child.getValue(User.class);
-                        usernameStr = user.getUsername();
-
-                        if (GAME_MODE == true) {
-                            initGame();
-                        } else {
-                            getGameSettingOnline();
-                            onlineGame();
-                        }
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
+        if (GAME_MODE == true) {
+            initGame();
+        } else {
+            getGameSettingOnline();
+            onlineGame();
+        }
     }
 
 
@@ -117,44 +92,23 @@ public class GameActivity extends AppCompatActivity {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
         GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
         GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
+        USERNAME = getIntent().getExtras().getString("USERNAME");
     }
 
     private void getGameSettingOnline() {
-
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
         GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
         GAME_MODE = getIntent().getExtras().getBoolean("GAME_MODE");
         MATCH_ID = getIntent().getExtras().getString("MATCH_ID");
-
-    }
-
-    private void getUser() {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        rootDatabaseRef.child("Users").orderByChild("id")
-                .equalTo(firebaseUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        user = child.getValue(User.class);
-                        usernameStr = user.getUsername();
-                    }
-                } catch (Exception e) {
-                    Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        USERNAME = getIntent().getExtras().getString("USERNAME");
     }
 
     private void storeGameScore() {
-        rootDatabaseRef.child("Users").child(usernameStr).addListenerForSingleValueEvent(new ValueEventListener() {
+        rootDatabaseRef.child("Users").child(USERNAME).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                user = snapshot.getValue(User.class);
+
                 // update real-time number of games played
                 updateNumOfGamesPlayed();
 
@@ -177,14 +131,14 @@ public class GameActivity extends AppCompatActivity {
     private void updateNumOfGamesPlayed() {
         user.numOfGamesPlayed++;
         rootDatabaseRef.child("Users")
-                .child(usernameStr)
+                .child(USERNAME)
                 .child("numOfGamesPlayed").setValue(user.numOfGamesPlayed);
     }
 
     private void addToScores() {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("score", game.score);
-        hashMap.put("username", usernameStr);
+        hashMap.put("username", USERNAME);
         rootDatabaseRef.child("Scores")
                 .child(GAME_LEVEL)
                 .push()
@@ -196,7 +150,7 @@ public class GameActivity extends AppCompatActivity {
             case "easy":
                 if (game.score > user.personalBestScoreEasy) {
                     rootDatabaseRef.child("Users")
-                            .child(usernameStr)
+                            .child(USERNAME)
                             .child("personalBestScoreEasy")
                             .setValue(game.score);
                     personalBestFlag = true;
@@ -205,7 +159,7 @@ public class GameActivity extends AppCompatActivity {
             case "medium":
                 if (game.score > user.personalBestScoreMedium) {
                     rootDatabaseRef.child("Users")
-                            .child(usernameStr)
+                            .child(USERNAME)
                             .child("personalBestScoreMedium")
                             .setValue(game.score);
                     personalBestFlag = true;
@@ -214,7 +168,7 @@ public class GameActivity extends AppCompatActivity {
             case "hard":
                 if (game.score > user.personalBestScoreHard) {
                     rootDatabaseRef.child("Users")
-                            .child(usernameStr)
+                            .child(USERNAME)
                             .child("personalBestScoreHard")
                             .setValue(game.score);
                     personalBestFlag = true;
@@ -252,11 +206,11 @@ public class GameActivity extends AppCompatActivity {
                 Player player1 = snapshot.child("player1").getValue(Player.class);
                 String player1Name = player1.getUsername();
 
-                if (usernameStr.equals(player0Name)) {
+                if (USERNAME.equals(player0Name)) {
                         playerNumber = 0;
                         curPlayer = player0;
                         opponentPlayer = player1;
-                    } else if (usernameStr.equals(player1Name)) {
+                    } else if (USERNAME.equals(player1Name)) {
                         playerNumber = 1;
                         curPlayer = player1;
                         opponentPlayer = player0;

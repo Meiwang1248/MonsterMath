@@ -37,27 +37,19 @@ import edu.neu.madcourse.monstermath.Model.Player;
 import edu.neu.madcourse.monstermath.Model.User;
 
 public class MatchingActivity extends AppCompatActivity {
-    static final String TAG = AppCompatActivity.class.getSimpleName();
-    static String GAME_OPERATION, GAME_LEVEL;
-    final String NONE = "none";
+    static String GAME_OPERATION, GAME_LEVEL, USERNAME;
 
     Button btnShakeToJoin, btnCreateNewGame;
 
     // Firebase settings
-    FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference mMatchmaker = database.getReference("Matches");
-    DatabaseReference mUsers = database.getReference("Users");
-
-    User user;
-    String usernameStr= "";
 
     // Sensor settings
     SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
-    @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +114,7 @@ public class MatchingActivity extends AppCompatActivity {
         final DatabaseReference dbReference = mMatchmaker.push();
         HashMap<String, Object> hashMap = new HashMap<>();
         Game newGame = new Game(GAME_OPERATION, GAME_LEVEL, false, 1);
-        hashMap.put("player0", new Player(usernameStr, 0));
+        hashMap.put("player0", new Player(USERNAME, 0));
         hashMap.put("game", newGame);
         dbReference.setValue(hashMap);
 
@@ -157,6 +149,7 @@ public class MatchingActivity extends AppCompatActivity {
     private void getGameSettings() {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
         GAME_LEVEL = getIntent().getExtras().getString("GAME_LEVEL");
+        USERNAME = getIntent().getExtras().getString("USERNAME");
     }
 
     /**
@@ -178,7 +171,7 @@ public class MatchingActivity extends AppCompatActivity {
                             // get opponent player
                             String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
                             // create new player
-                            mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
+                            mMatchmaker.child(matchmaker).child("player1").setValue(new Player(USERNAME, 0));
                             // get game settings
                             GAME_LEVEL = snapshot.child("game").child("difficultyLevel").getValue(String.class);
                             GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
@@ -201,6 +194,7 @@ public class MatchingActivity extends AppCompatActivity {
     private void openMatchingResultDialog(boolean matchingDone, String opponentName, String matchId) {
         MatchingResultDialog matchingResultDialog = new MatchingResultDialog(GAME_OPERATION,
                 GAME_LEVEL,
+                USERNAME,
                 opponentName,
                 matchingDone,
                 matchId);
@@ -210,32 +204,10 @@ public class MatchingActivity extends AppCompatActivity {
     private void openMatchingResultDialog(boolean matchingDone, String matchId) {
         MatchingResultDialog matchingResultDialog = new MatchingResultDialog(GAME_OPERATION,
                 GAME_LEVEL,
+                USERNAME,
                 matchingDone,
                 matchId);
         matchingResultDialog.show(getSupportFragmentManager(), "matching");
-    }
-
-    private void getUsername() {
-        // get username
-        mUsers.orderByChild("id")
-                .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        user = child.getValue(User.class);
-                        usernameStr = user.getUsername();
-                    }
-                } catch(Exception e) {
-                    Toast.makeText(MatchingActivity.this, e.toString(), Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 
     private void hideSystemUI() {

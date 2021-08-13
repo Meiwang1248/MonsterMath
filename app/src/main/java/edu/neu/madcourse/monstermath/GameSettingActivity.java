@@ -1,5 +1,6 @@
 package edu.neu.madcourse.monstermath;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,13 @@ import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import edu.neu.madcourse.monstermath.Model.User;
 
 public class GameSettingActivity extends AppCompatActivity {
     MaterialButtonToggleGroup tgBtnGrpOperation, tgBtnGrpLevel, tgBtnGrpMode;
@@ -17,6 +25,7 @@ public class GameSettingActivity extends AppCompatActivity {
     String gameOperation, gameLevel;
     boolean gameMode;
     FirebaseAuth auth;
+    String usernameString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +33,36 @@ public class GameSettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game_setting);
 
         hideSystemUI();
-
         // set onClickListener for toggle button groups
-         setGameOperation();
-         setGameLevel();
-         setGameMode();
+        setGameOperation();
+        setGameLevel();
+        setGameMode();
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (gameMode) {
-                    openGameActivity();
-                } else {
-                    openMatchingActivity();
-                }
+                FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
+                        .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            User user = child.getValue(User.class);
+                            usernameString = user.getUsername();
+                        }
+                        if (gameMode) {
+                            openGameActivity();
+                        } else {
+                            openMatchingActivity();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
 
@@ -46,7 +70,24 @@ public class GameSettingActivity extends AppCompatActivity {
         btnScoreBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openScoreBoard();
+                FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+                FirebaseDatabase.getInstance().getReference().child("Users").orderByChild("id")
+                        .equalTo(currUser.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            User user = child.getValue(User.class);
+                            usernameString = user.getUsername();
+                        }
+                        openScoreBoard();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
             }
         });
         
@@ -84,7 +125,6 @@ public class GameSettingActivity extends AppCompatActivity {
                 }
             }
         });
-        tgBtnGrpOperation.
     }
 
     private void setGameLevel() {
@@ -147,6 +187,7 @@ public class GameSettingActivity extends AppCompatActivity {
         intent.putExtra("GAME_OPERATION", gameOperation);
         intent.putExtra("GAME_LEVEL", gameLevel);
         intent.putExtra("GAME_MODE", gameMode);
+        intent.putExtra("USERNAME", usernameString);
         startActivity(intent);
     }
 
@@ -155,11 +196,13 @@ public class GameSettingActivity extends AppCompatActivity {
         intent.putExtra("GAME_OPERATION", gameOperation);
         intent.putExtra("GAME_LEVEL", gameLevel);
         intent.putExtra("GAME_MODE", gameMode);
+        intent.putExtra("USERNAME", usernameString);
         startActivity(intent);
     }
 
     private void openScoreBoard() {
         Intent intent = new Intent(this, ScoreBoardActivity.class);
+        intent.putExtra("USERNAME", usernameString);
         startActivity(intent);
     }
 
