@@ -128,6 +128,9 @@ public class ScoreBoardActivity extends AppCompatActivity {
                         // read personal best score
                         readPersonalBestScore();
 
+                        // read score rankings
+                        readScoreRanking();
+
                         // get current user's token
                         FirebaseMessaging.getInstance().getToken()
                                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -161,9 +164,6 @@ public class ScoreBoardActivity extends AppCompatActivity {
             }
         });
 
-
-        // read score rankings
-        readScoreRanking();
     }
 
     private void readPersonalBestScore() {
