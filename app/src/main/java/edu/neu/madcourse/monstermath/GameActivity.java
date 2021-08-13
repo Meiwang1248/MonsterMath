@@ -98,9 +98,10 @@ public class GameActivity extends AppCompatActivity {
         // install listeners to all multiple choices
         installListeners();
 
+
+        // get game settings
+        getGameSettings();
         if (GAME_MODE == true) {
-            // get game settings
-            getGameSettings();
             initGame();
         } else {
             getGameSettingOnline();
