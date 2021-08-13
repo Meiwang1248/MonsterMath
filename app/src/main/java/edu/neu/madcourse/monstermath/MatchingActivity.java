@@ -171,7 +171,7 @@ public class MatchingActivity extends AppCompatActivity {
     }
 
     private void onShake() {
-        if (mAccel > 12) {
+        if (mAccel > 2) {
             Toast toast = Toast.makeText(getApplicationContext(), "Shake activity detected!", Toast.LENGTH_LONG);
             toast.show();
             joinExistingGame();
