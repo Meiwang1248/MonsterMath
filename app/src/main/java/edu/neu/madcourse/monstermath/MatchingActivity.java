@@ -188,10 +188,14 @@ public class MatchingActivity extends AppCompatActivity {
      * Joins an existing game waiting for others to join.
      */
     private void joinExistingGame() {
-        mMatchmaker.addListenerForSingleValueEvent(new ValueEventListener() {
+        mMatchmaker.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    if (!snapshot.exists()) {
+                        Toast.makeText(getApplicationContext(), "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     // if match is not done
                     if (!snapshot.child("player1").exists()) {
                         // get match id
