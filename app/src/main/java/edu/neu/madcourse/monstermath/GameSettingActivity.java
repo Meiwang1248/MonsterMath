@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,67 +26,9 @@ public class GameSettingActivity extends AppCompatActivity {
         hideSystemUI();
 
         // set onClickListener for toggle button groups
-        // setGameOperation();
-        tgBtnGrpOperation = findViewById(R.id.toggleBtnGrpOperationSelection);
-        tgBtnGrpOperation.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingGameAdd:
-                            gameOperation = "+";
-                            break;
-                        case R.id.btnSettingGameDivide:
-                            gameOperation = "÷";
-                            break;
-                        case R.id.btnSettingGameMultiply:
-                            gameOperation = "×";
-                            break;
-                        case R.id.btnSettingGameSubtract:
-                            gameOperation = "-";
-                            break;
-                    }
-                }
-            }
-        });
-        // setGameLevel();
-        tgBtnGrpLevel = findViewById(R.id.toggleBtnGrpLevelSelection);
-        tgBtnGrpLevel.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingLevelEasy:
-                            gameLevel = "easy";
-                            break;
-                        case R.id.btnSettingLevelMedium:
-                            gameLevel = "medium";
-                            break;
-                        case R.id.btnSettingLevelHard:
-                            gameLevel = "hard";
-                            break;
-                    }
-                }
-            }
-        });
-
-        // setGameMode();
-        tgBtnGrpMode = findViewById(R.id.toggleBtnGrpModeSelection);
-        tgBtnGrpMode.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
-            @Override
-            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
-                if (isChecked) {
-                    switch (checkedId) {
-                        case R.id.btnSettingModeSolo:
-                            gameMode = true;
-                            break;
-                        case R.id.btnSettingModeComp:
-                            gameMode = false;
-                            break;
-                    }
-                }
-            }
-        });
+         setGameOperation();
+         setGameLevel();
+         setGameMode();
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
@@ -136,9 +79,12 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameOperation = "-";
                             break;
                     }
+                } else {
+                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        tgBtnGrpOperation.
     }
 
     private void setGameLevel() {
@@ -158,6 +104,8 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameLevel = "hard";
                             break;
                     }
+                } else {
+                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -177,6 +125,8 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameMode = false;
                             break;
                     }
+                } else {
+                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
