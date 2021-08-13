@@ -1,5 +1,6 @@
 package edu.neu.madcourse.monstermath;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -154,8 +155,11 @@ public class GameResultDialog extends AppCompatDialogFragment {
 
     @Override
     public void onStart() {
-        super.onStart();
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        super.onStart();        Dialog dialog = getDialog();
+        // set transparent window
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        // disable closing dialog on outside touch
+        dialog.setCanceledOnTouchOutside(false);
     }
 
     private void openGameSettingActivity() {
