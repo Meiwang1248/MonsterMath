@@ -111,9 +111,9 @@ public class GameResultDialog extends AppCompatDialogFragment {
                             opponentScore = snapshot.child("score").getValue(Integer.class);
                             showOnlineGameResult();
                             // destroy match
-                            FirebaseDatabase.getInstance().getReference()
-                                    .child("Matches")
-                                    .child(matchID).removeValue();
+//                            FirebaseDatabase.getInstance().getReference()
+//                                    .child("Matches")
+//                                    .child(matchID).removeValue();
                         }
                     }
 

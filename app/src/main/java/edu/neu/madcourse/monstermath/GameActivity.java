@@ -503,7 +503,7 @@ public class GameActivity extends AppCompatActivity {
                     int opponentPlayerScore = snapshot.child("player" + (1 - playerNumber)).child("score").getValue(Integer.class);
                     openGameResultDialog(game.score, opponentPlayerScore);
                     // destroy current match
-                    rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
+                    // rootDatabaseRef.child("Matches").child(MATCH_ID).removeValue();
                 }
             }
 
