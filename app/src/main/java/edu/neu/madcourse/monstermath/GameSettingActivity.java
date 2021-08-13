@@ -25,9 +25,67 @@ public class GameSettingActivity extends AppCompatActivity {
         hideSystemUI();
 
         // set onClickListener for toggle button groups
-        setGameOperation();
-        setGameLevel();
-        setGameMode();
+        // setGameOperation();
+        tgBtnGrpOperation = findViewById(R.id.toggleBtnGrpOperationSelection);
+        tgBtnGrpOperation.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingGameAdd:
+                            gameOperation = "+";
+                            break;
+                        case R.id.btnSettingGameDivide:
+                            gameOperation = "÷";
+                            break;
+                        case R.id.btnSettingGameMultiply:
+                            gameOperation = "×";
+                            break;
+                        case R.id.btnSettingGameSubtract:
+                            gameOperation = "-";
+                            break;
+                    }
+                }
+            }
+        });
+        // setGameLevel();
+        tgBtnGrpLevel = findViewById(R.id.toggleBtnGrpLevelSelection);
+        tgBtnGrpLevel.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingLevelEasy:
+                            gameLevel = "easy";
+                            break;
+                        case R.id.btnSettingLevelMedium:
+                            gameLevel = "medium";
+                            break;
+                        case R.id.btnSettingLevelHard:
+                            gameLevel = "hard";
+                            break;
+                    }
+                }
+            }
+        });
+
+        // setGameMode();
+        tgBtnGrpMode = findViewById(R.id.toggleBtnGrpModeSelection);
+        tgBtnGrpMode.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (isChecked) {
+                    switch (checkedId) {
+                        case R.id.btnSettingModeSolo:
+                            gameMode = true;
+                            break;
+                        case R.id.btnSettingModeComp:
+                            gameMode = false;
+                            break;
+                    }
+                }
+            }
+        });
 
         btnSettingDone = findViewById(R.id.btnSettingDone);
         btnSettingDone.setOnClickListener(new View.OnClickListener() {
