@@ -70,6 +70,15 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.acitivity_game);
         hideSystemUI();
 
+        // connect multiple choices and monsters to UI
+        connectUIComponents();
+        // install listeners to all multiple choices
+        installListeners();
+        // get game settings
+        getGameSettings();
+        // add sound effects
+        sound = new SoundEffects(this);
+
         // set root database reference
         rootDatabaseRef = FirebaseDatabase.getInstance().getReference();
         // get user
@@ -82,6 +91,13 @@ public class GameActivity extends AppCompatActivity {
                     for (DataSnapshot child : snapshot.getChildren()) {
                         user = child.getValue(User.class);
                         usernameStr = user.getUsername();
+
+                        if (GAME_MODE == true) {
+                            initGame();
+                        } else {
+                            getGameSettingOnline();
+                            onlineGame();
+                        }
                     }
                 } catch (Exception e) {
                     Toast.makeText(GameActivity.this, e.toString(), Toast.LENGTH_LONG).show();
@@ -93,23 +109,7 @@ public class GameActivity extends AppCompatActivity {
 
             }
         });
-        // connect multiple choices and monsters to UI
-        connectUIComponents();
-        // install listeners to all multiple choices
-        installListeners();
 
-
-        // get game settings
-        getGameSettings();
-        if (GAME_MODE == true) {
-            initGame();
-        } else {
-            getGameSettingOnline();
-            onlineGame();
-        }
-
-        // add sound effects
-        sound = new SoundEffects(this);
     }
 
 
