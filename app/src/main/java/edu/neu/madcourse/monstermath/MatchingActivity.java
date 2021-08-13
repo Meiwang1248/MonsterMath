@@ -54,28 +54,8 @@ public class MatchingActivity extends AppCompatActivity {
 
     // Sensor settings
     SensorManager mSensorManager;
-    private float mAccel; // acceleration apart from gravity
-    private float mAccelCurrent; // current acceleration including gravity
-    private float mAccelLast; // last acceleration including gravity
-
-    private final SensorEventListener mSensorListener = new SensorEventListener() {
-        @Override
-        public void onSensorChanged(SensorEvent event) {
-            float x = event.values[0];
-            float y = event.values[1];
-            float z = event.values[2];
-            mAccelLast = mAccelCurrent;
-            mAccelCurrent = (float) Math.sqrt((double) (x*x + y*y + z*z));
-            float delta = mAccelCurrent - mAccelLast;
-            mAccel = mAccel * 0.9f + delta; // perform low-cut filter
-        }
-
-        @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-        }
-    };
-
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
 
     @SuppressLint("ServiceCast")
     @Override
@@ -88,7 +68,6 @@ public class MatchingActivity extends AppCompatActivity {
         btnCreateNewGame = findViewById(R.id.btnCreateNewGame);
         btnShakeToJoin = findViewById(R.id.btnShakeToJoin);
 
-        getUsername();
         getGameSettings();
 
         btnCreateNewGame.setOnClickListener(new View.OnClickListener() {
@@ -97,37 +76,42 @@ public class MatchingActivity extends AppCompatActivity {
                 createNewGame();
             }
         });
+//
+//        btnShakeToJoin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                joinExistingGame();
+//            }
+//        });
 
-        btnShakeToJoin.setOnClickListener(new View.OnClickListener() {
+        // Sensor settings
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener(new ShakeDetector.OnShakeListener() {
+
             @Override
-            public void onClick(View v) {
+            public void onShake(int count) {
+                Toast toast = Toast.makeText(getApplicationContext(), "Shake activity detected!", Toast.LENGTH_LONG);
+                toast.show();
                 joinExistingGame();
             }
         });
 
-        // Sensor settings
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
-        mAccel = 0.00f;
-        mAccelCurrent = SensorManager.GRAVITY_EARTH;
-        mAccelLast = SensorManager.GRAVITY_EARTH;
-
-        onShake();
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(mSensorListener,
-                mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-                SensorManager.SENSOR_DELAY_NORMAL);
+        mSensorManager.registerListener(mShakeDetector,
+                mAccelerometer,
+                SensorManager.SENSOR_DELAY_UI);
     }
 
     @Override
     protected void onPause() {
-        mSensorManager.unregisterListener(mSensorListener);
+        mSensorManager.unregisterListener(mShakeDetector);
         super.onPause();
     }
 
@@ -169,15 +153,6 @@ public class MatchingActivity extends AppCompatActivity {
         // open matching result dialog
         openMatchingResultDialog(false, matchmaker);
     }
-
-    private void onShake() {
-        if (mAccel > 2) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Shake activity detected!", Toast.LENGTH_LONG);
-            toast.show();
-            joinExistingGame();
-        }
-    }
-
 
     private void getGameSettings() {
         GAME_OPERATION = getIntent().getExtras().getString("GAME_OPERATION");
