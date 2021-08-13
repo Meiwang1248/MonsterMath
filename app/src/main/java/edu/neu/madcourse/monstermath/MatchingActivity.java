@@ -58,7 +58,7 @@ public class MatchingActivity extends AppCompatActivity {
 
         // link buttons
         btnCreateNewGame = findViewById(R.id.btnCreateNewGame);
-        btnShakeToJoin = findViewById(R.id.btnShakeToJoin);
+//        btnShakeToJoin = findViewById(R.id.btnShakeToJoin);
 
         getGameSettings();
 

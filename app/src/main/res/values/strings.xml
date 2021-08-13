@@ -17,6 +17,6 @@
     <string name="setting_button_play">Play</string>
     <string name="score_board">Score Board</string>
     <string name="setting_button_logout">Logout</string>
-    <string name="matching_shake_phone_line">Shake your phone to join an existing game</string>
-    <string name="matching_create_game_line">Create a new online game and wait for others to join</string>
+    <string name="matching_shake_phone_line">Shake to join an existing game</string>
+    <string name="matching_create_game_line">Create a new online game</string>
 </resources>
