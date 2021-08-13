@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -51,10 +52,18 @@ public class GameSettingActivity extends AppCompatActivity {
                             User user = child.getValue(User.class);
                             usernameString = user.getUsername();
                         }
-                        if (gameMode) {
-                            openGameActivity();
+                        // make sure all buttons are checked
+                        if (tgBtnGrpLevel.getCheckedButtonId() == View.NO_ID
+                                || tgBtnGrpOperation.getCheckedButtonId() == View.NO_ID
+                                || tgBtnGrpMode.getCheckedButtonId() == View.NO_ID) {
+                            Toast.makeText(GameSettingActivity.this, "All settings required", Toast.LENGTH_SHORT).show();
+                            return;
                         } else {
-                            openMatchingActivity();
+                            if (gameMode) {
+                                openGameActivity();
+                            } else {
+                                openMatchingActivity();
+                            }
                         }
                     }
 
@@ -120,8 +129,6 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameOperation = "-";
                             break;
                     }
-                } else {
-                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -144,8 +151,6 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameLevel = "hard";
                             break;
                     }
-                } else {
-                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -165,8 +170,6 @@ public class GameSettingActivity extends AppCompatActivity {
                             gameMode = false;
                             break;
                     }
-                } else {
-                    Toast.makeText(GameSettingActivity.this, "Button selection required.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
