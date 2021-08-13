@@ -194,28 +194,27 @@ public class MatchingActivity extends AppCompatActivity {
 
                 if (dataSnapshot.getChildrenCount() == 0) {
                     Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                } else {
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        // if match is not done
+                        if (!snapshot.child("player1").exists()) {
+                            // get match id
+                            final String matchmaker = snapshot.getKey();
+                            // get opponent player
+                            String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
+                            // create new player
+                            mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
+                            // get game settings
+                            GAME_LEVEL = snapshot.child("game").child("difficultyLevel").getValue(String.class);
+                            GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
+                            // open matching result dialog
+                            openMatchingResultDialog(true, opponentName, matchmaker);
+                        } else {
+                            // if no match is found
+                            Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
+                        }
 
-                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
-                    // if match is not done
-                    if (!snapshot.child("player1").exists()) {
-                        // get match id
-                        final String matchmaker = snapshot.getKey();
-                        // get opponent player
-                        String opponentName = snapshot.child("player0").getValue(Player.class).getUsername();
-                        // create new player
-                        mMatchmaker.child(matchmaker).child("player1").setValue(new Player(usernameStr, 0));
-                        // get game settings
-                        GAME_LEVEL = snapshot.child("game").child("difficultyLevel").getValue(String.class);
-                        GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
-                        // open matching result dialog
-                        openMatchingResultDialog(true, opponentName, matchmaker);
-                    } else {
-                        // if no match is found
-                        Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
                     }
-
                 }
             }
 
