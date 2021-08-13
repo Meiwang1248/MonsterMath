@@ -11,24 +11,24 @@
         android:theme="@style/Theme.MonsterMath"
         android:usesCleartextTraffic="true">
         <activity android:name=".MatchingActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape"/>
         <activity android:name=".GameActivity"
             android:label="Monster Math"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape"/>
         <activity android:name=".GameSettingActivity"
             android:label="Settings"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape"/>
         <activity android:name=".ScoreBoardActivity"
             android:label="Score Board"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape"/>
         <activity
             android:name=".StartActivity"
             android:label="Monster Math"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,17 +37,17 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:screenOrientation="landscape" />
         <activity
             android:name=".LoginActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:label="@string/login_name"
             android:parentActivityName=".StartActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".RegisterActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="screenSize"
             android:label="@string/register_name"
             android:screenOrientation="landscape"
             android:parentActivityName=".StartActivity" />
