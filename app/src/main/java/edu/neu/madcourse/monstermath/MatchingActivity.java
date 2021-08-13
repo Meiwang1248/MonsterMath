@@ -209,9 +209,6 @@ public class MatchingActivity extends AppCompatActivity {
                             GAME_OPERATION = snapshot.child("game").child("operation").getValue(String.class);
                             // open matching result dialog
                             openMatchingResultDialog(true, opponentName, matchmaker);
-                        } else {
-                            // if no match is found
-                            Toast.makeText(MatchingActivity.this, "Sorry, currently there is no match available.", Toast.LENGTH_LONG).show();
                         }
 
                     }
